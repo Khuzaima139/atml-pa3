@@ -1,0 +1,59 @@
+method: l2sp
+model:
+  name: Qwen/Qwen3-0.6B
+  revision: c1899de289a04d12100db370d81485cdf75e47ca
+  enable_thinking: false                       # L109
+data:
+  dataset: meta-math/MetaMathQA
+  split: train
+  revision: aa4f34d3d2d3231299b5b03d9b3e5a20da45aa18
+  train_ids: splits/task1/train_ids.json       # 40,000 rows, source order, no shuffle (L111-113)
+  format: "prompt = chat template [user], add_generation_prompt, enable_thinking=False, tokenized alone; response = tokenizer(response, add_special_tokens=False) + <|im_end|>"
+  max_length: 2048                             # L127
+  pad_id: 151643                               # <|endoftext|>, right padding, attention mask 0
+  im_end_id: 151645
+  labels: "-100 on prompt and padding; response tokens and <|im_end|> scored (L114-115)"
+seed: 6304                                     # L109
+batch:
+  microbatch: 2                                # L120
+  grad_accum: 16
+  effective_batch: 32
+  updates: 1250                                # L119
+  epochs: 1
+loss:
+  normalization: "sum of token NLL over the 16 microbatches / scored tokens in the effective batch (L115-116)"
+  logit_chunk: 1024                            # logits only at scored positions, chunked, CE in FP32
+optimizer:
+  name: adamw                                  # L121
+  betas: [0.9, 0.999]
+  eps: 1.0e-8
+  weight_decay: 0.01                           # tensors with >= 2 dims only (L122)
+  fused_on_cuda: true
+schedule:
+  peak_lr: 2.0e-5
+  warmup_updates: 38                           # L123
+  decay: "cosine to 0 at update 1250; factor(u) = u/38 for u < 38, else 0.5*(1+cos(pi*(u-38)/1212))"
+clip_grad_norm: 1.0                            # L124
+precision:
+  autocast: float16                            # L129-131
+  grad_scaler: dynamic
+  init_scale: 65536.0
+  weights: fp32 master (bf16 checkpoint cast to fp32)
+gradient_checkpointing:
+  enabled: true                                # L127
+  use_reentrant: false
+l2sp:
+  lambda: 1.0e-3                                # L190-196
+  ref_dtype: bfloat16
+adapter: null
+displacement_updates: [1250]
+checkpoints:
+  recovery: [312, 625, 937, 1250]              # L156-158; rolling, previous deleted after each save
+  keep_weights: [1250]
+logging:
+  json_every: 10
+output:
+  result: results/task1/train_l2sp.json
+  smoke_result: results/task1/smoke_l2sp.json
+  recovery_dir: checkpoints/task1/l2sp/recovery
+  keep_dir: checkpoints/task1/l2sp
