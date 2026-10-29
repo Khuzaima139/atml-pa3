@@ -67,7 +67,7 @@ def unique_trainable(model):
 
 
 def param_groups(named, weight_decay):
-    """Weight decay on tensors with >= 2 dims, none on the rest (L121; the model has no biases)."""
+    """Weight decay on tensors with >= 2 dims, none on the rest (L123; the model has no biases)."""
     decay = [p for _, p in named if p.ndim >= 2]
     other = [p for _, p in named if p.ndim < 2]
     groups = [{"params": decay, "weight_decay": weight_decay}]

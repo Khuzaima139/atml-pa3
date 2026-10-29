@@ -9,31 +9,31 @@ data:
   revision: aa4f34d3d2d3231299b5b03d9b3e5a20da45aa18
   train_ids: splits/task1/train_ids.json       # 40,000 rows, source order, no shuffle (L111-113)
   format: "prompt = chat template [user], add_generation_prompt, enable_thinking=False, tokenized alone; response = tokenizer(response, add_special_tokens=False) + <|im_end|>"
-  max_length: 2048                             # L127
+  max_length: 2048                             # L126
   pad_id: 151643                               # <|endoftext|>, right padding, attention mask 0
   im_end_id: 151645
   labels: "-100 on prompt and padding; response tokens and <|im_end|> scored (L114-115)"
 seed: 6304                                     # L109
 batch:
-  microbatch: 2                                # L120
+  microbatch: 2                                # L121
   grad_accum: 16
   effective_batch: 32
-  updates: 1250                                # L119
+  updates: 1250                                # L120
   epochs: 1
 loss:
   normalization: "sum of token NLL over the 16 microbatches / scored tokens in the effective batch (L115-116)"
   logit_chunk: 1024                            # logits only at scored positions, chunked, CE in FP32
 optimizer:
-  name: adamw                                  # L121
+  name: adamw                                  # L122
   betas: [0.9, 0.999]
   eps: 1.0e-8
-  weight_decay: 0.01                           # tensors with >= 2 dims only (L122)
+  weight_decay: 0.01                           # tensors with >= 2 dims only (L123)
   fused_on_cuda: true
 schedule:
   peak_lr: 2.0e-5
-  warmup_updates: 38                           # L123
+  warmup_updates: 38                           # L124
   decay: "cosine to 0 at update 1250; factor(u) = u/38 for u < 38, else 0.5*(1+cos(pi*(u-38)/1212))"
-clip_grad_norm: 1.0                            # L124
+clip_grad_norm: 1.0                            # L125
 precision:
   autocast: float16                            # L129-131
   grad_scaler: dynamic
