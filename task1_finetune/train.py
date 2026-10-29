@@ -501,15 +501,15 @@ class Trainer:
                 "checkpoint_bytes": {e["kind"]: e["bytes"] for e in self.files}}
 
     def _smoke_summary(self):
-        steady = self.log[1:] or self.log
+        steady = self.log[1:] or self.log  # empty for the write before update 1: projections are null
         t = [r["time_s"] for r in steady]
         tok = [r["padded_tokens"] for r in steady]
         epoch_tok = self.data_info.get("padded_tokens_epoch")
         return {"time_per_update_s": [r["time_s"] for r in self.log],
                 "padded_tokens_per_update": [r["padded_tokens"] for r in self.log],
                 "skipped_updates": self.acc["skipped"],
-                "projected_full_run_s_by_updates": float(np.mean(t)) * self.updates,
-                "projected_full_run_s_by_tokens": (sum(t) / sum(tok) * epoch_tok) if epoch_tok else None,
+                "projected_full_run_s_by_updates": float(np.mean(t)) * self.updates if t else None,
+                "projected_full_run_s_by_tokens": (sum(t) / sum(tok) * epoch_tok) if t and epoch_tok else None,
                 "projection_note": "updates after the first; excludes checkpoint I/O and setup"}
 
     def _write(self, status):
@@ -531,6 +531,13 @@ def _smoke_pairs(examples, pairs, n_updates, accum):
     return [pairs[j]] + rest[:n_updates * accum - 1], lens[j]
 
 
+def training_device():
+    """The only CUDA requirement of main(); the CPU end-to-end test replaces this function."""
+    if not torch.cuda.is_available():
+        raise SystemExit("CUDA is required (training never runs on the Mac)")
+    return torch.device("cuda")
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", required=True)
@@ -544,9 +551,7 @@ def main(argv=None):
         cfg["output"]["recovery_dir"] = args.recovery_dir
     if args.keep_dir:
         cfg["output"]["keep_dir"] = args.keep_dir
-    if not torch.cuda.is_available():
-        raise SystemExit("CUDA is required (training never runs on the Mac)")
-    device = torch.device("cuda")
+    device = training_device()
     seed_everything(cfg["seed"])
     from transformers import AutoModelForCausalLM
 

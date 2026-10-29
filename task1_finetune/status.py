@@ -43,9 +43,9 @@ def line(path):
         s += f" omega {_g(last['omega'], '{:.4g}')} total {_g(last.get('total_loss'))}"
     if d["kind"] == "smoke":
         sm = d["smoke"]
+        tok_s, upd_s = sm["projected_full_run_s_by_tokens"], sm["projected_full_run_s_by_updates"]
         s += (f" s/update {[round(t, 1) for t in sm['time_per_update_s']]} proj "
-              f"{_g(sm['projected_full_run_s_by_tokens'] and sm['projected_full_run_s_by_tokens'] / 3600, '{:.2f}')}h"
-              f" (by updates {sm['projected_full_run_s_by_updates'] / 3600:.2f}h)")
+              f"{_g(tok_s and tok_s / 3600, '{:.2f}')}h (by updates {_g(upd_s and upd_s / 3600, '{:.2f}')}h)")
     return s
 
 
@@ -113,8 +113,13 @@ def plan(queues, limit_h, results_dir="results/task1"):
                 ok = False
                 continue
             sm = d["smoke"]
-            proj = max(x for x in (sm["projected_full_run_s_by_tokens"], sm["projected_full_run_s_by_updates"])
-                       if x is not None)
+            projs = [x for x in (sm["projected_full_run_s_by_tokens"], sm["projected_full_run_s_by_updates"])
+                     if x is not None]
+            if not projs:
+                print(f"queue {qi}: no projection for {m} (smoke status {d['status']}, no update finished)")
+                ok = False
+                continue
+            proj = max(projs)
             setup = sum((d["resources"].get("setup_s") or {}).values())
             h = (proj + setup) / 3600
             total += h

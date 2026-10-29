@@ -7,6 +7,7 @@ import os
 
 import pytest
 import torch
+import yaml
 
 from common.seed import seed_everything
 from task1_finetune import data as D
@@ -517,3 +518,113 @@ def test_run_queue_continues_after_failure_and_cleans_recovery(tmp_path):
     assert (rec / "bad").exists() and not (rec / "good").exists()
     assert (root / "notes" / "kaggle_logs" / "queue_gpu1.done").exists()
     assert (root / "notes" / "kaggle_logs" / "train_good.log").exists()
+
+
+# ---------------------------------------------------------------- end-to-end smoke entry point (CPU)
+
+@pytest.fixture(scope="module")
+def smoke_runs(tmp_path_factory, examples):
+    """`python -m task1_finetune.train --config <cfg> --smoke_updates 3` for all five methods, run through
+    train.main on CPU. Replaced: the CUDA device check, the checkpoint loader (tiny random Qwen3) and the
+    40,000-row loader (16 short examples); configs are tiny_cfg (grad_accum 2, OPLoRA k 8)."""
+    import transformers
+    from task1_finetune import train
+    root = tmp_path_factory.mktemp("smoke")
+    res = root / "results" / "task1"
+    runs = {}
+    for method in METHODS:
+        cfg = tiny_cfg(method)
+        cfg["output"] = {"result": str(res / f"train_{method}.json"),
+                         "smoke_result": str(res / f"smoke_{method}.json"),
+                         "recovery_dir": str(root / "rec" / method), "keep_dir": str(root / "keep" / method)}
+        cfg_path = root / f"{method}.yaml"
+        cfg_path.write_text(yaml.safe_dump(cfg))
+        calls, writes = {}, []
+
+        def from_pretrained(name, revision, dtype):
+            calls.update(name=name, revision=revision, dtype=dtype)
+            return tiny_model().to(dtype)
+
+        def load_train_examples(tok, ids_path):
+            calls["train_ids"] = ids_path
+            return examples, {"first_index": 0, "last_index": len(examples) - 1}
+
+        def spy_write(path, doc, real=train.write_result):
+            writes.append(copy.deepcopy(doc))
+            real(path, doc)
+
+        with pytest.MonkeyPatch.context() as mp:
+            mp.setattr(train, "training_device", lambda: CPU)
+            mp.setattr(transformers.AutoModelForCausalLM, "from_pretrained", from_pretrained)
+            mp.setattr(D, "load_train_examples", load_train_examples)
+            mp.setattr(train, "write_result", spy_write)
+            train.main(["--config", str(cfg_path), "--smoke_updates", "3"])
+        runs[method] = {"cfg": cfg, "calls": calls, "writes": writes}
+    return root, runs
+
+
+@pytest.mark.parametrize("method", METHODS)
+def test_train_main_smoke_end_to_end(smoke_runs, examples, method):
+    from task1_finetune import status
+    root, runs = smoke_runs
+    run = runs[method]
+    assert run["calls"] == {"name": "Qwen/Qwen3-0.6B", "revision": D.MODEL_REVISION, "dtype": torch.bfloat16,
+                            "train_ids": "splits/task1/train_ids.json"}
+    path = run["cfg"]["output"]["smoke_result"]
+    with open(path) as f:
+        doc = json.load(f)
+    assert doc["kind"] == "smoke" and doc["status"] == "done" and doc["method"] == method
+    assert [r["update"] for r in doc["log"]] == [1, 2, 3] and doc["resources"]["updates_done"] == 3
+    assert all(r["sft_loss"] is not None and r["grad_norm_preclip"] is not None for r in doc["log"])
+    assert doc["files"] == [] and doc["config"]["checkpoints"] == {"recovery": [], "keep_weights": []}
+    assert not os.path.exists(run["cfg"]["output"]["recovery_dir"])
+    assert not os.path.exists(run["cfg"]["output"]["keep_dir"])
+    longest = max(len(e["input_ids"]) for e in examples)
+    assert doc["data"]["smoke_first_microbatch_len"] == longest
+    sm = doc["smoke"]
+    assert len(sm["time_per_update_s"]) == len(sm["padded_tokens_per_update"]) == 3
+    t, tok = sm["time_per_update_s"][1:], sm["padded_tokens_per_update"][1:]
+    assert sm["projected_full_run_s_by_updates"] == pytest.approx(sum(t) / 2 * run["cfg"]["batch"]["updates"])
+    assert sm["projected_full_run_s_by_tokens"] == pytest.approx(sum(t) / sum(tok) * doc["data"]["padded_tokens_epoch"])
+    # regression (Kaggle ZeroDivisionError): the JSON written before update 1 has an empty log
+    first = run["writes"][0]
+    assert first["status"] == "running" and first["log"] == []
+    assert first["smoke"]["projected_full_run_s_by_updates"] is None
+    assert first["smoke"]["projected_full_run_s_by_tokens"] is None
+    p0 = root / f"first_write_{method}.json"
+    p0.write_text(json.dumps(first))
+    assert status.line(str(p0)).startswith(f"{method} smoke running update 0/0")
+    assert run["writes"][-1]["status"] == "done"
+
+
+def test_status_cli_on_smoke_jsons(smoke_runs):
+    import subprocess
+    import sys
+    root, runs = smoke_runs
+    paths = [runs[m]["cfg"]["output"]["smoke_result"] for m in METHODS]
+    env = {**os.environ, "PYTHONPATH": REPO}
+
+    def status(*args):
+        return subprocess.run([sys.executable, "-m", "task1_finetune.status", *args], cwd=root, env=env,
+                              capture_output=True, text=True)
+
+    r = status(*paths)
+    assert r.returncode == 0, r.stderr
+    assert [ln.split()[:4] for ln in r.stdout.splitlines()] == [[m, "smoke", "done", "update"] for m in METHODS]
+    r = status("--table", *paths)
+    assert r.returncode == 0, r.stderr
+    rows = [ln.split(" | ") for ln in r.stdout.splitlines()]
+    assert rows[0][0].strip() == "method" and [x[0].strip() for x in rows[1:]] == list(METHODS)
+    for x in rows[1:]:
+        assert x[1].strip() == "done" and x[2].strip() == "3" and x[8].strip() != "-" and x[9].strip() != "-"
+    queues = ["--queue", "full_ft,lora4,oplora16", "--queue", "l2sp,lora16"]
+    r = status("--plan", *queues, "--limit_h", "1000")  # reads results/task1/smoke_*.json under cwd
+    assert r.returncode == 0, r.stdout + r.stderr
+    assert "queue GPU0: full_ft " in r.stdout and "queue GPU1: l2sp " in r.stdout and "plan: OK" in r.stdout
+    r = status("--plan", *queues, "--limit_h", "0")
+    assert r.returncode == 1 and "OVER LIMIT" in r.stdout and "plan: STOP" in r.stdout
+    # a smoke JSON with no finished update (e.g. a crash in update 1) stops the plan instead of raising
+    first = runs["lora4"]["writes"][0]
+    (root / "results" / "task1" / "smoke_lora4.json").write_text(json.dumps(first))
+    r = status("--plan", *queues, "--limit_h", "1000")
+    assert r.returncode == 1 and "no projection for lora4" in r.stdout and "plan: STOP" in r.stdout, r.stderr
