@@ -453,3 +453,67 @@ def test_status_helpers(tmp_path, examples, capsys):
     with open(kept, "ab") as f:
         f.write(b"x")
     assert status.verify([p]) == 1
+
+
+def _fake_doc(method, kind, status, **extra):
+    return {"run_id": f"{kind}_{method}", "kind": kind, "status": status, "method": method,
+            "config": {"batch": {"updates": 1250}}, "overhead": {}, "displacement_l2": {},
+            "resources": {"updates_done": 3, "skipped_updates": 0, "train_s": 60.0, "wall_s": 90.0,
+                          "ckpt_io_s": 0.0, "peak_allocated_bytes": 2**30, "peak_reserved_bytes": 2**31,
+                          "trainable_params": 10, "setup_s": {"data_s": 1800.0, "model_load_s": 0.0}},
+            "log": [{"sft_loss": 0.5, "lr": 1e-5, "time_s": 1.0}], **extra}
+
+
+def test_status_plan_limits_queue_hours(tmp_path, capsys):
+    from task1_finetune import status
+    for m, h_tok, h_upd in (("a", 4.0, 3.0), ("b", 5.0, 5.6), ("c", 1.0, 1.0)):
+        d = _fake_doc(m, "smoke", "done", smoke={"projected_full_run_s_by_tokens": h_tok * 3600,
+                                                 "projected_full_run_s_by_updates": h_upd * 3600})
+        (tmp_path / f"smoke_{m}.json").write_text(json.dumps(d))
+    # per run: max of the two projections + 0.5 h setup -> a 4.5, b 6.1, c 1.5
+    assert not status.plan([["a", "b"], ["c"]], 10.5, str(tmp_path))
+    assert "10.60h" in capsys.readouterr().out
+    assert status.plan([["a", "c"], ["b"]], 10.5, str(tmp_path))
+    assert not status.plan([["a", "missing"]], 10.5, str(tmp_path))
+
+
+def test_status_wait_on_queue_markers_and_train_table(tmp_path, capsys):
+    from task1_finetune import status
+    p1, p2 = tmp_path / "train_a.json", tmp_path / "train_b.json"
+    p1.write_text(json.dumps(_fake_doc("a", "train", "done")))
+    m1, m2 = tmp_path / "q0.done", tmp_path / "q1.done"
+    m1.write_text("x")
+    m2.write_text("x")
+    started = tmp_path / "started"
+    started.write_text(str(__import__("time").time() - 12 * 3600))
+    st = status.wait([str(p1), str(p2)], 0, [str(m1), str(m2)], str(started), warn_h=11)
+    out = capsys.readouterr().out
+    assert st == ["done", "pending"] and "WARNING" in out and "b: pending" in out
+    assert "a: status done update 3/1250 sft_loss 0.5000 skipped 0" in out
+    t = status.train_table([str(p1), str(p2)]).splitlines()
+    assert t[1].split(" | ")[0].strip() == "a" and "0.5000" in t[1] and "missing" in t[2]
+
+
+def test_run_queue_continues_after_failure_and_cleans_recovery(tmp_path):
+    import shutil
+    import subprocess
+    root = tmp_path / "repo"
+    (root / "task1_finetune").mkdir(parents=True)
+    shutil.copy(os.path.join(REPO, "task1_finetune", "run_queue.sh"), root / "task1_finetune")
+    fake = tmp_path / "bin"
+    fake.mkdir()
+    # stub python: training of "bad" fails; verification always passes
+    (fake / "python").write_text('#!/bin/bash\necho "python $*"\ncase "$*" in *bad.yaml*) exit 3;; esac\nexit 0\n')
+    (fake / "python").chmod(0o755)
+    rec = tmp_path / "rec"
+    for m in ("bad", "good"):
+        (rec / m).mkdir(parents=True)
+    env = {**os.environ, "PATH": f"{fake}:{os.environ['PATH']}", "RECOVERY_ROOT": str(rec)}
+    r = subprocess.run(["bash", str(root / "task1_finetune" / "run_queue.sh"), "1", "bad", "good"],
+                       capture_output=True, text=True, env=env)
+    assert r.returncode == 0, r.stderr
+    assert "GPU1 bad FAILED (exit 3" in r.stdout and "GPU1 good verified; recovery state deleted" in r.stdout
+    assert "--recovery_dir " + str(rec / "good") in r.stdout
+    assert (rec / "bad").exists() and not (rec / "good").exists()
+    assert (root / "notes" / "kaggle_logs" / "queue_gpu1.done").exists()
+    assert (root / "notes" / "kaggle_logs" / "train_good.log").exists()
