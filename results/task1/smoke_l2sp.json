@@ -1,0 +1,218 @@
+{
+  "run_id": "smoke_l2sp_20261029T120644Z",
+  "kind": "smoke",
+  "status": "done",
+  "method": "l2sp",
+  "config": {
+    "method": "l2sp",
+    "model": {
+      "name": "Qwen/Qwen3-0.6B",
+      "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "enable_thinking": false
+    },
+    "data": {
+      "dataset": "meta-math/MetaMathQA",
+      "split": "train",
+      "revision": "aa4f34d3d2d3231299b5b03d9b3e5a20da45aa18",
+      "train_ids": "splits/task1/train_ids.json",
+      "format": "prompt = chat template [user], add_generation_prompt, enable_thinking=False, tokenized alone; response = tokenizer(response, add_special_tokens=False) + <|im_end|>",
+      "max_length": 2048,
+      "pad_id": 151643,
+      "im_end_id": 151645,
+      "labels": "-100 on prompt and padding; response tokens and <|im_end|> scored (L114-115)"
+    },
+    "seed": 6304,
+    "batch": {
+      "microbatch": 2,
+      "grad_accum": 16,
+      "effective_batch": 32,
+      "updates": 1250,
+      "epochs": 1
+    },
+    "loss": {
+      "normalization": "sum of token NLL over the 16 microbatches / scored tokens in the effective batch (L115-116)",
+      "logit_chunk": 1024
+    },
+    "optimizer": {
+      "name": "adamw",
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "weight_decay": 0.01,
+      "fused_on_cuda": true
+    },
+    "schedule": {
+      "peak_lr": 2e-05,
+      "warmup_updates": 38,
+      "decay": "cosine to 0 at update 1250; factor(u) = u/38 for u < 38, else 0.5*(1+cos(pi*(u-38)/1212))"
+    },
+    "clip_grad_norm": 1.0,
+    "precision": {
+      "autocast": "float16",
+      "grad_scaler": "dynamic",
+      "init_scale": 65536.0,
+      "weights": "fp32 master (bf16 checkpoint cast to fp32)"
+    },
+    "gradient_checkpointing": {
+      "enabled": true,
+      "use_reentrant": false
+    },
+    "l2sp": {
+      "lambda": 0.001,
+      "ref_dtype": "bfloat16"
+    },
+    "adapter": null,
+    "displacement_updates": [],
+    "checkpoints": {
+      "recovery": [],
+      "keep_weights": []
+    },
+    "logging": {
+      "json_every": 10
+    },
+    "output": {
+      "result": "results/task1/train_l2sp.json",
+      "smoke_result": "results/task1/smoke_l2sp.json",
+      "recovery_dir": "checkpoints/task1/l2sp/recovery",
+      "keep_dir": "checkpoints/task1/l2sp"
+    }
+  },
+  "segments": [
+    {
+      "from_update": 0,
+      "provenance": {
+        "git": {
+          "commit": "c821d466c0bc7206366727333f151ea4a06acc5e",
+          "dirty": false
+        },
+        "hostname": "8a27ac430e3f",
+        "hardware": {
+          "cpu": "x86_64",
+          "cpu_count": 4,
+          "platform": "Linux-6.18.55+-x86_64-with-glibc2.39",
+          "python": "3.13.15",
+          "gpus": [
+            {
+              "index": 0,
+              "name": "Tesla T4",
+              "total_memory_gb": 14.56
+            }
+          ],
+          "torch": "2.11.0+cu128",
+          "cuda": "12.8"
+        },
+        "timestamp": "2026-10-29T12:06:44.942367+00:00"
+      }
+    }
+  ],
+  "dtypes": {
+    "master": "float32",
+    "compute": "float16 autocast",
+    "optimizer_states": "float32"
+  },
+  "data": {
+    "train_ids": "splits/task1/train_ids.json",
+    "count": 40000,
+    "first_index": 0,
+    "last_index": 40001,
+    "token_fingerprint": "96c83df5911db96e9a2bb9f2afa03a5caf75849184df6ba1b120471c04db4b22",
+    "microbatches": 20000,
+    "padded_tokens_epoch": 12341498,
+    "longest_example": 1941,
+    "smoke_first_microbatch_len": 1941
+  },
+  "overhead": {
+    "theta0_build_s": 0.03552130700001044,
+    "theta0_bytes": 1192099840,
+    "theta0_dtype": "bfloat16",
+    "theta0_device": "cuda",
+    "theta0_transfer": "built on the training device; no per-update transfer"
+  },
+  "resources": {
+    "trainable_params": 596049920,
+    "trainable_tensors": 310,
+    "updates_done": 3,
+    "skipped_updates": 0,
+    "train_s": 21.494290534000015,
+    "ckpt_io_s": 0.0,
+    "displacement_s": 0.0,
+    "wall_s": 21.5059072971344,
+    "setup_s": {
+      "data_s": 15.289716774999988,
+      "model_load_s": 2.449096677,
+      "prepare_s": 1.2483714629999554
+    },
+    "peak_allocated_bytes": 12660050432,
+    "peak_reserved_bytes": 13342081024,
+    "checkpoint_bytes": {}
+  },
+  "displacement_l2": {},
+  "files": [],
+  "generation": null,
+  "log_fields": "update is 1-based (the update just completed); lr is the rate applied in that update; sft_loss = summed token NLL over the 16 microbatches / scored_tokens; grad_norm_preclip is the global norm after unscale_ (and after the L2-SP gradient) and before clipping; loss_scale is the GradScaler scale used for that update's backward; skipped = the scale dropped (inf/nan grads)",
+  "log": [
+    {
+      "update": 1,
+      "sft_loss": 0.821297968848277,
+      "lr": 0.0,
+      "grad_norm_preclip": 25.190711975097656,
+      "loss_scale": 65536.0,
+      "skipped": false,
+      "scored_tokens": 6608,
+      "padded_tokens": 12478,
+      "time_s": 9.266844233999961,
+      "omega": 0.0,
+      "lambda_omega": 0.0,
+      "total_loss": 0.821297968848277,
+      "penalty_s": 0.1762986179999757
+    },
+    {
+      "update": 2,
+      "sft_loss": 0.945044191969809,
+      "lr": 5.263157894736843e-07,
+      "grad_norm_preclip": 31.273296356201172,
+      "loss_scale": 65536.0,
+      "skipped": false,
+      "scored_tokens": 5481,
+      "padded_tokens": 9256,
+      "time_s": 6.132840785000042,
+      "omega": 0.0,
+      "lambda_omega": 0.0,
+      "total_loss": 0.945044191969809,
+      "penalty_s": 0.1760226659999944
+    },
+    {
+      "update": 3,
+      "sft_loss": 1.0215347253152385,
+      "lr": 1.0526315789473685e-06,
+      "grad_norm_preclip": 31.674518585205078,
+      "loss_scale": 65536.0,
+      "skipped": false,
+      "scored_tokens": 4964,
+      "padded_tokens": 8962,
+      "time_s": 6.094605515000012,
+      "omega": 4.563737728498164e-05,
+      "lambda_omega": 4.563737728498164e-08,
+      "total_loss": 1.0215347709526157,
+      "penalty_s": 0.17602283700000498
+    }
+  ],
+  "smoke": {
+    "time_per_update_s": [
+      9.266844233999961,
+      6.132840785000042,
+      6.094605515000012
+    ],
+    "padded_tokens_per_update": [
+      12478,
+      9256,
+      8962
+    ],
+    "skipped_updates": 0,
+    "projected_full_run_s_by_updates": 7642.153937500034,
+    "projected_full_run_s_by_tokens": 8283.291473079265,
+    "projection_note": "updates after the first; excludes checkpoint I/O and setup"
+  }
+}
