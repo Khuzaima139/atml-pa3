@@ -39,6 +39,7 @@ COMPARISONS = [("full_ft_u0625", "baseline"), ("full_ft_u1250", "baseline"), ("l
                ("lora16_u1250", "oplora16_u1250"), ("full_ft_u1250", "lora16_u1250")]   # L221-225
 NO_EXTRACTION = "[invalid]"
 EXACT_MATCH_IGNORE = (",", r"\$", r"(?s).*#### ", r"\.$")   # stock gsm8k_cot metric settings, ignore_case true
+FLEXIBLE_PATTERN = r"(-?[$0-9.,]{2,})|(-?[0-9]+)"           # stock gsm8k_cot flexible-extract filter
 DIRECTION_AGNOSTIC_RHO = 128 / 1024                         # k / d_out of down_proj
 MA_WINDOW = 25
 LAST_UPDATES = 50
@@ -220,6 +221,47 @@ def gain_loss_table(ev, baseline):
             no_digit_extraction(x) and gold_is_last_number(x) for x, _ in gained)
         rows.append(row)
     return rows
+
+
+def adjusted_answer(response, flexible_answer):
+    """The stock answer, unless it has no digit: then the last stock-pattern match that has one. Never sees the gold."""
+    if flexible_answer == NO_EXTRACTION or re.search(r"\d", flexible_answer):
+        return flexible_answer
+    found = [m.group(0) for m in re.finditer(FLEXIBLE_PATTERN, response) if re.search(r"\d", m.group(0))]
+    return found[-1] if found else NO_EXTRACTION
+
+
+def adjusted_flags(rows):
+    return np.array([exact_match_norm(adjusted_answer(r["response"], r["flexible_answer"])) == exact_match_norm(r["gold"])
+                     for r in rows], dtype=np.int8)
+
+
+def numeric_equal_only(row):
+    """Scored wrong after adjustment although the answer equals the gold as a number, such as $16.00 for 16."""
+    a, gold = exact_match_norm(adjusted_answer(row["response"], row["flexible_answer"])), exact_match_norm(row["gold"])
+    try:
+        return a != gold and float(a) == float(gold)
+    except ValueError:
+        return False
+
+
+def adjusted_tables(ev, baseline):
+    """One rule for all conditions, reported beside the stock score, which stays primary (L146-147, L263-264)."""
+    flag = {c: adjusted_flags(e["gsm8k"]) for c, e in ev.items()}
+    scores = []
+    for c, e in ev.items():
+        stock = flags(e["gsm8k"])
+        recovered = (flag[c] == 1) & (stock == 0)
+        assert not ((flag[c] == 0) & (stock == 1)).any(), c
+        scores.append({"condition": c, "stock_correct": int(stock.sum()), "adjusted_correct": int(flag[c].sum()),
+                       "recovered": int(recovered.sum()),
+                       "recovered_truncated": int(sum(r["truncated"] for r, x in zip(e["gsm8k"], recovered) if x)),
+                       "numeric_equal_still_wrong": sum(numeric_equal_only(r) for r in e["gsm8k"]),
+                       "stock_acc": float(stock.mean()), "adjusted_acc": float(flag[c].mean()),
+                       "stock_change_pp": 100 * float(stock.mean() - flags(ev[baseline]["gsm8k"]).mean()),
+                       "adjusted_change_pp": 100 * float(flag[c].mean() - flag[baseline].mean())})
+    tests = [{"a": a, "b": b, "benchmark": "gsm8k", **paired_bootstrap(flag[a], flag[b])} for a, b in COMPARISONS if b == baseline]
+    return scores, tests
 
 
 # ---------------------------------------------------------------- 3. prediction balance and normalization
@@ -489,8 +531,9 @@ def figure_learning(train, folder):
     _save(fig, folder, FIGURES[0])
 
 
-def figure_benchmarks(table, comparisons, folder):
-    """Change from baseline with paired 95% CIs (L220-221, L278); one panel per benchmark, each with its own axis."""
+def figure_benchmarks(table, comparisons, adjusted, folder):
+    """Change from baseline with paired 95% CIs (L220-221, L278); one panel per benchmark, each with its own axis.
+    GSM8K also shows the adjusted score as hollow markers."""
     conds = [r["condition"] for r in table][1:]
     y = np.arange(len(conds))[::-1]
     fig, axes = plt.subplots(1, 4, figsize=(10, 2.9), facecolor=SURFACE, sharey=True, constrained_layout=True)
@@ -499,11 +542,22 @@ def figure_benchmarks(table, comparisons, folder):
         d = np.array([rows[c]["diff_pp"] for c in conds])
         lo, hi = np.array([rows[c]["ci_low_pp"] for c in conds]), np.array([rows[c]["ci_high_pp"] for c in conds])
         ax.axvline(0, color=INK_2, linewidth=0.8)
-        ax.errorbar(d, y, xerr=[d - lo, hi - d], fmt="o", color=METHOD_COLOR["full_ft"], markersize=5, elinewidth=1.4, capsize=0)
-        _axes(ax, f"{name} (baseline {100 * table[0][b]['primary']:.2f}%)")
+        ax.errorbar(d, y, xerr=[d - lo, hi - d], fmt="o", color=METHOD_COLOR["full_ft"], markersize=5, elinewidth=1.4, capsize=0,
+                    label="stock")
+        title = f"{name} (baseline {100 * table[0][b]['primary']:.2f}%)"
+        if b == "gsm8k":
+            scores, tests = adjusted
+            ra = {r["a"]: r for r in tests}
+            da = np.array([ra[c]["diff_pp"] for c in conds])
+            la, ha = np.array([ra[c]["ci_low_pp"] for c in conds]), np.array([ra[c]["ci_high_pp"] for c in conds])
+            ax.errorbar(da, y - 0.24, xerr=[da - la, ha - da], fmt="o", color=METHOD_COLOR["full_ft"], markerfacecolor=SURFACE,
+                        markersize=5, elinewidth=1.0, capsize=0, label="adjusted")
+            ax.legend(frameon=False, fontsize=8, labelcolor=INK_2, loc="lower right", ncol=2)
+            title = f"{name} ({100 * table[0][b]['primary']:.2f}%; adjusted {100 * scores[0]['adjusted_acc']:.2f}%)"
+        _axes(ax, title)
         ax.set_xlabel("Change from baseline, pp", fontsize=8, color=INK_2)
     axes[0].set_yticks(y, [SHORT[c] for c in conds])
-    axes[0].set_ylim(-0.6, len(conds) - 0.4)
+    axes[0].set_ylim(-1.35, len(conds) - 0.4)
     _save(fig, folder, FIGURES[1])
 
 
@@ -603,7 +657,18 @@ def summary_md(t):
                   [[r["condition"], r["gained"], r["gained_baseline_truncated"], r["gained_condition_truncated"], r["gained_neither_truncated"],
                     r["gained_baseline_no_digit"], r["gained_baseline_no_digit_gold_is_last_number"], r["lost"],
                     r["lost_baseline_truncated"], r["lost_condition_truncated"], r["lost_neither_truncated"]] for r in t["gain_loss"]])
-    section("2. GSM8K extraction vs correctness", ex, "Items gained and lost against the baseline:", gl)
+    adj = md_table(["condition", "stock correct", "adjusted correct", "recovered", "recovered truncated", "numeric equal, still wrong",
+                    "stock %", "adjusted %",
+                    "stock change pp", "adjusted change pp"],
+                   [[r["condition"], r["stock_correct"], r["adjusted_correct"], r["recovered"], r["recovered_truncated"],
+                     r["numeric_equal_still_wrong"], _pct(r["stock_acc"]),
+                     _pct(r["adjusted_acc"]), _pp(r["stock_change_pp"]), _pp(r["adjusted_change_pp"])] for r in t["adjusted"]])
+    adj_boot = md_table(["A", "B", "A - B pp, adjusted", "95% CI pp", "only A correct", "only B correct", "n"],
+                        [[r["a"], r["b"], _pp(r["diff_pp"]), f"[{r['ci_low_pp']:+.2f}, {r['ci_high_pp']:+.2f}]", r["n_a_only_correct"],
+                          r["n_b_only_correct"], r["n"]] for r in t["adjusted_comparisons"]])
+    section("2. GSM8K extraction vs correctness", ex, "Items gained and lost against the baseline:", gl,
+            "Adjusted score (not the primary metric): where the stock answer has no digit, the last stock-pattern match with a digit; "
+            "stock normalization; the gold is not used to choose the answer:", adj, adj_boot)
 
     bq = md_table(["condition", "gold yes %", "pred yes %", "acc %", "acc gold yes %", "acc gold no %"],
                   [[r["condition"], _pct(r["gold_yes_share"]), _pct(r["pred_yes_share"]), _pct(r["acc"]), _pct(r["acc_gold_yes"]),
@@ -680,14 +745,16 @@ def analyze(results="results/task1", out=None, figures="figures/task1", sheet="s
          "norm": norm_table(ev, baseline), "resources": resource_table(train), "diagnostics": diagnostics_table(diag),
          "verification": verification_table(ver, ev)}
     t["learning"], t["mean_sft_last50"] = learning_table(train)
+    t["adjusted"], t["adjusted_comparisons"] = adjusted_tables(ev, baseline)
     qrows = qualitative_rows(qual)
     t["qualitative"] = qualitative_summary(qrows, conditions)
 
     figure_learning(train, figures)
-    figure_benchmarks(t["benchmarks"], t["comparisons"], figures)
+    figure_benchmarks(t["benchmarks"], t["comparisons"], (t["adjusted"], t["adjusted_comparisons"]), figures)
     figure_diagnostics(t["diagnostics"], figures)
 
-    parts = {"benchmarks": ("score_check", "benchmarks", "comparisons"), "gsm8k_extraction": ("extraction", "gain_loss"),
+    parts = {"benchmarks": ("score_check", "benchmarks", "comparisons"),
+             "gsm8k_extraction": ("extraction", "gain_loss", "adjusted", "adjusted_comparisons"),
              "prediction_balance": ("boolq", "norm"), "learning": ("learning", "mean_sft_last50"), "resources": ("resources",),
              "diagnostics_tables": ("diagnostics", "verification"), "qualitative_checks": ("qualitative",)}
     for name, keys in parts.items():
