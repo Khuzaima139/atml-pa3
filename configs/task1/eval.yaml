@@ -28,7 +28,7 @@ lm_eval:
   version: 0.4.13
   batch_size_gsm8k: 32                         # fixed for all seven conditions; never 'auto'
   batch_size_likelihood: 8                     # 32 cannot fit BoolQ on a T4: longest request 1,270 tokens, 23.0 GiB
-  softmax_dtype: null                          # stock default: log-softmax in the model dtype (FP16)
+  softmax_dtype: null                          # stock, decided: scoring arithmetic stays FP16 as lm-eval does it, identical for all seven conditions
   bootstrap_iters: 100000                      # lm-eval default
 gsm8k:                                         # L145-147
   task: gsm8k_cot
