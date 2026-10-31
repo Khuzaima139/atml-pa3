@@ -1,0 +1,51 @@
+{
+  "run_id": "analysis_learning",
+  "provenance": {
+    "git": {
+      "commit": "21f7587657e38a4134535a44af21fb9cb2936952",
+      "dirty": false
+    },
+    "hostname": "Khuzaimas-MacBook-Pro.local",
+    "hardware": {
+      "cpu": "arm",
+      "cpu_count": 8,
+      "platform": "macOS-27.0.1-arm64-arm-64bit",
+      "python": "3.11.18",
+      "gpus": [],
+      "torch": "2.15.0"
+    },
+    "timestamp": "2026-10-31T10:25:10.218391+00:00"
+  },
+  "learning": [
+    {
+      "run": "full_ft",
+      "update": 625,
+      "displacement": 10.026997893949321,
+      "mean_sft_last50": null
+    },
+    {
+      "run": "full_ft",
+      "update": 1250,
+      "displacement": 10.665012436241927,
+      "mean_sft_last50": 0.1842198322674284
+    },
+    {
+      "run": "l2sp",
+      "update": 1250,
+      "displacement": 6.2686145562422775,
+      "mean_sft_last50": 0.18418624404814665,
+      "omega": 19.647764227962632,
+      "half_displacement_squared": 19.64776422736628,
+      "lambda_omega": 0.019647764227962633,
+      "total_loss": 0.18378150794045278,
+      "lambda_omega_over_mean_sft": 0.10667335299386782
+    }
+  ],
+  "mean_sft_last50": {
+    "full_ft": 0.1842198322674284,
+    "l2sp": 0.18418624404814665,
+    "lora4": 0.2117447937173335,
+    "lora16": 0.19896952545721094,
+    "oplora16": 0.2000345338853244
+  }
+}

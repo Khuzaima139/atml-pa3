@@ -1,0 +1,70 @@
+{
+  "run_id": "analysis_manifest",
+  "provenance": {
+    "git": {
+      "commit": "21f7587657e38a4134535a44af21fb9cb2936952",
+      "dirty": false
+    },
+    "hostname": "Khuzaimas-MacBook-Pro.local",
+    "hardware": {
+      "cpu": "arm",
+      "cpu_count": 8,
+      "platform": "macOS-27.0.1-arm64-arm-64bit",
+      "python": "3.11.18",
+      "gpus": [],
+      "torch": "2.15.0"
+    },
+    "timestamp": "2026-10-31T10:25:10.218391+00:00"
+  },
+  "sources": {
+    "configs/task1/eval.yaml": "146653237a35c91e4f0bcc8fc7c90cd61a61a9490da383e6b59ffb2b842661a7",
+    "results/task1/eval/baseline/scores.json": "429b8ea3666f489bbe382b06e69950b41fb2e44cda23da617de047c96a82735b",
+    "results/task1/eval/baseline/gsm8k.jsonl.gz": "83122c6104c505b405a95835fda4dce39c4b2f4ae9e38addb3f07f8379ce9a5d",
+    "results/task1/eval/baseline/hellaswag.jsonl.gz": "f647f4176be52ad72849640733aac9f98d190a470eacb1a00c8e7aa8189e7662",
+    "results/task1/eval/baseline/boolq.jsonl.gz": "f38eb510ae48bef99369c270857d782836e4f0d971cc2ca94821a51bc4cbf0f5",
+    "results/task1/eval/baseline/arc_easy.jsonl.gz": "24a6f6f2f85ea44d2fb507253e45dcd9809c4fa1cc992e9d79215643b64275a1",
+    "results/task1/eval/full_ft_u0625/scores.json": "456afa5adfc24c48d0806e685e02a9ff38875c4250423ab84ab962fd8a0bb1da",
+    "results/task1/eval/full_ft_u0625/gsm8k.jsonl.gz": "fae5ab155722358f8320d060765938b37651a2dff48a4391589d28e829053cea",
+    "results/task1/eval/full_ft_u0625/hellaswag.jsonl.gz": "df2cca847f0362b842557e1308e5751ad30013422ea7d58b872b490aaf20c267",
+    "results/task1/eval/full_ft_u0625/boolq.jsonl.gz": "d0a2265fb125e6c0a71afad1ddb16c8e1b4dd455e1f6a5524ff531393efe1c31",
+    "results/task1/eval/full_ft_u0625/arc_easy.jsonl.gz": "a164a3cc00e0febb220a5ab4b3b84bf8705b72b67d5332ea1e8eb726595fe8af",
+    "results/task1/eval/full_ft_u1250/scores.json": "9c40767f8c34269fa9609dd1ed7010733be3b539e7fd3c380e84c8c1b3cd8f21",
+    "results/task1/eval/full_ft_u1250/gsm8k.jsonl.gz": "f29ad33bb2fab66203f52b80a462a4c8d811416361a82123c7a3605c511ffb1f",
+    "results/task1/eval/full_ft_u1250/hellaswag.jsonl.gz": "13a305870ff770d9629776d54741788d7c38861d2d5758f5c2931a117c882bed",
+    "results/task1/eval/full_ft_u1250/boolq.jsonl.gz": "2139bf65435da2ec3dc91ab410e350bd6293ff8643d558b87c88c9fc3ea85d44",
+    "results/task1/eval/full_ft_u1250/arc_easy.jsonl.gz": "46882341c40a49458825af6f3503d247e4844918a88e5a7174e5a57b6e8a0e92",
+    "results/task1/eval/l2sp_u1250/scores.json": "3c125e131084ba7f9e4583957a215e06e4273d8cfc8eb31563c9237672525448",
+    "results/task1/eval/l2sp_u1250/gsm8k.jsonl.gz": "47ad3b2bba70baa8bf092374c2cc022f1eb86fb582f68b832eb97c5b0f8ac249",
+    "results/task1/eval/l2sp_u1250/hellaswag.jsonl.gz": "c4b0eec5790b44818f1442f8052fcad240002b2333b6d4404689bd6e95007824",
+    "results/task1/eval/l2sp_u1250/boolq.jsonl.gz": "2d5cdbaf9b55e8cd16872ee9f952982019ff98130c2b80da6b6a2036a42c5ce9",
+    "results/task1/eval/l2sp_u1250/arc_easy.jsonl.gz": "7c93c916657e21e4b627fcf305ce30d648062c6473de34ef066acf80adc87c8a",
+    "results/task1/eval/lora4_u1250/scores.json": "34e9f85efbb6e41cabf08497df21109c870d38d36e37005c4f35f04d58305b1f",
+    "results/task1/eval/lora4_u1250/gsm8k.jsonl.gz": "4d5f7abec8a3e6933982c8c76d7cee67159e3aa791c2dbac25557d2119aae404",
+    "results/task1/eval/lora4_u1250/hellaswag.jsonl.gz": "06130889da31bd03c13e1e74694b683e0379c03bed57ecaef376a69336acb7bb",
+    "results/task1/eval/lora4_u1250/boolq.jsonl.gz": "76636c38a5b4fd681fdfa195ed3a7847774f4bbbfdc22a01cf29364dcff0c244",
+    "results/task1/eval/lora4_u1250/arc_easy.jsonl.gz": "559a566d0194e19d26a13e0d3cba67f428f44c1999a7f8f8eff3cbaa148d2833",
+    "results/task1/eval/lora16_u1250/scores.json": "02aeecdb7afa68ed9bc9353d990d17218d5e376fe2bd20c5d6a3f76833114832",
+    "results/task1/eval/lora16_u1250/gsm8k.jsonl.gz": "96dc3538bcf9b539722e8e5ef4f0302b79f666fce73dad1d18d859b96063ba5b",
+    "results/task1/eval/lora16_u1250/hellaswag.jsonl.gz": "27720f7ecddd5d1e4b5f08688c0c6c5a356ae0dcfc68a7ceca1a74647df2ad20",
+    "results/task1/eval/lora16_u1250/boolq.jsonl.gz": "06ddbc39aa3dbee8bcb6dae27a32d2a6626bfeb39a0dd41731b94c4dfa06fde0",
+    "results/task1/eval/lora16_u1250/arc_easy.jsonl.gz": "c5f9fa7aa10839e5fd368eb316c00af75b72241307af4a156f0d4d4d545f6157",
+    "results/task1/eval/oplora16_u1250/scores.json": "afecd8be9efa1899f9cbdbe16195c80d759cf905152d1d11eec42ec6f9989868",
+    "results/task1/eval/oplora16_u1250/gsm8k.jsonl.gz": "8878d6bf4c479d8a5ea36dcf56e68067733bc52d5ec753f3c78b3504aa62a40d",
+    "results/task1/eval/oplora16_u1250/hellaswag.jsonl.gz": "e1d4b388a638d29ec2520c0b1b21eeb3c97ff62ae40e832acfc80ab0c0da5719",
+    "results/task1/eval/oplora16_u1250/boolq.jsonl.gz": "eef8b5753dd0abff84266d34b49d4f71be07622321e578e132218a43fc3c4317",
+    "results/task1/eval/oplora16_u1250/arc_easy.jsonl.gz": "bad3417e6767fcdd2f90359a63452c6b765be1c4ada5ac54c999e4887accf8f4",
+    "results/task1/train_full_ft.json": "5497beea40a2c0df64bfbd85b410eb8854ac52ef9172e36d7dc0bf8482b18346",
+    "results/task1/train_l2sp.json": "9862bd30a999a25c222fabe148e219019243099bcc348b59e42491dce0e0473e",
+    "results/task1/train_lora4.json": "62a5cc2c8373369b05f4a9901e387a7232f0bc4a3388008e71164a5522906772",
+    "results/task1/train_lora16.json": "a2781ad98e79a55c4182c6f86080e41e77f775034ede22cdc07654ac1b0eed41",
+    "results/task1/train_oplora16.json": "ca660c412792c176ae86333d6e86600bf953697a45c5cd663786d849dec3d122",
+    "results/task1/diagnostics.json": "7b82b7ea49c19f151b5bd592fa94b0fd4724cacc7405b747acdf0eab1772189b",
+    "results/task1/oplora_verification.json": "f642236be6a49d9a7bc4dd9d67dbcbed8b406d9822a075c7fbcaf9c893c3d1df",
+    "results/task1/qualitative/all_168.json": "1f7a3a527f1d40ed975039eee4d802d82470458005ffbd953731ab03791fddc4"
+  },
+  "figures": [
+    "figures/task1/learning_curves.png",
+    "figures/task1/benchmark_changes.png",
+    "figures/task1/diagnostics.png"
+  ]
+}

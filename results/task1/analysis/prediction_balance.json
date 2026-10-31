@@ -1,0 +1,205 @@
+{
+  "run_id": "analysis_prediction_balance",
+  "provenance": {
+    "git": {
+      "commit": "21f7587657e38a4134535a44af21fb9cb2936952",
+      "dirty": false
+    },
+    "hostname": "Khuzaimas-MacBook-Pro.local",
+    "hardware": {
+      "cpu": "arm",
+      "cpu_count": 8,
+      "platform": "macOS-27.0.1-arm64-arm-64bit",
+      "python": "3.11.18",
+      "gpus": [],
+      "torch": "2.15.0"
+    },
+    "timestamp": "2026-10-31T10:25:10.218391+00:00"
+  },
+  "boolq": [
+    {
+      "condition": "baseline",
+      "gold_yes_share": 0.6217125382262997,
+      "pred_yes_share": 0.5773700305810398,
+      "acc": 0.6437308868501529,
+      "acc_gold_yes": 0.677816035415642,
+      "acc_gold_no": 0.587712206952304
+    },
+    {
+      "condition": "full_ft_u0625",
+      "gold_yes_share": 0.6217125382262997,
+      "pred_yes_share": 0.31712538226299697,
+      "acc": 0.6165137614678899,
+      "acc_gold_yes": 0.4466305951795376,
+      "acc_gold_no": 0.8957154405820533
+    },
+    {
+      "condition": "full_ft_u1250",
+      "gold_yes_share": 0.6217125382262997,
+      "pred_yes_share": 0.29571865443425077,
+      "acc": 0.6061162079510704,
+      "acc_gold_yes": 0.42105263157894735,
+      "acc_gold_no": 0.910266774454325
+    },
+    {
+      "condition": "l2sp_u1250",
+      "gold_yes_share": 0.6217125382262997,
+      "pred_yes_share": 0.38776758409785933,
+      "acc": 0.6529051987767585,
+      "acc_gold_yes": 0.5327102803738317,
+      "acc_gold_no": 0.8504446240905417
+    },
+    {
+      "condition": "lora4_u1250",
+      "gold_yes_share": 0.6217125382262997,
+      "pred_yes_share": 0.4706422018348624,
+      "acc": 0.6666666666666666,
+      "acc_gold_yes": 0.6104279390063945,
+      "acc_gold_no": 0.7590945836701698
+    },
+    {
+      "condition": "lora16_u1250",
+      "gold_yes_share": 0.6217125382262997,
+      "pred_yes_share": 0.581651376146789,
+      "acc": 0.7097859327217125,
+      "acc_gold_yes": 0.734382685686178,
+      "acc_gold_no": 0.6693613581244947
+    },
+    {
+      "condition": "oplora16_u1250",
+      "gold_yes_share": 0.6217125382262997,
+      "pred_yes_share": 0.5611620795107034,
+      "acc": 0.708868501529052,
+      "acc_gold_yes": 0.7171667486473192,
+      "acc_gold_no": 0.6952303961196443
+    }
+  ],
+  "norm": [
+    {
+      "benchmark": "hellaswag",
+      "condition": "baseline",
+      "acc": 0.37562238597888864,
+      "acc_norm": 0.47321250746863175,
+      "acc_change_pp": 0.0,
+      "acc_norm_change_pp": 0.0,
+      "norm_minus_raw_change_pp": 0.0
+    },
+    {
+      "benchmark": "hellaswag",
+      "condition": "full_ft_u0625",
+      "acc": 0.3693487353116909,
+      "acc_norm": 0.45717984465245964,
+      "acc_change_pp": -0.6273650667197761,
+      "acc_norm_change_pp": -1.6032662816172105,
+      "norm_minus_raw_change_pp": -0.9759012148974344
+    },
+    {
+      "benchmark": "hellaswag",
+      "condition": "full_ft_u1250",
+      "acc": 0.37402907787293366,
+      "acc_norm": 0.4585739892451703,
+      "acc_change_pp": -0.15933081059549825,
+      "acc_norm_change_pp": -1.463851822346146,
+      "norm_minus_raw_change_pp": -1.3045210117506478
+    },
+    {
+      "benchmark": "hellaswag",
+      "condition": "l2sp_u1250",
+      "acc": 0.3745269866560446,
+      "acc_norm": 0.46564429396534557,
+      "acc_change_pp": -0.10953993228440262,
+      "acc_norm_change_pp": -0.7568213503286181,
+      "norm_minus_raw_change_pp": -0.6472814180442155
+    },
+    {
+      "benchmark": "hellaswag",
+      "condition": "lora4_u1250",
+      "acc": 0.37731527584146585,
+      "acc_norm": 0.47241585341565423,
+      "acc_change_pp": 0.1692889862577207,
+      "acc_norm_change_pp": -0.0796654052977519,
+      "norm_minus_raw_change_pp": -0.2489543915554726
+    },
+    {
+      "benchmark": "hellaswag",
+      "condition": "lora16_u1250",
+      "acc": 0.3781119298944433,
+      "acc_norm": 0.474407488548098,
+      "acc_change_pp": 0.24895439155546706,
+      "acc_norm_change_pp": 0.11949810794662508,
+      "norm_minus_raw_change_pp": -0.12945628360884198
+    },
+    {
+      "benchmark": "hellaswag",
+      "condition": "oplora16_u1250",
+      "acc": 0.377912766381199,
+      "acc_norm": 0.4714200358494324,
+      "acc_change_pp": 0.22903804023103325,
+      "acc_norm_change_pp": -0.17924716191993761,
+      "norm_minus_raw_change_pp": -0.40828520215097086
+    },
+    {
+      "benchmark": "arc_easy",
+      "condition": "baseline",
+      "acc": 0.609006734006734,
+      "acc_norm": 0.5606060606060606,
+      "acc_change_pp": 0.0,
+      "acc_norm_change_pp": 0.0,
+      "norm_minus_raw_change_pp": 0.0
+    },
+    {
+      "benchmark": "arc_easy",
+      "condition": "full_ft_u0625",
+      "acc": 0.6536195286195287,
+      "acc_norm": 0.61489898989899,
+      "acc_change_pp": 4.4612794612794655,
+      "acc_norm_change_pp": 5.42929292929294,
+      "norm_minus_raw_change_pp": 0.9680134680134742
+    },
+    {
+      "benchmark": "arc_easy",
+      "condition": "full_ft_u1250",
+      "acc": 0.6624579124579124,
+      "acc_norm": 0.6275252525252525,
+      "acc_change_pp": 5.345117845117842,
+      "acc_norm_change_pp": 6.691919191919194,
+      "norm_minus_raw_change_pp": 1.3468013468013522
+    },
+    {
+      "benchmark": "arc_easy",
+      "condition": "l2sp_u1250",
+      "acc": 0.6616161616161617,
+      "acc_norm": 0.6296296296296297,
+      "acc_change_pp": 5.260942760942767,
+      "acc_norm_change_pp": 6.90235690235691,
+      "norm_minus_raw_change_pp": 1.6414141414141437
+    },
+    {
+      "benchmark": "arc_easy",
+      "condition": "lora4_u1250",
+      "acc": 0.6616161616161617,
+      "acc_norm": 0.6397306397306397,
+      "acc_change_pp": 5.260942760942767,
+      "acc_norm_change_pp": 7.912457912457915,
+      "norm_minus_raw_change_pp": 2.6515151515151487
+    },
+    {
+      "benchmark": "arc_easy",
+      "condition": "lora16_u1250",
+      "acc": 0.6616161616161617,
+      "acc_norm": 0.6380471380471381,
+      "acc_change_pp": 5.260942760942767,
+      "acc_norm_change_pp": 7.744107744107753,
+      "norm_minus_raw_change_pp": 2.4831649831649862
+    },
+    {
+      "benchmark": "arc_easy",
+      "condition": "oplora16_u1250",
+      "acc": 0.6565656565656566,
+      "acc_norm": 0.6367845117845118,
+      "acc_change_pp": 4.755892255892258,
+      "acc_norm_change_pp": 7.617845117845123,
+      "norm_minus_raw_change_pp": 2.861952861952865
+    }
+  ]
+}

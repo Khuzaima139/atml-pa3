@@ -1,0 +1,137 @@
+{
+  "run_id": "analysis_resources",
+  "provenance": {
+    "git": {
+      "commit": "21f7587657e38a4134535a44af21fb9cb2936952",
+      "dirty": false
+    },
+    "hostname": "Khuzaimas-MacBook-Pro.local",
+    "hardware": {
+      "cpu": "arm",
+      "cpu_count": 8,
+      "platform": "macOS-27.0.1-arm64-arm-64bit",
+      "python": "3.11.18",
+      "gpus": [],
+      "torch": "2.15.0"
+    },
+    "timestamp": "2026-10-31T10:25:10.218391+00:00"
+  },
+  "resources": [
+    {
+      "run": "full_ft",
+      "trainable_params": 596049920,
+      "train_h": 2.343934706929724,
+      "wall_h": 2.416941339969635,
+      "ckpt_io_s": 257.8194370530009,
+      "s_per_update": 6.750531955957605,
+      "peak_allocated_bytes": 12558914048,
+      "peak_reserved_bytes": 13681819648,
+      "kept_files": {
+        "full_ft_weights_u0625.safetensors": 2384235112,
+        "full_ft_weights_u1250.safetensors": 2384235112
+      },
+      "kept_bytes": 4768470224,
+      "recovery_bytes": 7153143353,
+      "started_utc": "10-29 12:10",
+      "shared_vm_with": [
+        "l2sp"
+      ],
+      "overhead": {}
+    },
+    {
+      "run": "l2sp",
+      "trainable_params": 596049920,
+      "train_h": 2.3993643676688867,
+      "wall_h": 2.467496780819363,
+      "ckpt_io_s": 240.23258214399948,
+      "s_per_update": 6.910169378886394,
+      "peak_allocated_bytes": 13747816960,
+      "peak_reserved_bytes": 15481176064,
+      "kept_files": {
+        "l2sp_weights_u1250.safetensors": 2384235112
+      },
+      "kept_bytes": 2384235112,
+      "recovery_bytes": 7153213369,
+      "started_utc": "10-29 12:12",
+      "shared_vm_with": [
+        "full_ft",
+        "lora4"
+      ],
+      "overhead": {
+        "theta0_build_s": 0.03459452300000976,
+        "theta0_bytes": 1192099840,
+        "theta0_dtype": "bfloat16",
+        "theta0_device": "cuda",
+        "theta0_transfer": "built on the training device; no per-update transfer",
+        "penalty_s_per_update": 0.17586405721039192
+      }
+    },
+    {
+      "run": "lora4",
+      "trainable_params": 2523136,
+      "train_h": 2.8984739152441747,
+      "wall_h": 2.899628439148267,
+      "ckpt_io_s": 1.5878989989960246,
+      "s_per_update": 8.347604875903222,
+      "peak_allocated_bytes": 3374171648,
+      "peak_reserved_bytes": 6360662016,
+      "kept_files": {
+        "lora4_adapter_u1250.safetensors": 10134264
+      },
+      "kept_bytes": 10134264,
+      "recovery_bytes": 30912709,
+      "started_utc": "10-29 14:36",
+      "shared_vm_with": [
+        "l2sp",
+        "lora16"
+      ],
+      "overhead": {}
+    },
+    {
+      "run": "lora16",
+      "trainable_params": 10092544,
+      "train_h": 2.777518840216659,
+      "wall_h": 2.779543423321512,
+      "ckpt_io_s": 4.6506546570053615,
+      "s_per_update": 7.999254259823979,
+      "peak_allocated_bytes": 3495282176,
+      "peak_reserved_bytes": 6480199680,
+      "kept_files": {
+        "lora16_adapter_u1250.safetensors": 40412944
+      },
+      "kept_bytes": 40412944,
+      "recovery_bytes": 121745605,
+      "started_utc": "10-29 14:40",
+      "shared_vm_with": [
+        "lora4"
+      ],
+      "overhead": {}
+    },
+    {
+      "run": "oplora16",
+      "trainable_params": 10092544,
+      "train_h": 3.6631190490605765,
+      "wall_h": 3.6681686307324304,
+      "ckpt_io_s": 15.678202428996883,
+      "s_per_update": 10.54978286129446,
+      "peak_allocated_bytes": 3826701824,
+      "peak_reserved_bytes": 6817841152,
+      "kept_files": {
+        "oplora16_adapter_u1250.safetensors": 40412944,
+        "oplora16_adapter_eff_u1250.safetensors": 40414528
+      },
+      "kept_bytes": 80827472,
+      "recovery_bytes": 444832461,
+      "started_utc": "10-29 17:31",
+      "shared_vm_with": [],
+      "overhead": {
+        "svd_preprocess_s": 34.540699430999666,
+        "basis_bytes": 322961408,
+        "basis_dtype": "float32",
+        "k": 128,
+        "export_compute_s": 0.05819370000244817,
+        "export_s": 0.18572926599881612
+      }
+    }
+  ]
+}
