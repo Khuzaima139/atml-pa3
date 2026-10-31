@@ -223,44 +223,51 @@ def gain_loss_table(ev, baseline):
     return rows
 
 
-def adjusted_answer(response, flexible_answer):
-    """The stock answer, unless it has no digit: then the last stock-pattern match that has one. Never sees the gold."""
-    if flexible_answer == NO_EXTRACTION or re.search(r"\d", flexible_answer):
-        return flexible_answer
+def adjusted_answer(response):
+    """The last match of the stock flexible regex that contains a digit. Takes the response only, so never the gold."""
     found = [m.group(0) for m in re.finditer(FLEXIBLE_PATTERN, response) if re.search(r"\d", m.group(0))]
     return found[-1] if found else NO_EXTRACTION
 
 
 def adjusted_flags(rows):
-    return np.array([exact_match_norm(adjusted_answer(r["response"], r["flexible_answer"])) == exact_match_norm(r["gold"])
-                     for r in rows], dtype=np.int8)
+    return np.array([exact_match_norm(adjusted_answer(r["response"])) == exact_match_norm(r["gold"]) for r in rows], dtype=np.int8)
 
 
 def numeric_equal_only(row):
     """Scored wrong after adjustment although the answer equals the gold as a number, such as $16.00 for 16."""
-    a, gold = exact_match_norm(adjusted_answer(row["response"], row["flexible_answer"])), exact_match_norm(row["gold"])
+    a, gold = exact_match_norm(adjusted_answer(row["response"])), exact_match_norm(row["gold"])
     try:
         return a != gold and float(a) == float(gold)
     except ValueError:
         return False
 
 
+def extraction_changed(row):
+    """The rule moved the answer. A stock answer with a digit must come back unchanged: that is the stock regex's last match."""
+    a = adjusted_answer(row["response"])
+    assert a == row["flexible_answer"] or no_digit_extraction(row), row["doc_id"]
+    return a != row["flexible_answer"]
+
+
 def adjusted_tables(ev, baseline):
-    """One rule for all conditions, reported beside the stock score, which stays primary (L146-147, L263-264)."""
+    """Secondary score, one rule for all conditions; the stock score stays primary (L146-147, L263-264).
+    Stock change = adjusted change + extraction-only change, each against the baseline's own score."""
     flag = {c: adjusted_flags(e["gsm8k"]) for c, e in ev.items()}
+    stock_base = flags(ev[baseline]["gsm8k"]).mean()
     scores = []
     for c, e in ev.items():
         stock = flags(e["gsm8k"])
-        recovered = (flag[c] == 1) & (stock == 0)
+        flipped = (flag[c] == 1) & (stock == 0)
         assert not ((flag[c] == 0) & (stock == 1)).any(), c
+        stock_change = 100 * float(stock.mean() - stock_base)
+        adjusted_change = 100 * float(flag[c].mean() - flag[baseline].mean())
         scores.append({"condition": c, "stock_correct": int(stock.sum()), "adjusted_correct": int(flag[c].sum()),
-                       "recovered": int(recovered.sum()),
-                       "recovered_truncated": int(sum(r["truncated"] for r, x in zip(e["gsm8k"], recovered) if x)),
+                       "extraction_changed": sum(extraction_changed(r) for r in e["gsm8k"]), "flips_to_correct": int(flipped.sum()),
+                       "flips_truncated": int(sum(r["truncated"] for r, x in zip(e["gsm8k"], flipped) if x)),
                        "numeric_equal_still_wrong": sum(numeric_equal_only(r) for r in e["gsm8k"]),
-                       "stock_acc": float(stock.mean()), "adjusted_acc": float(flag[c].mean()),
-                       "stock_change_pp": 100 * float(stock.mean() - flags(ev[baseline]["gsm8k"]).mean()),
-                       "adjusted_change_pp": 100 * float(flag[c].mean() - flag[baseline].mean())})
-    tests = [{"a": a, "b": b, "benchmark": "gsm8k", **paired_bootstrap(flag[a], flag[b])} for a, b in COMPARISONS if b == baseline]
+                       "stock_acc": float(stock.mean()), "adjusted_acc": float(flag[c].mean()), "stock_change_pp": stock_change,
+                       "adjusted_change_pp": adjusted_change, "extraction_only_change_pp": stock_change - adjusted_change})
+    tests = [{"a": a, "b": b, "benchmark": "gsm8k", **paired_bootstrap(flag[a], flag[b])} for a, b in COMPARISONS]
     return scores, tests
 
 
@@ -532,32 +539,27 @@ def figure_learning(train, folder):
 
 
 def figure_benchmarks(table, comparisons, adjusted, folder):
-    """Change from baseline with paired 95% CIs (L220-221, L278); one panel per benchmark, each with its own axis.
-    GSM8K also shows the adjusted score as hollow markers."""
+    """Change from baseline with paired 95% CIs (L220-221, L278). GSM8K has a stock panel, the primary metric, and a
+    secondary adjusted panel on the same axis; the other benchmarks have their own axes."""
     conds = [r["condition"] for r in table][1:]
     y = np.arange(len(conds))[::-1]
-    fig, axes = plt.subplots(1, 4, figsize=(10, 2.9), facecolor=SURFACE, sharey=True, constrained_layout=True)
-    for ax, b, name in zip(axes, BENCHMARKS, ("GSM8K", "HellaSwag", "BoolQ", "ARC-Easy")):
-        rows = {r["a"]: r for r in comparisons if r["b"] == "baseline" and r["benchmark"] == b}
+    scores, tests = adjusted
+    panels = [(f"GSM8K, stock ({100 * table[0]['gsm8k']['primary']:.2f}%)", [r for r in comparisons if r["benchmark"] == "gsm8k"]),
+              (f"GSM8K adj., secondary ({100 * scores[0]['adjusted_acc']:.2f}%)", tests)]
+    for b, name in (("hellaswag", "HellaSwag"), ("boolq", "BoolQ"), ("arc_easy", "ARC-Easy")):
+        panels.append((f"{name} ({100 * table[0][b]['primary']:.2f}%)", [r for r in comparisons if r["benchmark"] == b]))
+    fig, axes = plt.subplots(1, 5, figsize=(12.5, 2.9), facecolor=SURFACE, sharey=True, constrained_layout=True)
+    axes[1].sharex(axes[0])
+    for ax, (title, panel) in zip(axes, panels):
+        rows = {r["a"]: r for r in panel if r["b"] == "baseline"}
         d = np.array([rows[c]["diff_pp"] for c in conds])
         lo, hi = np.array([rows[c]["ci_low_pp"] for c in conds]), np.array([rows[c]["ci_high_pp"] for c in conds])
         ax.axvline(0, color=INK_2, linewidth=0.8)
-        ax.errorbar(d, y, xerr=[d - lo, hi - d], fmt="o", color=METHOD_COLOR["full_ft"], markersize=5, elinewidth=1.4, capsize=0,
-                    label="stock")
-        title = f"{name} (baseline {100 * table[0][b]['primary']:.2f}%)"
-        if b == "gsm8k":
-            scores, tests = adjusted
-            ra = {r["a"]: r for r in tests}
-            da = np.array([ra[c]["diff_pp"] for c in conds])
-            la, ha = np.array([ra[c]["ci_low_pp"] for c in conds]), np.array([ra[c]["ci_high_pp"] for c in conds])
-            ax.errorbar(da, y - 0.24, xerr=[da - la, ha - da], fmt="o", color=METHOD_COLOR["full_ft"], markerfacecolor=SURFACE,
-                        markersize=5, elinewidth=1.0, capsize=0, label="adjusted")
-            ax.legend(frameon=False, fontsize=8, labelcolor=INK_2, loc="lower right", ncol=2)
-            title = f"{name} ({100 * table[0][b]['primary']:.2f}%; adjusted {100 * scores[0]['adjusted_acc']:.2f}%)"
+        ax.errorbar(d, y, xerr=[d - lo, hi - d], fmt="o", color=METHOD_COLOR["full_ft"], markersize=5, elinewidth=1.4, capsize=0)
         _axes(ax, title)
         ax.set_xlabel("Change from baseline, pp", fontsize=8, color=INK_2)
     axes[0].set_yticks(y, [SHORT[c] for c in conds])
-    axes[0].set_ylim(-1.35, len(conds) - 0.4)
+    axes[0].set_ylim(-0.6, len(conds) - 0.4)
     _save(fig, folder, FIGURES[1])
 
 
@@ -629,14 +631,18 @@ def summary_md(t):
     head = ["condition"]
     for b in BENCHMARKS:
         head += [f"{b} %"] + ([f"{b} raw acc %"] if b in NORMALIZED else []) + [f"{b} change pp"]
+        if b == "gsm8k":
+            head += ["gsm8k adjusted % (secondary)", "gsm8k adjusted change pp (secondary)"]
         if b in NORMALIZED:
             head.append(f"{b} raw change pp")
     rows = []
-    for r in t["benchmarks"]:
+    for r, a in zip(t["benchmarks"], t["adjusted"]):
         row = [r["condition"]]
         for b in BENCHMARKS:
             v = r[b]
             row += [_pct(v["primary"])] + ([_pct(v["acc"])] if b in NORMALIZED else []) + [_pp(v["change_pp"])]
+            if b == "gsm8k":
+                row += [_pct(a["adjusted_acc"]), _pp(a["adjusted_change_pp"])]
             if b in NORMALIZED:
                 row.append(_pp(v["acc_change_pp"]))
         rows.append(row)
@@ -657,18 +663,20 @@ def summary_md(t):
                   [[r["condition"], r["gained"], r["gained_baseline_truncated"], r["gained_condition_truncated"], r["gained_neither_truncated"],
                     r["gained_baseline_no_digit"], r["gained_baseline_no_digit_gold_is_last_number"], r["lost"],
                     r["lost_baseline_truncated"], r["lost_condition_truncated"], r["lost_neither_truncated"]] for r in t["gain_loss"]])
-    adj = md_table(["condition", "stock correct", "adjusted correct", "recovered", "recovered truncated", "numeric equal, still wrong",
-                    "stock %", "adjusted %",
-                    "stock change pp", "adjusted change pp"],
-                   [[r["condition"], r["stock_correct"], r["adjusted_correct"], r["recovered"], r["recovered_truncated"],
-                     r["numeric_equal_still_wrong"], _pct(r["stock_acc"]),
-                     _pct(r["adjusted_acc"]), _pp(r["stock_change_pp"]), _pp(r["adjusted_change_pp"])] for r in t["adjusted"]])
+    adj = md_table(["condition", "stock % (primary)", "adjusted % (secondary)", "extraction changed", "flips to correct", "flips truncated",
+                    "numeric equal, still wrong"],
+                   [[r["condition"], _pct(r["stock_acc"]), _pct(r["adjusted_acc"]), r["extraction_changed"], r["flips_to_correct"],
+                     r["flips_truncated"], r["numeric_equal_still_wrong"]] for r in t["adjusted"]])
+    dec = md_table(["condition", "stock change pp", "adjusted change pp", "extraction-only change pp"],
+                   [[r["condition"], _pp(r["stock_change_pp"]), _pp(r["adjusted_change_pp"]), _pp(r["extraction_only_change_pp"])]
+                    for r in t["adjusted"][1:]])
     adj_boot = md_table(["A", "B", "A - B pp, adjusted", "95% CI pp", "only A correct", "only B correct", "n"],
                         [[r["a"], r["b"], _pp(r["diff_pp"]), f"[{r['ci_low_pp']:+.2f}, {r['ci_high_pp']:+.2f}]", r["n_a_only_correct"],
                           r["n_b_only_correct"], r["n"]] for r in t["adjusted_comparisons"]])
     section("2. GSM8K extraction vs correctness", ex, "Items gained and lost against the baseline:", gl,
-            "Adjusted score (not the primary metric): where the stock answer has no digit, the last stock-pattern match with a digit; "
-            "stock normalization; the gold is not used to choose the answer:", adj, adj_boot)
+            "Adjusted score, secondary; the stock score stays primary. Rule, gold-free: the last match of the stock flexible regex that "
+            "contains a digit, then stock normalization:", adj, "Decomposition against the baseline, stock = adjusted + extraction-only:",
+            dec, f"Paired item bootstrap on the adjusted score, {N_BOOT} resamples, seed {SEED}:", adj_boot)
 
     bq = md_table(["condition", "gold yes %", "pred yes %", "acc %", "acc gold yes %", "acc gold no %"],
                   [[r["condition"], _pct(r["gold_yes_share"]), _pct(r["pred_yes_share"]), _pct(r["acc"]), _pct(r["acc_gold_yes"]),

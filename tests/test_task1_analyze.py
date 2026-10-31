@@ -110,37 +110,64 @@ def test_last_number_and_no_digit_extraction():
     assert not A.no_digit_extraction({"flexible_answer": A.NO_EXTRACTION})
 
 
-def test_adjusted_answer_only_replaces_no_digit_extractions():
-    assert A.adjusted_answer("so\n$$\n\\boxed{1,200}\n$$", "$$") == "1,200"
-    assert A.adjusted_answer("7 then 18.\n$$", "$$") == "18."
-    assert A.adjusted_answer("$$ no numbers $$", "$$") == A.NO_EXTRACTION
-    assert A.adjusted_answer("anything 5", "$18") == "$18"
-    assert A.adjusted_answer("nothing", A.NO_EXTRACTION) == A.NO_EXTRACTION
+@pytest.mark.parametrize("response,answer", [("$$\\boxed{18}$$", "18"), ("The answer is: 18", "18"), ("18.", "18"), ("18 ,,", "18"),
+                                             ("so\n$$\n\\boxed{1,200}\n$$", "1200"), ("7 then $18.\n$$", "18")])
+def test_adjusted_rule_on_toy_strings(response, answer):
+    assert A.exact_match_norm(A.adjusted_answer(response)) == answer
+
+
+@pytest.mark.parametrize("response", [",,", "$$ no numbers $$", ".. ,, $$", "none"])
+def test_adjusted_rule_ignores_matches_without_digits(response):
+    assert A.adjusted_answer(response) == A.NO_EXTRACTION
 
 
 def test_adjusted_answer_never_sees_the_gold():
-    # only response and stock answer go in, so two rows differing in gold get the same answer
-    rows = [{"response": "\\boxed{18}\n$$", "flexible_answer": "$$", "gold": g} for g in ("18", "19")]
+    # two rows differing only in gold get the same answer, so only the flag differs
+    rows = [{"response": "\\boxed{18}\n$$", "gold": g} for g in ("18", "19")]
     assert A.adjusted_flags(rows).tolist() == [1, 0]
 
 
+def test_extraction_changed():
+    assert A.extraction_changed({"doc_id": 0, "response": "\\boxed{18}\n$$", "flexible_answer": "$$"})
+    assert not A.extraction_changed({"doc_id": 0, "response": "paid $18", "flexible_answer": "$18"})
+    with pytest.raises(AssertionError):      # a stock answer with a digit that the rule does not reproduce
+        A.extraction_changed({"doc_id": 0, "response": "paid $18", "flexible_answer": "$19"})
+
+
 def test_numeric_equal_only():
-    row = {"response": "x", "flexible_answer": "$16.00", "gold": "16"}
-    assert A.numeric_equal_only(row)
-    assert not A.numeric_equal_only({**row, "flexible_answer": "$16"})     # already correct
-    assert not A.numeric_equal_only({**row, "flexible_answer": "17"})
-    assert not A.numeric_equal_only({"response": "none", "flexible_answer": "$$", "gold": "16"})
+    assert A.numeric_equal_only({"response": "$16.00", "gold": "16"})
+    assert not A.numeric_equal_only({"response": "$16", "gold": "16"})      # already correct
+    assert not A.numeric_equal_only({"response": "17", "gold": "16"})
+    assert not A.numeric_equal_only({"response": "none", "gold": "16"})
 
 
 def test_adjusted_scores_on_committed_files(run):
     _, t, *_ = run
     for r in t["adjusted"]:
-        assert r["adjusted_correct"] == r["stock_correct"] + r["recovered"]
+        assert r["adjusted_correct"] == r["stock_correct"] + r["flips_to_correct"]
+        assert r["flips_to_correct"] <= r["extraction_changed"]
         assert r["adjusted_acc"] == r["adjusted_correct"] / 1319
-    assert t["adjusted"][0]["recovered"] > 0
-    assert all(r["recovered"] == 0 for r in t["adjusted"][1:])
+        assert r["stock_change_pp"] == pytest.approx(r["adjusted_change_pp"] + r["extraction_only_change_pp"], abs=1e-12)
+    for r, e in zip(t["adjusted"], t["extraction"]):
+        assert r["extraction_changed"] == e["wrong_no_digit_extraction"]
+    assert t["adjusted"][0]["flips_to_correct"] > 0
+    assert all(r["extraction_changed"] == 0 for r in t["adjusted"][1:])
     assert t["benchmarks"][0]["gsm8k"]["primary"] == t["adjusted"][0]["stock_acc"]      # stock primary untouched
-    assert [(r["a"], r["b"]) for r in t["adjusted_comparisons"]] == [x for x in A.COMPARISONS if x[1] == "baseline"]
+
+
+def test_adjusted_bootstrap_covers_the_eleven_comparisons(run):
+    _, t, *_ = run
+    assert [(r["a"], r["b"]) for r in t["adjusted_comparisons"]] == A.COMPARISONS
+    assert len(A.COMPARISONS) == 11
+    stock = {(r["a"], r["b"]): r for r in t["comparisons"] if r["benchmark"] == "gsm8k"}
+    for r in t["adjusted_comparisons"]:
+        if r["b"] != "baseline":      # the rule changes the baseline only, so these equal the stock bootstrap
+            assert r == stock[(r["a"], r["b"])]
+
+
+def test_summary_labels_adjusted_as_secondary(run):
+    *_, text, _ = run
+    assert "gsm8k adjusted % (secondary)" in text and "stock % (primary)" in text
 
 
 def test_extraction_counts_add_up(run):
@@ -258,6 +285,9 @@ def test_benchmark_titles_do_not_overlap(run, monkeypatch, tmp_path):
     seen[0].canvas.draw()
     spans = [ax._left_title.get_window_extent() for ax in seen[0].axes]
     assert all(a.x1 < b.x0 for a, b in zip(spans, spans[1:]))
+    assert len(seen[0].axes) == 5
+    assert "secondary" in seen[0].axes[1]._left_title.get_text()
+    assert seen[0].axes[0].get_xlim() == seen[0].axes[1].get_xlim()
 
 
 def test_inputs_are_committed_results_only(run):
