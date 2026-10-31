@@ -473,7 +473,7 @@ def figure_learning(train, folder):
     lr.set_xlabel("Optimizer update", fontsize=8, color=INK_2)
     log = train["l2sp"]["log"]
     u = [x["update"] for x in log]
-    for i, (key, title) in enumerate((("omega", "L2-SP: Ω"), ("lambda_omega", "L2-SP: λΩ"), ("total_loss", f"L2-SP: total loss (faint: each update; line: moving average of {MA_WINDOW})"))):
+    for i, (key, title) in enumerate((("omega", "L2-SP: Ω"), ("lambda_omega", "L2-SP: λΩ"), ("total_loss", "L2-SP: total loss (faint; line: MA 25)"))):
         ax = fig.add_subplot(grid[2 * i:2 * i + 2, 1])
         if key == "total_loss":
             y = [x[key] for x in log]

@@ -202,6 +202,20 @@ def test_every_figure_regenerates(run):
         assert (d / "figures" / name).stat().st_size > 10000
 
 
+def test_panel_titles_fit_the_figure(monkeypatch, tmp_path):
+    # a long title on the narrow L2-SP panel was cut off at the figure edge
+    rd = A.Reader()
+    train = {m: rd.json(f"results/task1/train_{m}.json") for m in A.METHODS}
+    seen = []
+    monkeypatch.setattr(A, "_save", lambda fig, folder, name: seen.append(fig))
+    A.figure_learning(train, str(tmp_path))
+    fig = seen[0]
+    fig.canvas.draw()
+    width = fig.bbox.width
+    for ax in fig.axes:
+        assert ax._left_title.get_window_extent().x1 <= width, ax._left_title.get_text()
+
+
 def test_inputs_are_committed_results_only(run):
     _, _, _, rd = run
     missing = set(rd.read) - tracked()
