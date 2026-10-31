@@ -1,0 +1,53 @@
+# Task 1 evaluation, qualitative generation and diagnostics (manual L132-172, L212-259).
+model:
+  name: Qwen/Qwen3-0.6B
+  revision: c1899de289a04d12100db370d81485cdf75e47ca
+  enable_thinking: false                       # L108
+seed: 6304                                     # L109
+baseline: baseline                             # unchanged checkpoint, evaluated once (L110, L163-164)
+conditions:                                    # L169-172; <method>_u<update> names a kept checkpoint in the train JSON
+  - baseline
+  - full_ft_u0625
+  - full_ft_u1250
+  - l2sp_u1250
+  - lora4_u1250
+  - lora16_u1250
+  - oplora16_u1250
+train_results: results/task1                   # train_<method>.json: file names, sha256, adapter settings
+outputs:
+  eval_root: results/task1/eval
+  smoke_root: results/task1/eval_smoke
+  qualitative_root: results/task1/qualitative
+  raw_samples_root: outputs/task1/raw_samples  # raw lm-eval sample files: Kaggle zip only, never committed
+  diagnostics: results/task1/diagnostics.json
+  oplora_verification: results/task1/oplora_verification.json
+probe_ids: splits/task1/probe_ids.json         # L151-153
+merge_check:
+  n_per_domain: 4                              # first 4 GSM8K and first 4 HellaSwag probe ids (L214)
+lm_eval:
+  version: 0.4.13
+  batch_size_gsm8k: 32                         # fixed for all seven conditions; never 'auto'
+  batch_size_likelihood: 32
+  softmax_dtype: null                          # stock default: log-softmax in the model dtype (FP16)
+  bootstrap_iters: 100000                      # lm-eval default
+gsm8k:                                         # L145-147
+  task: gsm8k_cot
+  num_fewshot: 0
+  apply_chat_template: true
+  gen_kwargs: {max_gen_toks: 1024, do_sample: false}
+likelihood:                                    # L147-148; stock completion prompts, no chat template
+  tasks: {hellaswag: hellaswag, boolq: boolq, arc_easy: arc_easy}
+  num_fewshot: 0
+  primary: {hellaswag: acc_norm, boolq: acc, arc_easy: acc_norm}   # L138-142
+qualitative:                                   # L153-155, L249-251
+  path: data/task1/first_plot_questions.yaml
+  sha256: 215abde5b02811e922b6ac563ff33c490e0dff9ab58439df840f3135e9387173
+  max_new_tokens: 512
+diagnostics:                                   # L226-248
+  target: down_proj
+  layers: [0, 13, 27]
+  k: 128
+  epsilon: 1.0e-8
+  checkpoints: [full_ft_u0625, full_ft_u1250, l2sp_u1250, lora4_u1250, lora16_u1250, oplora16_u1250]
+smoke:                                         # memory on the longest requests of the full run
+  likelihood_batch_sizes: [32, 16, 8]

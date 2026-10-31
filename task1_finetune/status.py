@@ -6,6 +6,12 @@
     python -m task1_finetune.status --plan --queue full_ft,lora4,oplora16 --queue l2sp,lora16 --limit_h 10.5
     python -m task1_finetune.status --wait --every 600 --done_files a.done b.done --started_file s results/...
     python -m task1_finetune.status --verify results/task1/train_full_ft.json  # sha256 of kept files
+    python -m task1_finetune.status --find_ckpts /kaggle/input                 # locate and check kept files
+    python -m task1_finetune.status --eval_status                              # one line per condition
+    python -m task1_finetune.status --eval_plan --queue baseline,... --queue lora4_u1250,...,diagnostics
+    python -m task1_finetune.status --eval_wait --every 600 --done_files a.done b.done --started_file s
+    python -m task1_finetune.status --eval_summary                             # final table and diagnostics
+    python -m task1_finetune.status --collect_qualitative                      # qualitative/all_168.json
 """
 import argparse
 import json
@@ -193,6 +199,125 @@ def verify(paths):
     return bad
 
 
+# ---------------------------------------------------------------- evaluation (T1-eval)
+
+EVAL_CONFIG = "configs/task1/eval.yaml"
+DIAGNOSTICS_BUDGET_H = 0.25  # fixed allowance in the queue plan: six checkpoints, three layers, 196 SVDs
+
+
+def _eval_cfg(path=EVAL_CONFIG):
+    import yaml
+    with open(path) as f:
+        return yaml.safe_load(f)
+
+
+def _scores(root, cond):
+    return _load(os.path.join(root, cond, "scores.json"))
+
+
+def _gib(x):
+    return None if x is None else x / GiB
+
+
+def eval_line(root, cond):
+    d = _scores(root, cond)
+    if d is None:
+        return f"{cond}: pending (no result JSON yet)"
+    s = d["scores"]
+    prim = " ".join(f"{k} {100 * v['primary']:.2f}" for k, v in s.items())
+    g = s.get("gsm8k", {})
+    return (f"{cond}: status {d['status']} stages {','.join(d['stages_s'])} {prim} truncated {g.get('truncated', '-')} "
+            f"no_extraction {g.get('no_flexible_extraction', '-')} peak_alloc "
+            f"{d['resources']['peak_allocated_bytes'] / GiB:.2f}GiB wall {d['resources']['wall_s'] / 60:.1f}min")
+
+
+def eval_plan(queues, limit_h, smoke_root):
+    """Projected hours per GPU queue from the smoke JSONs (baseline for full-model conditions, lora16 for
+    adapter conditions); STOP also when a worst-case batch at the configured batch size does not fit."""
+    ok = True
+    smoke = {c: _scores(smoke_root, c) for c in ("baseline", "lora16_u1250")}
+    for c, d in smoke.items():
+        if d is None or d["status"] != "done":
+            print(f"smoke {c}: {'missing' if d is None else d['status']}")
+            ok = False
+            continue
+        b = str(d["config"]["lm_eval"]["batch_size_likelihood"])
+        w, t, r = d["worst_batches"], d["timing"], d["resources"]
+        print(f"smoke {c}: peak {r['peak_allocated_bytes'] / GiB:.2f}GiB (reserved {r['peak_reserved_bytes'] / GiB:.2f}GiB) "
+              f"s/request generate_until {t['generate_until']['seconds'] / t['generate_until']['requests']:.3f} "
+              f"loglikelihood {t['loglikelihood']['seconds'] / t['loglikelihood']['requests']:.4f} "
+              f"projected full condition {d['projection']['total_s'] / 3600:.2f}h {json.dumps(d['projection'])}")
+        print(f"smoke {c}: worst likelihood batches " + ", ".join(
+            f"{k}: fits {v['fits']} peak {_gib(v['peak_allocated_bytes'] or 0):.2f}GiB" for k, v in w["likelihood"].items())
+            + f"; worst gsm8k fits {w['gsm8k']['fits']} peak {_gib(w['gsm8k']['peak_allocated_bytes'] or 0):.2f}GiB")
+        if b not in w["likelihood"] or not w["likelihood"][b]["fits"] or not w["gsm8k"]["fits"]:
+            print(f"smoke {c}: configured batch size {b} does not fit, or a worst-case batch failed")
+            ok = False
+    if not ok:
+        print("plan: STOP")
+        return False
+    for qi, q in enumerate(queues):
+        total, parts = 0.0, []
+        for c in q:
+            if c == "diagnostics":
+                h = DIAGNOSTICS_BUDGET_H
+            else:
+                ref = "lora16_u1250" if c.startswith(("lora", "oplora")) else "baseline"
+                h = smoke[ref]["projection"]["total_s"] / 3600
+            total += h
+            parts.append(f"{c} {h:.2f}h")
+        over = total > limit_h
+        ok &= not over
+        print(f"queue GPU{qi}: {' + '.join(parts)} = {total:.2f}h (limit {limit_h}h){'  OVER LIMIT' if over else ''}")
+    print("plan:", "OK" if ok else "STOP")
+    return ok
+
+
+def wait_eval(conds, root, every, done_files, started_file=None, warn_h=None, queue_pattern="run_eval_queue.sh"):
+    t0 = time.time()
+    if started_file and os.path.exists(started_file):
+        with open(started_file) as f:
+            t0 = float(f.read().strip())
+    while True:
+        elapsed_h = (time.time() - t0) / 3600
+        print(f"--- {time.strftime('%H:%M:%S')} elapsed {elapsed_h:.2f}h", flush=True)
+        for c in conds:
+            print(" ", eval_line(root, c), flush=True)
+        if warn_h is not None and elapsed_h > warn_h:
+            print(f"WARNING: {elapsed_h:.2f}h elapsed (> {warn_h}h); the Kaggle session ends at 12h", flush=True)
+        done = [os.path.exists(f) for f in done_files]
+        if all(done) or not _alive(queue_pattern):
+            print("queues finished:" if all(done) else "queue processes gone; markers:", dict(zip(done_files, done)),
+                  flush=True)
+            return
+        time.sleep(every)
+
+
+def eval_summary(cfg):
+    o = cfg["outputs"]
+    root = o["eval_root"]
+    head = ("condition", "status", "gsm8k", "hellaswag", "boolq", "arc_easy", "truncated", "no_extraction",
+            "fp16_max", "fp16_mean", "fp16_argmax", "fp32_max", "fp32_mean", "fp32_argmax", "merge_s")
+    rows = [head]
+    for c in cfg["conditions"]:
+        d = _scores(root, c)
+        if d is None:
+            rows.append((c, "missing") + ("",) * (len(head) - 2))
+            continue
+        s, mc = d["scores"], d["merge_check"]
+        prim = [_g(s[k]["primary"] * 100, "{:.2f}") if k in s else "-" for k in ("gsm8k", "hellaswag", "boolq", "arc_easy")]
+        g = s.get("gsm8k", {})
+        check = ["n/a"] * 6
+        if mc:
+            check = [f"{mc[p][k]:.4g}" for p in ("fp16", "fp32") for k in ("max_abs_diff", "mean_abs_diff", "argmax_agreement")]
+        rows.append((c, d["status"], *prim, str(g.get("truncated", "-")), str(g.get("no_flexible_extraction", "-")),
+                     *check, _g((d["model"] or {}).get("merge_s"), "{:.2f}")))
+    print(_fmt_table(rows))
+    for name, key in (("diagnostics", "diagnostics"), ("oplora_verification", "oplora_verification")):
+        d = _load(o[key])
+        print(f"{name}: {'missing' if d is None else d['status']}" + (f" {d.get('aggregate')}" if d else ""))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("paths", nargs="*")
@@ -207,7 +332,40 @@ def main():
     ap.add_argument("--started_file")
     ap.add_argument("--warn_h", type=float)
     ap.add_argument("--verify", action="store_true")
+    ap.add_argument("--find_ckpts", metavar="ROOT")
+    ap.add_argument("--ckpt_index", default="results/task1/ckpt_index.json")
+    ap.add_argument("--eval_config", default=EVAL_CONFIG)
+    ap.add_argument("--eval_status", action="store_true")
+    ap.add_argument("--eval_plan", action="store_true")
+    ap.add_argument("--eval_wait", action="store_true")
+    ap.add_argument("--eval_summary", action="store_true")
+    ap.add_argument("--smoke", action="store_true", help="--eval_status on the smoke directory")
+    ap.add_argument("--collect_qualitative", action="store_true")
     a = ap.parse_args()
+    if a.find_ckpts:
+        from task1_finetune.build import METHODS, find_checkpoints
+        cfg = _eval_cfg(a.eval_config)
+        paths = [os.path.join(cfg["train_results"], f"train_{m}.json") for m in METHODS]
+        index, problems = find_checkpoints(a.find_ckpts, paths, a.ckpt_index)
+        print(f"checkpoints: {len(index)} OK, {len(problems)} problem(s) {problems}")
+        raise SystemExit(1 if problems else 0)
+    if a.eval_status or a.eval_plan or a.eval_wait or a.eval_summary or a.collect_qualitative:
+        cfg = _eval_cfg(a.eval_config)
+        o = cfg["outputs"]
+        if a.eval_status:
+            conds = ("baseline", "lora16_u1250") if a.smoke else cfg["conditions"]
+            for c in conds:
+                print(eval_line(o["smoke_root"] if a.smoke else o["eval_root"], c))
+        elif a.eval_plan:
+            raise SystemExit(0 if eval_plan([q.split(",") for q in a.queue], a.limit_h, o["smoke_root"]) else 1)
+        elif a.eval_wait:
+            wait_eval(cfg["conditions"], o["eval_root"], a.every, a.done_files, a.started_file, a.warn_h)
+        elif a.eval_summary:
+            eval_summary(cfg)
+        else:
+            from task1_finetune.qualitative import collect
+            print(f"qualitative: {collect(cfg)} responses in {o['qualitative_root']}/all_168.json")
+        return
     if a.table:
         print(table(a.paths))
     elif a.train_table:
