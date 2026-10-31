@@ -2,8 +2,8 @@
   "run_id": "analysis_manifest",
   "provenance": {
     "git": {
-      "commit": "538263fcdda13ddbf063074ca992c6e26aa334a1",
-      "dirty": true
+      "commit": "f33baedd4327a35ec2dff05926e44a51dac01a6c",
+      "dirty": false
     },
     "hostname": "Khuzaimas-MacBook-Pro.local",
     "hardware": {
@@ -14,7 +14,7 @@
       "gpus": [],
       "torch": "2.15.0"
     },
-    "timestamp": "2026-10-31T10:26:20.157271+00:00"
+    "timestamp": "2026-10-31T10:29:53.141850+00:00"
   },
   "sources": {
     "configs/task1/eval.yaml": "146653237a35c91e4f0bcc8fc7c90cd61a61a9490da383e6b59ffb2b842661a7",
