@@ -240,6 +240,18 @@ def test_analysis_json_matches_committed_outputs(run):
     assert (d / "out" / "summary.md").read_text() == open("results/task1/analysis/summary.md").read()
 
 
+def test_provenance_is_taken_before_outputs_are_written(monkeypatch, tmp_path):
+    # rewriting tracked figures first made a clean run record dirty True
+    calls = []
+    real = A.run_info
+    monkeypatch.setattr(A, "run_info", lambda: calls.append("provenance") or real())
+    monkeypatch.setattr(A, "figure_learning", lambda *a: calls.append("figure"))
+    monkeypatch.setattr(A, "figure_benchmarks", lambda *a: None)
+    monkeypatch.setattr(A, "figure_diagnostics", lambda *a: None)
+    A.analyze(out=str(tmp_path / "out"), figures=str(tmp_path / "figures"), sheet=str(tmp_path / "sheet.md"), annotations=str(tmp_path / "ann.csv"))
+    assert calls == ["provenance", "figure"]
+
+
 def test_analyze_output_is_deterministic(run, tmp_path):
     d, *_ = run
     shutil.copy(d / "ann.csv", tmp_path / "ann.csv")

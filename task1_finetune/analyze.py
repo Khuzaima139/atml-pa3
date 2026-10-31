@@ -660,6 +660,7 @@ def summary_md(t):
 
 def analyze(results="results/task1", out=None, figures="figures/task1", sheet="scratch/task1_annotation_sheet.md",
             annotations=None, config="configs/task1/eval.yaml"):
+    prov = run_info()          # before any output is rewritten, so the dirty flag describes the code and inputs
     out = out or f"{results}/analysis"
     annotations = annotations or f"{results}/annotations.csv"
     os.makedirs(out, exist_ok=True)
@@ -686,7 +687,6 @@ def analyze(results="results/task1", out=None, figures="figures/task1", sheet="s
     figure_benchmarks(t["benchmarks"], t["comparisons"], figures)
     figure_diagnostics(t["diagnostics"], figures)
 
-    prov = run_info()
     parts = {"benchmarks": ("score_check", "benchmarks", "comparisons"), "gsm8k_extraction": ("extraction", "gain_loss"),
              "prediction_balance": ("boolq", "norm"), "learning": ("learning", "mean_sft_last50"), "resources": ("resources",),
              "diagnostics_tables": ("diagnostics", "verification"), "qualitative_checks": ("qualitative",)}
