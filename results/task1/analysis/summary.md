@@ -2,15 +2,15 @@
 
 ## 1. Benchmarks
 
-| condition | gsm8k % | gsm8k change pp | hellaswag % | hellaswag raw acc % | hellaswag change pp | hellaswag raw change pp | boolq % | boolq change pp | arc_easy % | arc_easy raw acc % | arc_easy change pp | arc_easy raw change pp |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| baseline | 43.37 | +0.00 | 47.32 | 37.56 | +0.00 | +0.00 | 64.37 | +0.00 | 56.06 | 60.90 | +0.00 | +0.00 |
-| full_ft_u0625 | 57.70 | +14.33 | 45.72 | 36.93 | -1.60 | -0.63 | 61.65 | -2.72 | 61.49 | 65.36 | +5.43 | +4.46 |
-| full_ft_u1250 | 64.37 | +21.00 | 45.86 | 37.40 | -1.46 | -0.16 | 60.61 | -3.76 | 62.75 | 66.25 | +6.69 | +5.35 |
-| l2sp_u1250 | 63.99 | +20.62 | 46.56 | 37.45 | -0.76 | -0.11 | 65.29 | +0.92 | 62.96 | 66.16 | +6.90 | +5.26 |
-| lora4_u1250 | 60.35 | +16.98 | 47.24 | 37.73 | -0.08 | +0.17 | 66.67 | +2.29 | 63.97 | 66.16 | +7.91 | +5.26 |
-| lora16_u1250 | 62.55 | +19.18 | 47.44 | 37.81 | +0.12 | +0.25 | 70.98 | +6.61 | 63.80 | 66.16 | +7.74 | +5.26 |
-| oplora16_u1250 | 62.55 | +19.18 | 47.14 | 37.79 | -0.18 | +0.23 | 70.89 | +6.51 | 63.68 | 65.66 | +7.62 | +4.76 |
+| condition | gsm8k % | gsm8k change pp | gsm8k adjusted % (secondary) | gsm8k adjusted change pp (secondary) | hellaswag % | hellaswag raw acc % | hellaswag change pp | hellaswag raw change pp | boolq % | boolq change pp | arc_easy % | arc_easy raw acc % | arc_easy change pp | arc_easy raw change pp |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| baseline | 43.37 | +0.00 | 58.45 | +0.00 | 47.32 | 37.56 | +0.00 | +0.00 | 64.37 | +0.00 | 56.06 | 60.90 | +0.00 | +0.00 |
+| full_ft_u0625 | 57.70 | +14.33 | 57.70 | -0.76 | 45.72 | 36.93 | -1.60 | -0.63 | 61.65 | -2.72 | 61.49 | 65.36 | +5.43 | +4.46 |
+| full_ft_u1250 | 64.37 | +21.00 | 64.37 | +5.91 | 45.86 | 37.40 | -1.46 | -0.16 | 60.61 | -3.76 | 62.75 | 66.25 | +6.69 | +5.35 |
+| l2sp_u1250 | 63.99 | +20.62 | 63.99 | +5.53 | 46.56 | 37.45 | -0.76 | -0.11 | 65.29 | +0.92 | 62.96 | 66.16 | +6.90 | +5.26 |
+| lora4_u1250 | 60.35 | +16.98 | 60.35 | +1.90 | 47.24 | 37.73 | -0.08 | +0.17 | 66.67 | +2.29 | 63.97 | 66.16 | +7.91 | +5.26 |
+| lora16_u1250 | 62.55 | +19.18 | 62.55 | +4.09 | 47.44 | 37.81 | +0.12 | +0.25 | 70.98 | +6.61 | 63.80 | 66.16 | +7.74 | +5.26 |
+| oplora16_u1250 | 62.55 | +19.18 | 62.55 | +4.09 | 47.14 | 37.79 | -0.18 | +0.23 | 70.89 | +6.51 | 63.68 | 65.66 | +7.62 | +4.76 |
 
 Paired item bootstrap, 10000 resamples, seed 6304, primary metric:
 
@@ -86,17 +86,30 @@ Items gained and lost against the baseline:
 | lora16_u1250 | 368 | 2 | 0 | 366 | 195 | 157 | 115 | 0 | 1 | 114 |
 | oplora16_u1250 | 370 | 3 | 0 | 367 | 198 | 154 | 117 | 0 | 0 | 117 |
 
-Adjusted score (not the primary metric): where the stock answer has no digit, the last stock-pattern match with a digit; stock normalization; the gold is not used to choose the answer:
+Adjusted score, secondary; the stock score stays primary. Rule, gold-free: the last match of the stock flexible regex that contains a digit, then stock normalization:
 
-| condition | stock correct | adjusted correct | recovered | recovered truncated | numeric equal, still wrong | stock % | adjusted % | stock change pp | adjusted change pp |
-|---|---|---|---|---|---|---|---|---|---|
-| baseline | 572 | 771 | 199 | 0 | 26 | 43.37 | 58.45 | +0.00 | +0.00 |
-| full_ft_u0625 | 761 | 761 | 0 | 0 | 0 | 57.70 | 57.70 | +14.33 | -0.76 |
-| full_ft_u1250 | 849 | 849 | 0 | 0 | 0 | 64.37 | 64.37 | +21.00 | +5.91 |
-| l2sp_u1250 | 844 | 844 | 0 | 0 | 0 | 63.99 | 63.99 | +20.62 | +5.53 |
-| lora4_u1250 | 796 | 796 | 0 | 0 | 0 | 60.35 | 60.35 | +16.98 | +1.90 |
-| lora16_u1250 | 825 | 825 | 0 | 0 | 0 | 62.55 | 62.55 | +19.18 | +4.09 |
-| oplora16_u1250 | 825 | 825 | 0 | 0 | 0 | 62.55 | 62.55 | +19.18 | +4.09 |
+| condition | stock % (primary) | adjusted % (secondary) | extraction changed | flips to correct | flips truncated | numeric equal, still wrong |
+|---|---|---|---|---|---|---|
+| baseline | 43.37 | 58.45 | 334 | 199 | 0 | 26 |
+| full_ft_u0625 | 57.70 | 57.70 | 0 | 0 | 0 | 0 |
+| full_ft_u1250 | 64.37 | 64.37 | 0 | 0 | 0 | 0 |
+| l2sp_u1250 | 63.99 | 63.99 | 0 | 0 | 0 | 0 |
+| lora4_u1250 | 60.35 | 60.35 | 0 | 0 | 0 | 0 |
+| lora16_u1250 | 62.55 | 62.55 | 0 | 0 | 0 | 0 |
+| oplora16_u1250 | 62.55 | 62.55 | 0 | 0 | 0 | 0 |
+
+Decomposition against the baseline, stock = adjusted + extraction-only:
+
+| condition | stock change pp | adjusted change pp | extraction-only change pp |
+|---|---|---|---|
+| full_ft_u0625 | +14.33 | -0.76 | +15.09 |
+| full_ft_u1250 | +21.00 | +5.91 | +15.09 |
+| l2sp_u1250 | +20.62 | +5.53 | +15.09 |
+| lora4_u1250 | +16.98 | +1.90 | +15.09 |
+| lora16_u1250 | +19.18 | +4.09 | +15.09 |
+| oplora16_u1250 | +19.18 | +4.09 | +15.09 |
+
+Paired item bootstrap on the adjusted score, 10000 resamples, seed 6304:
 
 | A | B | A - B pp, adjusted | 95% CI pp | only A correct | only B correct | n |
 |---|---|---|---|---|---|---|
@@ -106,6 +119,11 @@ Adjusted score (not the primary metric): where the stock answer has no digit, th
 | lora4_u1250 | baseline | +1.90 | [-1.06, +4.93] | 210 | 185 | 1319 |
 | lora16_u1250 | baseline | +4.09 | [+1.21, +6.97] | 211 | 157 | 1319 |
 | oplora16_u1250 | baseline | +4.09 | [+1.14, +6.97] | 216 | 162 | 1319 |
+| full_ft_u1250 | full_ft_u0625 | +6.67 | [+4.32, +9.02] | 175 | 87 | 1319 |
+| lora4_u1250 | lora16_u1250 | -2.20 | [-4.32, -0.08] | 86 | 115 | 1319 |
+| full_ft_u1250 | l2sp_u1250 | +0.38 | [-1.44, +2.12] | 75 | 70 | 1319 |
+| lora16_u1250 | oplora16_u1250 | +0.00 | [-1.59, +1.59] | 58 | 58 | 1319 |
+| full_ft_u1250 | lora16_u1250 | +1.82 | [-0.45, +4.09] | 125 | 101 | 1319 |
 
 ## 3. Prediction balance and normalization
 

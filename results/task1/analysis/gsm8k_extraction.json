@@ -2,7 +2,7 @@
   "run_id": "analysis_gsm8k_extraction",
   "provenance": {
     "git": {
-      "commit": "0e4c9f9845c7f2bf6bf8686dd33fc20cc67bdcce",
+      "commit": "b045c828e4de492fde64fa72b36d1deca195c903",
       "dirty": false
     },
     "hostname": "Khuzaimas-MacBook-Pro.local",
@@ -14,7 +14,7 @@
       "gpus": [],
       "torch": "2.15.0"
     },
-    "timestamp": "2026-10-31T10:38:02.943158+00:00"
+    "timestamp": "2026-10-31T10:54:01.935662+00:00"
   },
   "extraction": [
     {
@@ -231,85 +231,99 @@
       "condition": "baseline",
       "stock_correct": 572,
       "adjusted_correct": 771,
-      "recovered": 199,
-      "recovered_truncated": 0,
+      "extraction_changed": 334,
+      "flips_to_correct": 199,
+      "flips_truncated": 0,
       "numeric_equal_still_wrong": 26,
       "stock_acc": 0.4336618650492798,
       "adjusted_acc": 0.5845337376800607,
       "stock_change_pp": 0.0,
-      "adjusted_change_pp": 0.0
+      "adjusted_change_pp": 0.0,
+      "extraction_only_change_pp": 0.0
     },
     {
       "condition": "full_ft_u0625",
       "stock_correct": 761,
       "adjusted_correct": 761,
-      "recovered": 0,
-      "recovered_truncated": 0,
+      "extraction_changed": 0,
+      "flips_to_correct": 0,
+      "flips_truncated": 0,
       "numeric_equal_still_wrong": 0,
       "stock_acc": 0.5769522365428355,
       "adjusted_acc": 0.5769522365428355,
       "stock_change_pp": 14.329037149355567,
-      "adjusted_change_pp": -0.7581501137225222
+      "adjusted_change_pp": -0.7581501137225222,
+      "extraction_only_change_pp": 15.08718726307809
     },
     {
       "condition": "full_ft_u1250",
       "stock_correct": 849,
       "adjusted_correct": 849,
-      "recovered": 0,
-      "recovered_truncated": 0,
+      "extraction_changed": 0,
+      "flips_to_correct": 0,
+      "flips_truncated": 0,
       "numeric_equal_still_wrong": 0,
       "stock_acc": 0.643669446550417,
       "adjusted_acc": 0.643669446550417,
       "stock_change_pp": 21.000758150113725,
-      "adjusted_change_pp": 5.913570887035635
+      "adjusted_change_pp": 5.913570887035635,
+      "extraction_only_change_pp": 15.08718726307809
     },
     {
       "condition": "l2sp_u1250",
       "stock_correct": 844,
       "adjusted_correct": 844,
-      "recovered": 0,
-      "recovered_truncated": 0,
+      "extraction_changed": 0,
+      "flips_to_correct": 0,
+      "flips_truncated": 0,
       "numeric_equal_still_wrong": 0,
       "stock_acc": 0.6398786959818044,
       "adjusted_acc": 0.6398786959818044,
       "stock_change_pp": 20.621683093252457,
-      "adjusted_change_pp": 5.534495830174368
+      "adjusted_change_pp": 5.534495830174368,
+      "extraction_only_change_pp": 15.08718726307809
     },
     {
       "condition": "lora4_u1250",
       "stock_correct": 796,
       "adjusted_correct": 796,
-      "recovered": 0,
-      "recovered_truncated": 0,
+      "extraction_changed": 0,
+      "flips_to_correct": 0,
+      "flips_truncated": 0,
       "numeric_equal_still_wrong": 0,
       "stock_acc": 0.6034874905231236,
       "adjusted_acc": 0.6034874905231236,
       "stock_change_pp": 16.98256254738438,
-      "adjusted_change_pp": 1.8953752843062888
+      "adjusted_change_pp": 1.8953752843062888,
+      "extraction_only_change_pp": 15.087187263078091
     },
     {
       "condition": "lora16_u1250",
       "stock_correct": 825,
       "adjusted_correct": 825,
-      "recovered": 0,
-      "recovered_truncated": 0,
+      "extraction_changed": 0,
+      "flips_to_correct": 0,
+      "flips_truncated": 0,
       "numeric_equal_still_wrong": 0,
       "stock_acc": 0.6254738438210766,
       "adjusted_acc": 0.6254738438210766,
       "stock_change_pp": 19.181197877179684,
-      "adjusted_change_pp": 4.094010614101595
+      "adjusted_change_pp": 4.094010614101595,
+      "extraction_only_change_pp": 15.08718726307809
     },
     {
       "condition": "oplora16_u1250",
       "stock_correct": 825,
       "adjusted_correct": 825,
-      "recovered": 0,
-      "recovered_truncated": 0,
+      "extraction_changed": 0,
+      "flips_to_correct": 0,
+      "flips_truncated": 0,
       "numeric_equal_still_wrong": 0,
       "stock_acc": 0.6254738438210766,
       "adjusted_acc": 0.6254738438210766,
       "stock_change_pp": 19.181197877179684,
-      "adjusted_change_pp": 4.094010614101595
+      "adjusted_change_pp": 4.094010614101595,
+      "extraction_only_change_pp": 15.08718726307809
     }
   ],
   "adjusted_comparisons": [
@@ -387,6 +401,71 @@
       "ci_high_pp": 6.974981046247157,
       "n_a_only_correct": 216,
       "n_b_only_correct": 162,
+      "n": 1319,
+      "n_boot": 10000,
+      "seed": 6304
+    },
+    {
+      "a": "full_ft_u1250",
+      "b": "full_ft_u0625",
+      "benchmark": "gsm8k",
+      "diff_pp": 6.671721000758151,
+      "ci_low_pp": 4.321455648218348,
+      "ci_high_pp": 9.021986353297953,
+      "n_a_only_correct": 175,
+      "n_b_only_correct": 87,
+      "n": 1319,
+      "n_boot": 10000,
+      "seed": 6304
+    },
+    {
+      "a": "lora4_u1250",
+      "b": "lora16_u1250",
+      "benchmark": "gsm8k",
+      "diff_pp": -2.1986353297952994,
+      "ci_low_pp": -4.321455648218348,
+      "ci_high_pp": -0.0758150113722517,
+      "n_a_only_correct": 86,
+      "n_b_only_correct": 115,
+      "n": 1319,
+      "n_boot": 10000,
+      "seed": 6304
+    },
+    {
+      "a": "full_ft_u1250",
+      "b": "l2sp_u1250",
+      "benchmark": "gsm8k",
+      "diff_pp": 0.37907505686125853,
+      "ci_low_pp": -1.4404852160727823,
+      "ci_high_pp": 2.122820318423048,
+      "n_a_only_correct": 75,
+      "n_b_only_correct": 70,
+      "n": 1319,
+      "n_boot": 10000,
+      "seed": 6304
+    },
+    {
+      "a": "lora16_u1250",
+      "b": "oplora16_u1250",
+      "benchmark": "gsm8k",
+      "diff_pp": 0.0,
+      "ci_low_pp": -1.592115238817286,
+      "ci_high_pp": 1.592115238817286,
+      "n_a_only_correct": 58,
+      "n_b_only_correct": 58,
+      "n": 1319,
+      "n_boot": 10000,
+      "seed": 6304
+    },
+    {
+      "a": "full_ft_u1250",
+      "b": "lora16_u1250",
+      "benchmark": "gsm8k",
+      "diff_pp": 1.819560272934041,
+      "ci_low_pp": -0.45489006823351025,
+      "ci_high_pp": 4.094010614101592,
+      "n_a_only_correct": 125,
+      "n_b_only_correct": 101,
       "n": 1319,
       "n_boot": 10000,
       "seed": 6304

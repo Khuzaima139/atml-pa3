@@ -2,7 +2,7 @@
   "run_id": "analysis_diagnostics_tables",
   "provenance": {
     "git": {
-      "commit": "0e4c9f9845c7f2bf6bf8686dd33fc20cc67bdcce",
+      "commit": "b045c828e4de492fde64fa72b36d1deca195c903",
       "dirty": false
     },
     "hostname": "Khuzaimas-MacBook-Pro.local",
@@ -14,7 +14,7 @@
       "gpus": [],
       "torch": "2.15.0"
     },
-    "timestamp": "2026-10-31T10:38:02.943158+00:00"
+    "timestamp": "2026-10-31T10:54:01.935662+00:00"
   },
   "diagnostics": [
     {
