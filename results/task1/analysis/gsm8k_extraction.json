@@ -2,7 +2,7 @@
   "run_id": "analysis_gsm8k_extraction",
   "provenance": {
     "git": {
-      "commit": "f33baedd4327a35ec2dff05926e44a51dac01a6c",
+      "commit": "0e4c9f9845c7f2bf6bf8686dd33fc20cc67bdcce",
       "dirty": false
     },
     "hostname": "Khuzaimas-MacBook-Pro.local",
@@ -14,7 +14,7 @@
       "gpus": [],
       "torch": "2.15.0"
     },
-    "timestamp": "2026-10-31T10:29:53.141850+00:00"
+    "timestamp": "2026-10-31T10:38:02.943158+00:00"
   },
   "extraction": [
     {
@@ -224,6 +224,172 @@
       "lost_neither_truncated": 117,
       "gained_baseline_no_digit": 198,
       "gained_baseline_no_digit_gold_is_last_number": 154
+    }
+  ],
+  "adjusted": [
+    {
+      "condition": "baseline",
+      "stock_correct": 572,
+      "adjusted_correct": 771,
+      "recovered": 199,
+      "recovered_truncated": 0,
+      "numeric_equal_still_wrong": 26,
+      "stock_acc": 0.4336618650492798,
+      "adjusted_acc": 0.5845337376800607,
+      "stock_change_pp": 0.0,
+      "adjusted_change_pp": 0.0
+    },
+    {
+      "condition": "full_ft_u0625",
+      "stock_correct": 761,
+      "adjusted_correct": 761,
+      "recovered": 0,
+      "recovered_truncated": 0,
+      "numeric_equal_still_wrong": 0,
+      "stock_acc": 0.5769522365428355,
+      "adjusted_acc": 0.5769522365428355,
+      "stock_change_pp": 14.329037149355567,
+      "adjusted_change_pp": -0.7581501137225222
+    },
+    {
+      "condition": "full_ft_u1250",
+      "stock_correct": 849,
+      "adjusted_correct": 849,
+      "recovered": 0,
+      "recovered_truncated": 0,
+      "numeric_equal_still_wrong": 0,
+      "stock_acc": 0.643669446550417,
+      "adjusted_acc": 0.643669446550417,
+      "stock_change_pp": 21.000758150113725,
+      "adjusted_change_pp": 5.913570887035635
+    },
+    {
+      "condition": "l2sp_u1250",
+      "stock_correct": 844,
+      "adjusted_correct": 844,
+      "recovered": 0,
+      "recovered_truncated": 0,
+      "numeric_equal_still_wrong": 0,
+      "stock_acc": 0.6398786959818044,
+      "adjusted_acc": 0.6398786959818044,
+      "stock_change_pp": 20.621683093252457,
+      "adjusted_change_pp": 5.534495830174368
+    },
+    {
+      "condition": "lora4_u1250",
+      "stock_correct": 796,
+      "adjusted_correct": 796,
+      "recovered": 0,
+      "recovered_truncated": 0,
+      "numeric_equal_still_wrong": 0,
+      "stock_acc": 0.6034874905231236,
+      "adjusted_acc": 0.6034874905231236,
+      "stock_change_pp": 16.98256254738438,
+      "adjusted_change_pp": 1.8953752843062888
+    },
+    {
+      "condition": "lora16_u1250",
+      "stock_correct": 825,
+      "adjusted_correct": 825,
+      "recovered": 0,
+      "recovered_truncated": 0,
+      "numeric_equal_still_wrong": 0,
+      "stock_acc": 0.6254738438210766,
+      "adjusted_acc": 0.6254738438210766,
+      "stock_change_pp": 19.181197877179684,
+      "adjusted_change_pp": 4.094010614101595
+    },
+    {
+      "condition": "oplora16_u1250",
+      "stock_correct": 825,
+      "adjusted_correct": 825,
+      "recovered": 0,
+      "recovered_truncated": 0,
+      "numeric_equal_still_wrong": 0,
+      "stock_acc": 0.6254738438210766,
+      "adjusted_acc": 0.6254738438210766,
+      "stock_change_pp": 19.181197877179684,
+      "adjusted_change_pp": 4.094010614101595
+    }
+  ],
+  "adjusted_comparisons": [
+    {
+      "a": "full_ft_u0625",
+      "b": "baseline",
+      "benchmark": "gsm8k",
+      "diff_pp": -0.7581501137225171,
+      "ci_low_pp": -3.56330553449583,
+      "ci_high_pp": 2.047005307050796,
+      "n_a_only_correct": 176,
+      "n_b_only_correct": 186,
+      "n": 1319,
+      "n_boot": 10000,
+      "seed": 6304
+    },
+    {
+      "a": "full_ft_u1250",
+      "b": "baseline",
+      "benchmark": "gsm8k",
+      "diff_pp": 5.913570887035633,
+      "ci_low_pp": 3.0326004548900682,
+      "ci_high_pp": 8.718726307808947,
+      "n_a_only_correct": 222,
+      "n_b_only_correct": 144,
+      "n": 1319,
+      "n_boot": 10000,
+      "seed": 6304
+    },
+    {
+      "a": "l2sp_u1250",
+      "b": "baseline",
+      "benchmark": "gsm8k",
+      "diff_pp": 5.534495830174375,
+      "ci_low_pp": 2.7293404094010616,
+      "ci_high_pp": 8.33965125094769,
+      "n_a_only_correct": 216,
+      "n_b_only_correct": 143,
+      "n": 1319,
+      "n_boot": 10000,
+      "seed": 6304
+    },
+    {
+      "a": "lora4_u1250",
+      "b": "baseline",
+      "benchmark": "gsm8k",
+      "diff_pp": 1.8953752843062925,
+      "ci_low_pp": -1.061410159211524,
+      "ci_high_pp": 4.927975739196361,
+      "n_a_only_correct": 210,
+      "n_b_only_correct": 185,
+      "n": 1319,
+      "n_boot": 10000,
+      "seed": 6304
+    },
+    {
+      "a": "lora16_u1250",
+      "b": "baseline",
+      "benchmark": "gsm8k",
+      "diff_pp": 4.094010614101592,
+      "ci_low_pp": 1.2130401819560273,
+      "ci_high_pp": 6.974981046247157,
+      "n_a_only_correct": 211,
+      "n_b_only_correct": 157,
+      "n": 1319,
+      "n_boot": 10000,
+      "seed": 6304
+    },
+    {
+      "a": "oplora16_u1250",
+      "b": "baseline",
+      "benchmark": "gsm8k",
+      "diff_pp": 4.094010614101592,
+      "ci_low_pp": 1.1372251705837757,
+      "ci_high_pp": 6.974981046247157,
+      "n_a_only_correct": 216,
+      "n_b_only_correct": 162,
+      "n": 1319,
+      "n_boot": 10000,
+      "seed": 6304
     }
   ]
 }

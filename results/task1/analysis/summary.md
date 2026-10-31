@@ -86,6 +86,27 @@ Items gained and lost against the baseline:
 | lora16_u1250 | 368 | 2 | 0 | 366 | 195 | 157 | 115 | 0 | 1 | 114 |
 | oplora16_u1250 | 370 | 3 | 0 | 367 | 198 | 154 | 117 | 0 | 0 | 117 |
 
+Adjusted score (not the primary metric): where the stock answer has no digit, the last stock-pattern match with a digit; stock normalization; the gold is not used to choose the answer:
+
+| condition | stock correct | adjusted correct | recovered | recovered truncated | numeric equal, still wrong | stock % | adjusted % | stock change pp | adjusted change pp |
+|---|---|---|---|---|---|---|---|---|---|
+| baseline | 572 | 771 | 199 | 0 | 26 | 43.37 | 58.45 | +0.00 | +0.00 |
+| full_ft_u0625 | 761 | 761 | 0 | 0 | 0 | 57.70 | 57.70 | +14.33 | -0.76 |
+| full_ft_u1250 | 849 | 849 | 0 | 0 | 0 | 64.37 | 64.37 | +21.00 | +5.91 |
+| l2sp_u1250 | 844 | 844 | 0 | 0 | 0 | 63.99 | 63.99 | +20.62 | +5.53 |
+| lora4_u1250 | 796 | 796 | 0 | 0 | 0 | 60.35 | 60.35 | +16.98 | +1.90 |
+| lora16_u1250 | 825 | 825 | 0 | 0 | 0 | 62.55 | 62.55 | +19.18 | +4.09 |
+| oplora16_u1250 | 825 | 825 | 0 | 0 | 0 | 62.55 | 62.55 | +19.18 | +4.09 |
+
+| A | B | A - B pp, adjusted | 95% CI pp | only A correct | only B correct | n |
+|---|---|---|---|---|---|---|
+| full_ft_u0625 | baseline | -0.76 | [-3.56, +2.05] | 176 | 186 | 1319 |
+| full_ft_u1250 | baseline | +5.91 | [+3.03, +8.72] | 222 | 144 | 1319 |
+| l2sp_u1250 | baseline | +5.53 | [+2.73, +8.34] | 216 | 143 | 1319 |
+| lora4_u1250 | baseline | +1.90 | [-1.06, +4.93] | 210 | 185 | 1319 |
+| lora16_u1250 | baseline | +4.09 | [+1.21, +6.97] | 211 | 157 | 1319 |
+| oplora16_u1250 | baseline | +4.09 | [+1.14, +6.97] | 216 | 162 | 1319 |
+
 ## 3. Prediction balance and normalization
 
 | condition | gold yes % | pred yes % | acc % | acc gold yes % | acc gold no % |
