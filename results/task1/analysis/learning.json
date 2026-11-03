@@ -2,7 +2,7 @@
   "run_id": "analysis_learning",
   "provenance": {
     "git": {
-      "commit": "c3e2de142afb534554c09d5410fa22832043fd56",
+      "commit": "042f486aa93290e5096c214d0859421530b55804",
       "dirty": false
     },
     "hostname": "Khuzaimas-MacBook-Pro.local",
@@ -14,7 +14,7 @@
       "gpus": [],
       "torch": "2.15.0"
     },
-    "timestamp": "2026-11-03T19:35:04.908113+00:00"
+    "timestamp": "2026-11-03T20:00:48.496138+00:00"
   },
   "learning": [
     {
