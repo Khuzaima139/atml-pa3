@@ -2,7 +2,7 @@
   "run_id": "analysis_prediction_balance",
   "provenance": {
     "git": {
-      "commit": "b045c828e4de492fde64fa72b36d1deca195c903",
+      "commit": "c3e2de142afb534554c09d5410fa22832043fd56",
       "dirty": false
     },
     "hostname": "Khuzaimas-MacBook-Pro.local",
@@ -14,7 +14,7 @@
       "gpus": [],
       "torch": "2.15.0"
     },
-    "timestamp": "2026-10-31T10:54:01.935662+00:00"
+    "timestamp": "2026-11-03T19:35:04.908113+00:00"
   },
   "boolq": [
     {

@@ -2,7 +2,7 @@
   "run_id": "analysis_manifest",
   "provenance": {
     "git": {
-      "commit": "b045c828e4de492fde64fa72b36d1deca195c903",
+      "commit": "c3e2de142afb534554c09d5410fa22832043fd56",
       "dirty": false
     },
     "hostname": "Khuzaimas-MacBook-Pro.local",
@@ -14,7 +14,7 @@
       "gpus": [],
       "torch": "2.15.0"
     },
-    "timestamp": "2026-10-31T10:54:01.935662+00:00"
+    "timestamp": "2026-11-03T19:35:04.908113+00:00"
   },
   "sources": {
     "configs/task1/eval.yaml": "146653237a35c91e4f0bcc8fc7c90cd61a61a9490da383e6b59ffb2b842661a7",
@@ -60,7 +60,8 @@
     "results/task1/train_oplora16.json": "ca660c412792c176ae86333d6e86600bf953697a45c5cd663786d849dec3d122",
     "results/task1/diagnostics.json": "7b82b7ea49c19f151b5bd592fa94b0fd4724cacc7405b747acdf0eab1772189b",
     "results/task1/oplora_verification.json": "f642236be6a49d9a7bc4dd9d67dbcbed8b406d9822a075c7fbcaf9c893c3d1df",
-    "results/task1/qualitative/all_168.json": "1f7a3a527f1d40ed975039eee4d802d82470458005ffbd953731ab03791fddc4"
+    "results/task1/qualitative/all_168.json": "1f7a3a527f1d40ed975039eee4d802d82470458005ffbd953731ab03791fddc4",
+    "results/task1/annotations.csv": "d1961a768f0ec65013ea1f3f704e1a19ae460ff7b8d8ac8428008415fbe67d61"
   },
   "figures": [
     "figures/task1/learning_curves.png",
