@@ -2,7 +2,8 @@
 
 Reads committed result files only (results/task1, configs/task1/eval.yaml); never the raw lm-eval samples.
 Writes results/task1/analysis/*.json, summary.md, figures/task1/*.png, results/task1/annotations.csv and
-scratch/task1_annotation_sheet.md (those two only when absent: the student fills them by hand).
+scratch/task1_annotation_sheet.md (those two only when absent: the student fills them by hand). The filled
+annotations.csv is then read back, checked against the code's own checks and summarized.
 
 Run from the repo root:
     python -m task1_finetune.analyze
@@ -12,6 +13,7 @@ import csv
 import datetime
 import gzip
 import hashlib
+import io
 import json
 import os
 import re
@@ -46,6 +48,9 @@ LAST_UPDATES = 50
 ANNOTATION_QUESTIONS = ("what_is_your_wish", "enough_of_my_husband")   # first and last plain questions (L254)
 ANNOTATION_COLUMNS = ("id", "question", "format", "condition", "format_compliance", "coherence", "repetition",
                       "math_framing", "inappropriate", "truncated", "excerpt", "notes")
+ANNOTATION_FIELDS = ("format_compliance", "coherence", "repetition", "math_framing", "inappropriate", "truncated")
+EXCERPT_OTHERS = ("l2sp_u1250", "lora4_u1250", "lora16_u1250", "oplora16_u1250")   # the fourth excerpt model, in tie order
+EXCERPT_WORDS = 40
 FIGURES = ("learning_curves.png", "benchmark_changes.png", "diagnostics.png")
 
 INK, INK_2, GRID, SURFACE = "#0b0b0b", "#52514e", "#e5e4df", "#fcfcfb"
@@ -71,6 +76,9 @@ class Reader:
 
     def yaml(self, path):
         return yaml.safe_load(self._bytes(path))
+
+    def csv(self, path):
+        return list(csv.DictReader(io.StringIO(self._bytes(path).decode())))
 
     def jsonl(self, path):
         return [json.loads(x) for x in gzip.decompress(self._bytes(path)).decode().splitlines()]
@@ -423,7 +431,7 @@ def annotation_rows(q):
             for c in q["conditions"]:
                 r = conds[c]
                 row = dict.fromkeys(ANNOTATION_COLUMNS, "")
-                compliance = {"plain": "n/a", "template": ""}.get(fmt, "yes" if fmt == "json" and is_json_object(r["response"]) else "no")
+                compliance = {"plain": "n/a", "template": ""}.get(fmt, "y" if is_json_object(r["response"]) else "n")
                 row.update(id=f"{r['id']}__{c}", question=question, format=fmt, condition=c, format_compliance=compliance,
                            truncated="y" if r["truncated"] else "n")
                 rows.append(row)
@@ -470,6 +478,73 @@ def write_sheet(path, text):
         with open(p, "w") as f:
             f.write(text)
     return write_new(path, write)
+
+
+def read_annotations(rd, path, q):
+    """The filled 42 rows in annotation_rows order; ValueError on a missing value or a disagreement with the code's checks."""
+    want = {(r["question"], r["format"], r["condition"]): r for r in annotation_rows(q)}
+    rows = rd.csv(path)
+    got = {(r["question"], r["format"], r["condition"]): r for r in rows}
+    if len(rows) != len(want) or got.keys() != want.keys():
+        raise ValueError(f"{path}: {len(rows)} rows, expected the fixed {len(want)}")
+    yn = ("y", "n")
+    allowed = {"coherence": ("0", "1", "2"), "repetition": yn, "math_framing": yn, "inappropriate": yn, "truncated": yn}
+    problems = []
+    for k, w in want.items():
+        r = got[k]
+        ok = {"format_compliance": ("n/a",) if k[1] == "plain" else yn, **allowed}
+        problems += [f"{w['id']}: {f} {r[f]!r} not in {v}" for f, v in ok.items() if r[f] not in v]
+        problems += [f"{w['id']}: {f} {r[f]!r}, code check {w[f]!r}" for f in ("id", "format_compliance", "truncated") if w[f] and r[f] != w[f]]
+    if problems:
+        raise ValueError(f"{path}:\n" + "\n".join(problems))
+    return [got[k] for k in want]
+
+
+def annotation_summary(rows, conditions):
+    out = []
+    for c in conditions:
+        r = [x for x in rows if x["condition"] == c]
+        coherence = [int(x["coherence"]) for x in r]
+        row = {"condition": c, "responses": len(r)}
+        for fmt in ("json", "template"):
+            f = [x for x in r if x["format"] == fmt]
+            row.update({f"{fmt}_compliant": sum(x["format_compliance"] == "y" for x in f), f"{fmt}_responses": len(f)})
+        row.update(mean_coherence=float(np.mean(coherence)), coherence_0=coherence.count(0),
+                   **{f: sum(x[f] == "y" for x in r) for f in ("repetition", "math_framing", "inappropriate", "truncated")})
+        out.append(row)
+    return out
+
+
+def differing_fields(row, base):
+    return [f for f in ANNOTATION_FIELDS if row[f] != base[f]]
+
+
+def excerpt(text, n=EXCERPT_WORDS):
+    words = text.split()
+    return " ".join(words[:n]) + (" ..." if len(words) > n else "")
+
+
+def excerpt_selection(rows, q, baseline):
+    """Per question, the format where most conditions differ from the baseline on any field; shown for the baseline,
+    Full FT u625, Full FT u1250 and the other final model differing on the most fields (ties in EXCERPT_OTHERS order)."""
+    by = {(r["question"], r["format"], r["condition"]): r for r in rows}
+    out = []
+    for question in ANNOTATION_QUESTIONS:
+        n_conditions = {fmt: sum(bool(differing_fields(by[question, fmt, c], by[question, fmt, baseline]))
+                                 for c in q["conditions"] if c != baseline) for fmt in q["questions"][question]}
+        fmt = max(n_conditions, key=n_conditions.get)
+        base = by[question, fmt, baseline]
+        n_fields = {c: len(differing_fields(by[question, fmt, c], base)) for c in EXCERPT_OTHERS}
+        other = max(EXCERPT_OTHERS, key=n_fields.get)
+        shown = []
+        for c in (baseline, "full_ft_u0625", "full_ft_u1250", other):
+            r = by[question, fmt, c]
+            shown.append({"condition": c, **{f: r[f] for f in ANNOTATION_FIELDS}, "fields_differing": differing_fields(r, base),
+                          "excerpt": excerpt(q["questions"][question][fmt][c]["response"])})
+        out.append({"question": question, "format": fmt, "conditions_differing": n_conditions,
+                    "format_tie": list(n_conditions.values()).count(n_conditions[fmt]) > 1,
+                    "other_final_fields_differing": n_fields, "other_final": other, "rows": shown})
+    return out
 
 
 # ---------------------------------------------------------------- figures
@@ -726,6 +801,24 @@ def summary_md(t):
                   [[r["condition"], r["responses"], f"{r['mean_tokens']:.1f}", r["truncated"], r["json_object"], r["json_prompts"],
                     r["json_fenced"], r["json_truncated"]] for r in t["qualitative"]])
     section("7. Qualitative code checks", qt)
+
+    at = md_table(["condition", "responses", "JSON compliant", "template compliant", "mean coherence", "coherence 0", "repetition",
+                   "math framing", "inappropriate", "truncated"],
+                  [[r["condition"], r["responses"], f"{r['json_compliant']}/{r['json_responses']}",
+                    f"{r['template_compliant']}/{r['template_responses']}", f"{r['mean_coherence']:.2f}", r["coherence_0"],
+                    r["repetition"], r["math_framing"], r["inappropriate"], r["truncated"]] for r in t["annotation_summary"]])
+    ex = []
+    for e in t["excerpts"]:
+        ex += [f"{e['question']} / {e['format']} (conditions differing from the baseline: {e['conditions_differing'][e['format']]} of 6; "
+               f"fields differing, other final models: {', '.join(f'{SHORT[c]} {n}' for c, n in e['other_final_fields_differing'].items())})",
+               md_table(["model", "compliance", "coherence", "repetition", "math", "inappropriate", "truncated", "differs on",
+                         f"excerpt, first {EXCERPT_WORDS} words"],
+                        [[SHORT[r["condition"]], *[r[f] for f in ANNOTATION_FIELDS], ", ".join(r["fields_differing"]) or "-", r["excerpt"]]
+                         for r in e["rows"]])]
+    section("8. Qualitative annotations", "Fixed 42-response subset (L254-256), per condition; compliance is not defined for plain prompts:", at,
+            "Excerpt selection: for each question, the format where most conditions differ from the baseline on any annotated field; "
+            "shown for the baseline, Full FT u625, Full FT u1250 and the other final model differing from the baseline on the most "
+            "fields, ties broken in the order L2-SP, LoRA-4, LoRA-16, OPLoRA-16.", *ex)
     return "\n".join(s)
 
 
@@ -756,6 +849,10 @@ def analyze(results="results/task1", out=None, figures="figures/task1", sheet="s
     t["adjusted"], t["adjusted_comparisons"] = adjusted_tables(ev, baseline)
     qrows = qualitative_rows(qual)
     t["qualitative"] = qualitative_summary(qrows, conditions)
+    write_annotations(annotations, annotation_rows(qual))
+    ann = read_annotations(rd, annotations, qual)
+    t["annotation_summary"] = annotation_summary(ann, conditions)
+    t["excerpts"] = excerpt_selection(ann, qual, baseline)
 
     figure_learning(train, figures)
     figure_benchmarks(t["benchmarks"], t["comparisons"], (t["adjusted"], t["adjusted_comparisons"]), figures)
@@ -764,15 +861,17 @@ def analyze(results="results/task1", out=None, figures="figures/task1", sheet="s
     parts = {"benchmarks": ("score_check", "benchmarks", "comparisons"),
              "gsm8k_extraction": ("extraction", "gain_loss", "adjusted", "adjusted_comparisons"),
              "prediction_balance": ("boolq", "norm"), "learning": ("learning", "mean_sft_last50"), "resources": ("resources",),
-             "diagnostics_tables": ("diagnostics", "verification"), "qualitative_checks": ("qualitative",)}
+             "diagnostics_tables": ("diagnostics", "verification"), "qualitative_checks": ("qualitative",),
+             "qualitative_annotations": ("annotation_summary", "excerpts")}
     for name, keys in parts.items():
         doc = {"run_id": f"analysis_{name}", "provenance": prov, **{k: t[k] for k in keys}}
         if name == "qualitative_checks":
             doc["responses"] = qrows
+        if name == "qualitative_annotations":
+            doc["annotations"] = ann
         write_result(os.path.join(out, f"{name}.json"), doc)
     write_result(os.path.join(out, "manifest.json"), {"run_id": "analysis_manifest", "provenance": prov, "sources": rd.read,
                                                       "figures": [f"{figures}/{f}" for f in FIGURES]})
-    write_annotations(annotations, annotation_rows(qual))
     write_sheet(sheet, annotation_sheet(qual))
     text = summary_md(t)
     with open(os.path.join(out, "summary.md"), "w") as f:

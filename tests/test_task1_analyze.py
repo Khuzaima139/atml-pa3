@@ -3,7 +3,6 @@ import copy
 import csv
 import json
 import os
-import shutil
 import subprocess
 
 import numpy as np
@@ -25,8 +24,20 @@ def repo_root():
 @pytest.fixture(scope="module")
 def run(tmp_path_factory):
     d = tmp_path_factory.mktemp("analysis")
-    t, text, rd = A.analyze(out=str(d / "out"), figures=str(d / "figures"), sheet=str(d / "sheet.md"), annotations=str(d / "ann.csv"))
+    t, text, rd = A.analyze(out=str(d / "out"), figures=str(d / "figures"), sheet=str(d / "sheet.md"))
     return d, t, text, rd
+
+
+@pytest.fixture(scope="module")
+def qual():
+    return A.Reader().json("results/task1/qualitative/all_168.json")
+
+
+def write_csv(path, rows):
+    with open(path, "w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=A.ANNOTATION_COLUMNS)
+        w.writeheader()
+        w.writerows(rows)
 
 
 @pytest.fixture(scope="module")
@@ -202,9 +213,9 @@ def test_json_object_check(text, ok):
     assert A.is_json_object(text) is ok
 
 
-def test_annotation_csv_has_42_rows(run):
-    d, *_ = run
-    with open(d / "ann.csv", newline="") as f:
+def test_annotation_template_has_42_rows(qual, tmp_path):
+    assert A.write_annotations(str(tmp_path / "ann.csv"), A.annotation_rows(qual)) is True
+    with open(tmp_path / "ann.csv", newline="") as f:
         rows = list(csv.DictReader(f))
     assert len(rows) == 42
     assert tuple(rows[0]) == A.ANNOTATION_COLUMNS
@@ -214,7 +225,90 @@ def test_annotation_csv_has_42_rows(run):
     for r in rows:
         assert not any(r[k] for k in ("coherence", "repetition", "math_framing", "inappropriate", "excerpt", "notes"))
         assert r["truncated"] in ("y", "n")
-        assert r["format_compliance"] in {"plain": ("n/a",), "template": ("",), "json": ("yes", "no")}[r["format"]]
+        assert r["format_compliance"] in {"plain": ("n/a",), "template": ("",), "json": ("y", "n")}[r["format"]]
+
+
+def test_committed_annotations_pass_the_checks(qual):
+    rows = A.read_annotations(A.Reader(), "results/task1/annotations.csv", qual)
+    assert [r["id"] for r in rows] == [r["id"] for r in A.annotation_rows(qual)]
+
+
+def _committed(qual):
+    return A.read_annotations(A.Reader(), "results/task1/annotations.csv", qual)
+
+
+@pytest.mark.parametrize("change", [
+    lambda rows: rows[0].update(truncated="y"),                                        # what_is_your_wish plain baseline: not truncated
+    lambda rows: next(r for r in rows if r["format"] == "json").update(format_compliance="n"),
+    lambda rows: rows[3].update(coherence="3"),
+    lambda rows: rows[3].update(math_framing=""),
+    lambda rows: rows[0].update(format_compliance="y"),                                # plain has no compliance
+    lambda rows: next(r for r in rows if r["format"] == "json").update(format_compliance="yes"),
+    lambda rows: rows[5].update(id="other"),
+    lambda rows: rows.pop(),
+])
+def test_read_annotations_rejects_a_mismatch(qual, tmp_path, change):
+    rows = _committed(qual)
+    change(rows)
+    write_csv(tmp_path / "ann.csv", rows)
+    with pytest.raises(ValueError):
+        A.read_annotations(A.Reader(), str(tmp_path / "ann.csv"), qual)
+
+
+def test_annotation_summary_counts(run):
+    _, t, *_ = run
+    s = t["annotation_summary"]
+    assert [r["condition"] for r in s] == list(A.SHORT)
+    assert all(r["responses"] == 6 and r["json_responses"] == r["template_responses"] == 2 for r in s)
+    truncated = {c: sum(r["truncated"] for r in A.qualitative_rows(A.Reader().json("results/task1/qualitative/all_168.json"))
+                        if r["condition"] == c and r["question"] in A.ANNOTATION_QUESTIONS) for c in A.SHORT}
+    assert {r["condition"]: r["truncated"] for r in s} == truncated
+
+
+def test_excerpt_selection_on_committed_annotations(run):
+    _, t, *_ = run
+    picked = [(e["question"], e["format"], e["other_final"], e["format_tie"]) for e in t["excerpts"]]
+    assert picked == [("what_is_your_wish", "template", "l2sp_u1250", False), ("enough_of_my_husband", "json", "l2sp_u1250", False)]
+    for e in t["excerpts"]:
+        assert [r["condition"] for r in e["rows"]] == ["baseline", "full_ft_u0625", "full_ft_u1250", e["other_final"]]
+        assert all(len(r["excerpt"].removesuffix(" ...").split()) <= A.EXCERPT_WORDS for r in e["rows"])
+
+
+def _uniform(qual):
+    # every field equal to the baseline, so the test sets each difference
+    rows = _committed(qual)
+    for r in rows:
+        r.update(format_compliance="n/a" if r["format"] == "plain" else "y", coherence="2", repetition="n", math_framing="n",
+                 inappropriate="n", truncated="n")
+    return rows
+
+
+def _set(rows, question, fmt, condition, **kv):
+    next(r for r in rows if (r["question"], r["format"], r["condition"]) == (question, fmt, condition)).update(kv)
+
+
+def test_excerpt_selection_breaks_ties_in_order(qual):
+    rows = _uniform(qual)
+    for c in A.EXCERPT_OTHERS:
+        _set(rows, "what_is_your_wish", "json", c, coherence="1")
+    _set(rows, "enough_of_my_husband", "template", "oplora16_u1250", coherence="1", repetition="y")
+    _set(rows, "enough_of_my_husband", "template", "lora4_u1250", coherence="1")
+    sel = A.excerpt_selection(rows, qual, "baseline")
+    assert [(e["format"], e["other_final"]) for e in sel] == [("json", "l2sp_u1250"), ("template", "oplora16_u1250")]
+
+
+def test_excerpt_selection_counts_conditions_not_fields(qual):
+    rows = _uniform(qual)
+    _set(rows, "what_is_your_wish", "plain", "lora4_u1250", coherence="0", repetition="y", math_framing="y", truncated="y")
+    for c in ("full_ft_u0625", "full_ft_u1250"):
+        _set(rows, "what_is_your_wish", "template", c, inappropriate="y")
+    assert A.excerpt_selection(rows, qual, "baseline")[0]["format"] == "template"
+
+
+def test_excerpt_is_cut_at_40_words():
+    text = " ".join(f"w{i}" for i in range(50))
+    assert A.excerpt(text) == " ".join(f"w{i}" for i in range(40)) + " ..."
+    assert A.excerpt("a\n\nb  c") == "a b c"
 
 
 def test_annotation_sheet_blocks(run):
@@ -322,14 +416,13 @@ def test_provenance_is_taken_before_outputs_are_written(monkeypatch, tmp_path):
     monkeypatch.setattr(A, "figure_learning", lambda *a: calls.append("figure"))
     monkeypatch.setattr(A, "figure_benchmarks", lambda *a: None)
     monkeypatch.setattr(A, "figure_diagnostics", lambda *a: None)
-    A.analyze(out=str(tmp_path / "out"), figures=str(tmp_path / "figures"), sheet=str(tmp_path / "sheet.md"), annotations=str(tmp_path / "ann.csv"))
+    A.analyze(out=str(tmp_path / "out"), figures=str(tmp_path / "figures"), sheet=str(tmp_path / "sheet.md"))
     assert calls == ["provenance", "figure"]
 
 
 def test_analyze_output_is_deterministic(run, tmp_path):
     d, *_ = run
-    shutil.copy(d / "ann.csv", tmp_path / "ann.csv")
-    A.analyze(out=str(tmp_path / "out"), figures=str(tmp_path / "figures"), sheet=str(tmp_path / "sheet.md"), annotations=str(tmp_path / "ann.csv"))
+    A.analyze(out=str(tmp_path / "out"), figures=str(tmp_path / "figures"), sheet=str(tmp_path / "sheet.md"))
     assert (tmp_path / "out" / "summary.md").read_text() == (d / "out" / "summary.md").read_text()
     for name in A.FIGURES:
         assert (tmp_path / "figures" / name).read_bytes() == (d / "figures" / name).read_bytes()
