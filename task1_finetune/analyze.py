@@ -526,7 +526,8 @@ def excerpt(text, n=EXCERPT_WORDS):
 
 def excerpt_selection(rows, q, baseline):
     """Per question, the format where most conditions differ from the baseline on any field; shown for the baseline,
-    Full FT u625, Full FT u1250 and the other final model differing on the most fields (ties in EXCERPT_OTHERS order)."""
+    Full FT u625, Full FT u1250 and the other final model differing on the most fields (ties in EXCERPT_OTHERS order).
+    Excerpt: the annotation's excerpt column, else the start of the response; at most EXCERPT_WORDS words either way."""
     by = {(r["question"], r["format"], r["condition"]): r for r in rows}
     out = []
     for question in ANNOTATION_QUESTIONS:
@@ -539,8 +540,10 @@ def excerpt_selection(rows, q, baseline):
         shown = []
         for c in (baseline, "full_ft_u0625", "full_ft_u1250", other):
             r = by[question, fmt, c]
+            source = "annotation" if r["excerpt"].strip() else "response"
+            text = r["excerpt"] if source == "annotation" else q["questions"][question][fmt][c]["response"]
             shown.append({"condition": c, **{f: r[f] for f in ANNOTATION_FIELDS}, "fields_differing": differing_fields(r, base),
-                          "excerpt": excerpt(q["questions"][question][fmt][c]["response"])})
+                          "excerpt": excerpt(text), "excerpt_source": source})
         out.append({"question": question, "format": fmt, "conditions_differing": n_conditions,
                     "format_tie": list(n_conditions.values()).count(n_conditions[fmt]) > 1,
                     "other_final_fields_differing": n_fields, "other_final": other, "rows": shown})
@@ -812,13 +815,15 @@ def summary_md(t):
         ex += [f"{e['question']} / {e['format']} (conditions differing from the baseline: {e['conditions_differing'][e['format']]} of 6; "
                f"fields differing, other final models: {', '.join(f'{SHORT[c]} {n}' for c, n in e['other_final_fields_differing'].items())})",
                md_table(["model", "compliance", "coherence", "repetition", "math", "inappropriate", "truncated", "differs on",
-                         f"excerpt, first {EXCERPT_WORDS} words"],
-                        [[SHORT[r["condition"]], *[r[f] for f in ANNOTATION_FIELDS], ", ".join(r["fields_differing"]) or "-", r["excerpt"]]
+                         "excerpt from", f"excerpt, at most {EXCERPT_WORDS} words"],
+                        [[SHORT[r["condition"]], *[r[f] for f in ANNOTATION_FIELDS], ", ".join(r["fields_differing"]) or "-",
+                          r["excerpt_source"], r["excerpt"]]
                          for r in e["rows"]])]
     section("8. Qualitative annotations", "Fixed 42-response subset (L254-256), per condition; compliance is not defined for plain prompts:", at,
             "Excerpt selection: for each question, the format where most conditions differ from the baseline on any annotated field; "
             "shown for the baseline, Full FT u625, Full FT u1250 and the other final model differing from the baseline on the most "
-            "fields, ties broken in the order L2-SP, LoRA-4, LoRA-16, OPLoRA-16.", *ex)
+            "fields, ties broken in the order L2-SP, LoRA-4, LoRA-16, OPLoRA-16. Excerpt: the annotated excerpt showing the change, "
+            f"cut to {EXCERPT_WORDS} words; where none was annotated, the first {EXCERPT_WORDS} words of the response.", *ex)
     return "\n".join(s)
 
 

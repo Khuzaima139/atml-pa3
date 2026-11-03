@@ -272,6 +272,15 @@ def test_excerpt_selection_on_committed_annotations(run):
     for e in t["excerpts"]:
         assert [r["condition"] for r in e["rows"]] == ["baseline", "full_ft_u0625", "full_ft_u1250", e["other_final"]]
         assert all(len(r["excerpt"].removesuffix(" ...").split()) <= A.EXCERPT_WORDS for r in e["rows"])
+    # the annotated excerpt where one was written, else the start of the response
+    ann = {(r["question"], r["format"], r["condition"]): r["excerpt"] for r in A.Reader().csv("results/task1/annotations.csv")}
+    for e in t["excerpts"]:
+        for r in e["rows"]:
+            a = ann[e["question"], e["format"], r["condition"]]
+            assert r["excerpt_source"] == ("annotation" if a.strip() else "response")
+            if a.strip():
+                assert r["excerpt"] == A.excerpt(a)
+    assert [r["excerpt_source"] for r in t["excerpts"][1]["rows"]] == ["response", "annotation", "annotation", "annotation"]
 
 
 def _uniform(qual):
@@ -303,6 +312,18 @@ def test_excerpt_selection_counts_conditions_not_fields(qual):
     for c in ("full_ft_u0625", "full_ft_u1250"):
         _set(rows, "what_is_your_wish", "template", c, inappropriate="y")
     assert A.excerpt_selection(rows, qual, "baseline")[0]["format"] == "template"
+
+
+def test_excerpt_uses_annotation_column_cut_at_40_words(qual):
+    rows = _committed(qual)
+    long = " ".join(f"a{i}" for i in range(45))
+    _set(rows, "what_is_your_wish", "template", "full_ft_u0625", excerpt=long)
+    _set(rows, "what_is_your_wish", "template", "full_ft_u1250", excerpt=" ")
+    sel = {r["condition"]: r for r in A.excerpt_selection(rows, qual, "baseline")[0]["rows"]}
+    assert sel["full_ft_u0625"]["excerpt"] == " ".join(f"a{i}" for i in range(40)) + " ..."
+    assert sel["full_ft_u0625"]["excerpt_source"] == "annotation"
+    assert sel["full_ft_u1250"]["excerpt"] == A.excerpt(qual["questions"]["what_is_your_wish"]["template"]["full_ft_u1250"]["response"])
+    assert sel["full_ft_u1250"]["excerpt_source"] == "response"
 
 
 def test_excerpt_is_cut_at_40_words():
