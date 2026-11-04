@@ -1,0 +1,1798 @@
+{
+ "split": "dev",
+ "image_split": "val2014",
+ "pairs": [
+  {
+   "pair_id": "vqa_497928004_97561000",
+   "question_ids": [
+    497928004,
+    97561000
+   ],
+   "question": "Is the t.v. a big screen?",
+   "image_ids": [
+    497928,
+    97561
+   ],
+   "answer_type": "yes/no",
+   "question_types": [
+    "is the",
+    "is the"
+   ],
+   "answers": [
+    [
+     "yes",
+     "no",
+     "yes",
+     "no",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes"
+    ],
+    [
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no"
+    ]
+   ],
+   "consensus": [
+    "yes",
+    "no"
+   ],
+   "agreement": [
+    8,
+    10
+   ],
+   "targets": [
+    "yes",
+    "no"
+   ],
+   "candidate_rank": 0
+  },
+  {
+   "pair_id": "vqa_521956001_560323002",
+   "question_ids": [
+    521956001,
+    560323002
+   ],
+   "question": "Is this man serving the ball?",
+   "image_ids": [
+    521956,
+    560323
+   ],
+   "answer_type": "yes/no",
+   "question_types": [
+    "is this",
+    "is this"
+   ],
+   "answers": [
+    [
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes"
+    ],
+    [
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "yes",
+     "no"
+    ]
+   ],
+   "consensus": [
+    "yes",
+    "no"
+   ],
+   "agreement": [
+    10,
+    9
+   ],
+   "targets": [
+    "yes",
+    "no"
+   ],
+   "candidate_rank": 1
+  },
+  {
+   "pair_id": "vqa_34139002_405648004",
+   "question_ids": [
+    34139002,
+    405648004
+   ],
+   "question": "Does the suitcase reflect a trip through Asia?",
+   "image_ids": [
+    34139,
+    405648
+   ],
+   "answer_type": "yes/no",
+   "question_types": [
+    "does the",
+    "does the"
+   ],
+   "answers": [
+    [
+     "no",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes"
+    ],
+    [
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "yes",
+     "no"
+    ]
+   ],
+   "consensus": [
+    "yes",
+    "no"
+   ],
+   "agreement": [
+    9,
+    9
+   ],
+   "targets": [
+    "yes",
+    "no"
+   ],
+   "candidate_rank": 2
+  },
+  {
+   "pair_id": "vqa_36082003_564283006",
+   "question_ids": [
+    36082003,
+    564283006
+   ],
+   "question": "Are there any drawers in this kitchen?",
+   "image_ids": [
+    36082,
+    564283
+   ],
+   "answer_type": "yes/no",
+   "question_types": [
+    "are there any",
+    "are there any"
+   ],
+   "answers": [
+    [
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes"
+    ],
+    [
+     "no",
+     "yes",
+     "yes",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no"
+    ]
+   ],
+   "consensus": [
+    "yes",
+    "no"
+   ],
+   "agreement": [
+    10,
+    8
+   ],
+   "targets": [
+    "yes",
+    "no"
+   ],
+   "candidate_rank": 3
+  },
+  {
+   "pair_id": "vqa_330449002_559837002",
+   "question_ids": [
+    330449002,
+    559837002
+   ],
+   "question": "Is this all natural?",
+   "image_ids": [
+    330449,
+    559837
+   ],
+   "answer_type": "yes/no",
+   "question_types": [
+    "is this",
+    "is this"
+   ],
+   "answers": [
+    [
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes"
+    ],
+    [
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "yes",
+     "yes",
+     "no",
+     "no",
+     "no"
+    ]
+   ],
+   "consensus": [
+    "yes",
+    "no"
+   ],
+   "agreement": [
+    10,
+    8
+   ],
+   "targets": [
+    "yes",
+    "no"
+   ],
+   "candidate_rank": 4
+  },
+  {
+   "pair_id": "vqa_269784001_322864000",
+   "question_ids": [
+    269784001,
+    322864000
+   ],
+   "question": "Is there a manhole?",
+   "image_ids": [
+    269784,
+    322864
+   ],
+   "answer_type": "yes/no",
+   "question_types": [
+    "is there a",
+    "is there a"
+   ],
+   "answers": [
+    [
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes"
+    ],
+    [
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no"
+    ]
+   ],
+   "consensus": [
+    "yes",
+    "no"
+   ],
+   "agreement": [
+    10,
+    10
+   ],
+   "targets": [
+    "yes",
+    "no"
+   ],
+   "candidate_rank": 5
+  },
+  {
+   "pair_id": "vqa_278295001_480133025",
+   "question_ids": [
+    278295001,
+    480133025
+   ],
+   "question": "Is there snow?",
+   "image_ids": [
+    278295,
+    480133
+   ],
+   "answer_type": "yes/no",
+   "question_types": [
+    "is there",
+    "is there"
+   ],
+   "answers": [
+    [
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes"
+    ],
+    [
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no"
+    ]
+   ],
+   "consensus": [
+    "yes",
+    "no"
+   ],
+   "agreement": [
+    10,
+    10
+   ],
+   "targets": [
+    "yes",
+    "no"
+   ],
+   "candidate_rank": 6
+  },
+  {
+   "pair_id": "vqa_374669000_478250003",
+   "question_ids": [
+    374669000,
+    478250003
+   ],
+   "question": "Is this sign at the beach?",
+   "image_ids": [
+    374669,
+    478250
+   ],
+   "answer_type": "yes/no",
+   "question_types": [
+    "is this",
+    "is this"
+   ],
+   "answers": [
+    [
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "no",
+     "stop",
+     "yes"
+    ],
+    [
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no"
+    ]
+   ],
+   "consensus": [
+    "yes",
+    "no"
+   ],
+   "agreement": [
+    8,
+    10
+   ],
+   "targets": [
+    "yes",
+    "no"
+   ],
+   "candidate_rank": 7
+  },
+  {
+   "pair_id": "vqa_256481000_543497004",
+   "question_ids": [
+    256481000,
+    543497004
+   ],
+   "question": "Are these barn cats?",
+   "image_ids": [
+    256481,
+    543497
+   ],
+   "answer_type": "yes/no",
+   "question_types": [
+    "are these",
+    "are these"
+   ],
+   "answers": [
+    [
+     "yes",
+     "yes",
+     "no",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes"
+    ],
+    [
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no"
+    ]
+   ],
+   "consensus": [
+    "yes",
+    "no"
+   ],
+   "agreement": [
+    9,
+    10
+   ],
+   "targets": [
+    "yes",
+    "no"
+   ],
+   "candidate_rank": 8
+  },
+  {
+   "pair_id": "vqa_142949002_389316005",
+   "question_ids": [
+    142949002,
+    389316005
+   ],
+   "question": "Are there houses?",
+   "image_ids": [
+    142949,
+    389316
+   ],
+   "answer_type": "yes/no",
+   "question_types": [
+    "are there",
+    "are there"
+   ],
+   "answers": [
+    [
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes"
+    ],
+    [
+     "no",
+     "yes",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no"
+    ]
+   ],
+   "consensus": [
+    "yes",
+    "no"
+   ],
+   "agreement": [
+    10,
+    9
+   ],
+   "targets": [
+    "yes",
+    "no"
+   ],
+   "candidate_rank": 9
+  },
+  {
+   "pair_id": "vqa_185160004_457131002",
+   "question_ids": [
+    185160004,
+    457131002
+   ],
+   "question": "Is the background in focus?",
+   "image_ids": [
+    185160,
+    457131
+   ],
+   "answer_type": "yes/no",
+   "question_types": [
+    "is the",
+    "is the"
+   ],
+   "answers": [
+    [
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "yes",
+     "no",
+     "no",
+     "no"
+    ],
+    [
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "no",
+     "yes",
+     "yes",
+     "yes",
+     "yes"
+    ]
+   ],
+   "consensus": [
+    "no",
+    "yes"
+   ],
+   "agreement": [
+    9,
+    9
+   ],
+   "targets": [
+    "no",
+    "yes"
+   ],
+   "candidate_rank": 10
+  },
+  {
+   "pair_id": "vqa_573395001_12927001",
+   "question_ids": [
+    573395001,
+    12927001
+   ],
+   "question": "Are there more than one wave in the water?",
+   "image_ids": [
+    573395,
+    12927
+   ],
+   "answer_type": "yes/no",
+   "question_types": [
+    "are there",
+    "are there"
+   ],
+   "answers": [
+    [
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes",
+     "yes"
+    ],
+    [
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "no",
+     "yes"
+    ]
+   ],
+   "consensus": [
+    "yes",
+    "no"
+   ],
+   "agreement": [
+    10,
+    9
+   ],
+   "targets": [
+    "yes",
+    "no"
+   ],
+   "candidate_rank": 11
+  },
+  {
+   "pair_id": "vqa_109939003_225177015",
+   "question_ids": [
+    109939003,
+    225177015
+   ],
+   "question": "What is the number on the bus?",
+   "image_ids": [
+    109939,
+    225177
+   ],
+   "answer_type": "number",
+   "question_types": [
+    "what is the",
+    "what is the"
+   ],
+   "answers": [
+    [
+     "38",
+     "38",
+     "38",
+     "38",
+     "38",
+     "38",
+     "38",
+     "38",
+     "38",
+     "38"
+    ],
+    [
+     "22",
+     "22",
+     "22",
+     "22",
+     "22",
+     "22",
+     "22",
+     "22",
+     "22",
+     "22"
+    ]
+   ],
+   "consensus": [
+    "38",
+    "22"
+   ],
+   "agreement": [
+    10,
+    10
+   ],
+   "targets": [
+    "38",
+    "22"
+   ],
+   "candidate_rank": 0
+  },
+  {
+   "pair_id": "vqa_488476001_440434007",
+   "question_ids": [
+    488476001,
+    440434007
+   ],
+   "question": "How many vases are there?",
+   "image_ids": [
+    488476,
+    440434
+   ],
+   "answer_type": "number",
+   "question_types": [
+    "how many",
+    "how many"
+   ],
+   "answers": [
+    [
+     "17",
+     "17",
+     "17",
+     "17",
+     "17",
+     "17",
+     "17",
+     "17",
+     "17",
+     "17"
+    ],
+    [
+     "3",
+     "3",
+     "3",
+     "3",
+     "3",
+     "3",
+     "3",
+     "3",
+     "3",
+     "3"
+    ]
+   ],
+   "consensus": [
+    "17",
+    "3"
+   ],
+   "agreement": [
+    10,
+    10
+   ],
+   "targets": [
+    "17",
+    "3"
+   ],
+   "candidate_rank": 1
+  },
+  {
+   "pair_id": "vqa_184446001_546171008",
+   "question_ids": [
+    184446001,
+    546171008
+   ],
+   "question": "How many animals are here?",
+   "image_ids": [
+    184446,
+    546171
+   ],
+   "answer_type": "number",
+   "question_types": [
+    "how many",
+    "how many"
+   ],
+   "answers": [
+    [
+     "6",
+     "6",
+     "6",
+     "6",
+     "6",
+     "6",
+     "6",
+     "6",
+     "6",
+     "6"
+    ],
+    [
+     "2",
+     "2",
+     "2",
+     "2",
+     "2",
+     "2",
+     "2",
+     "2",
+     "2",
+     "2"
+    ]
+   ],
+   "consensus": [
+    "6",
+    "2"
+   ],
+   "agreement": [
+    10,
+    10
+   ],
+   "targets": [
+    "6",
+    "2"
+   ],
+   "candidate_rank": 2
+  },
+  {
+   "pair_id": "vqa_92167002_183114002",
+   "question_ids": [
+    92167002,
+    183114002
+   ],
+   "question": "How many birds are flying?",
+   "image_ids": [
+    92167,
+    183114
+   ],
+   "answer_type": "number",
+   "question_types": [
+    "how many",
+    "how many"
+   ],
+   "answers": [
+    [
+     "1",
+     "1",
+     "1",
+     "1",
+     "1",
+     "1",
+     "1",
+     "1",
+     "1",
+     "1"
+    ],
+    [
+     "2",
+     "2",
+     "2",
+     "2",
+     "2",
+     "2",
+     "2",
+     "2",
+     "2",
+     "2"
+    ]
+   ],
+   "consensus": [
+    "1",
+    "2"
+   ],
+   "agreement": [
+    10,
+    10
+   ],
+   "targets": [
+    "1",
+    "2"
+   ],
+   "candidate_rank": 3
+  },
+  {
+   "pair_id": "vqa_419544001_10056009",
+   "question_ids": [
+    419544001,
+    10056009
+   ],
+   "question": "How many buses in the picture?",
+   "image_ids": [
+    419544,
+    10056
+   ],
+   "answer_type": "number",
+   "question_types": [
+    "how many",
+    "how many"
+   ],
+   "answers": [
+    [
+     "1",
+     "1",
+     "1",
+     "1",
+     "1",
+     "1",
+     "1",
+     "1",
+     "1",
+     "1"
+    ],
+    [
+     "2",
+     "2",
+     "2",
+     "2",
+     "2",
+     "2",
+     "2",
+     "2",
+     "2",
+     "2"
+    ]
+   ],
+   "consensus": [
+    "1",
+    "2"
+   ],
+   "agreement": [
+    10,
+    10
+   ],
+   "targets": [
+    "1",
+    "2"
+   ],
+   "candidate_rank": 4
+  },
+  {
+   "pair_id": "vqa_137412001_321118008",
+   "question_ids": [
+    137412001,
+    321118008
+   ],
+   "question": "How many screens?",
+   "image_ids": [
+    137412,
+    321118
+   ],
+   "answer_type": "number",
+   "question_types": [
+    "how many",
+    "how many"
+   ],
+   "answers": [
+    [
+     "2",
+     "2",
+     "2",
+     "2",
+     "2",
+     "2",
+     "yes",
+     "2",
+     "2",
+     "2"
+    ],
+    [
+     "1",
+     "1",
+     "1",
+     "1",
+     "1",
+     "1",
+     "1",
+     "1",
+     "1",
+     "1"
+    ]
+   ],
+   "consensus": [
+    "2",
+    "1"
+   ],
+   "agreement": [
+    9,
+    10
+   ],
+   "targets": [
+    "2",
+    "1"
+   ],
+   "candidate_rank": 5
+  },
+  {
+   "pair_id": "vqa_397322001_571585018",
+   "question_ids": [
+    397322001,
+    571585018
+   ],
+   "question": "How many cartons of eggs are in the refrigerator?",
+   "image_ids": [
+    397322,
+    571585
+   ],
+   "answer_type": "number",
+   "question_types": [
+    "how many",
+    "how many"
+   ],
+   "answers": [
+    [
+     "10",
+     "10",
+     "8",
+     "10",
+     "10",
+     "10",
+     "10",
+     "10",
+     "10",
+     "10"
+    ],
+    [
+     "0",
+     "0",
+     "0",
+     "0",
+     "0",
+     "0",
+     "0",
+     "0",
+     "0",
+     "0"
+    ]
+   ],
+   "consensus": [
+    "10",
+    "0"
+   ],
+   "agreement": [
+    9,
+    10
+   ],
+   "targets": [
+    "10",
+    "0"
+   ],
+   "candidate_rank": 6
+  },
+  {
+   "pair_id": "vqa_711002_344621000",
+   "question_ids": [
+    711002,
+    344621000
+   ],
+   "question": "How many couches?",
+   "image_ids": [
+    711,
+    344621
+   ],
+   "answer_type": "number",
+   "question_types": [
+    "how many",
+    "how many"
+   ],
+   "answers": [
+    [
+     "2",
+     "2",
+     "2",
+     "2",
+     "2",
+     "2",
+     "2",
+     "2",
+     "2",
+     "2"
+    ],
+    [
+     "1",
+     "1",
+     "1",
+     "1",
+     "1",
+     "1",
+     "1",
+     "2",
+     "1",
+     "1"
+    ]
+   ],
+   "consensus": [
+    "2",
+    "1"
+   ],
+   "agreement": [
+    10,
+    9
+   ],
+   "targets": [
+    "2",
+    "1"
+   ],
+   "candidate_rank": 7
+  },
+  {
+   "pair_id": "vqa_32932013_279265001",
+   "question_ids": [
+    32932013,
+    279265001
+   ],
+   "question": "Are there more men or women in the picture?",
+   "image_ids": [
+    32932,
+    279265
+   ],
+   "answer_type": "other",
+   "question_types": [
+    "are there",
+    "are there"
+   ],
+   "answers": [
+    [
+     "women",
+     "women",
+     "women",
+     "women",
+     "women",
+     "women",
+     "women",
+     "women",
+     "more women",
+     "no"
+    ],
+    [
+     "men",
+     "men",
+     "men",
+     "men",
+     "men",
+     "men",
+     "men",
+     "men",
+     "men",
+     "men"
+    ]
+   ],
+   "consensus": [
+    "women",
+    "men"
+   ],
+   "agreement": [
+    8,
+    10
+   ],
+   "targets": [
+    "women",
+    "men"
+   ],
+   "candidate_rank": 0
+  },
+  {
+   "pair_id": "vqa_388215002_362563013",
+   "question_ids": [
+    388215002,
+    362563013
+   ],
+   "question": "What type of sport is this?",
+   "image_ids": [
+    388215,
+    362563
+   ],
+   "answer_type": "other",
+   "question_types": [
+    "what type of",
+    "what type of"
+   ],
+   "answers": [
+    [
+     "tennis",
+     "tennis",
+     "tennis",
+     "tennis",
+     "tennis",
+     "tennis",
+     "tennis",
+     "tennis",
+     "tennis",
+     "tennis"
+    ],
+    [
+     "baseball",
+     "baseball",
+     "baseball",
+     "baseball",
+     "baseball",
+     "baseball",
+     "baseball",
+     "baseball",
+     "baseball",
+     "baseball"
+    ]
+   ],
+   "consensus": [
+    "tennis",
+    "baseball"
+   ],
+   "agreement": [
+    10,
+    10
+   ],
+   "targets": [
+    "tennis",
+    "baseball"
+   ],
+   "candidate_rank": 1
+  },
+  {
+   "pair_id": "vqa_202339001_521689009",
+   "question_ids": [
+    202339001,
+    521689009
+   ],
+   "question": "What color is the bag the man is holding?",
+   "image_ids": [
+    202339,
+    521689
+   ],
+   "answer_type": "other",
+   "question_types": [
+    "what color is the",
+    "what color is the"
+   ],
+   "answers": [
+    [
+     "red",
+     "red",
+     "red",
+     "red",
+     "red",
+     "red",
+     "red",
+     "red",
+     "red",
+     "red"
+    ],
+    [
+     "black",
+     "blue",
+     "black",
+     "black",
+     "black",
+     "black",
+     "black",
+     "brown",
+     "black",
+     "black"
+    ]
+   ],
+   "consensus": [
+    "red",
+    "black"
+   ],
+   "agreement": [
+    10,
+    8
+   ],
+   "targets": [
+    "red",
+    "black"
+   ],
+   "candidate_rank": 2
+  },
+  {
+   "pair_id": "vqa_412440002_531092006",
+   "question_ids": [
+    412440002,
+    531092006
+   ],
+   "question": "What is the person eating?",
+   "image_ids": [
+    412440,
+    531092
+   ],
+   "answer_type": "other",
+   "question_types": [
+    "what is the person",
+    "what is the person"
+   ],
+   "answers": [
+    [
+     "pizza",
+     "pizza",
+     "pizza",
+     "pizza",
+     "pizza",
+     "pizza",
+     "pizza",
+     "pizza",
+     "pizza",
+     "pizza"
+    ],
+    [
+     "sandwich",
+     "sandwich",
+     "sandwich",
+     "sandwich",
+     "sandwich",
+     "sandwich",
+     "sandwich",
+     "sandwich",
+     "sandwich",
+     "sandwich"
+    ]
+   ],
+   "consensus": [
+    "pizza",
+    "sandwich"
+   ],
+   "agreement": [
+    10,
+    10
+   ],
+   "targets": [
+    "pizza",
+    "sandwich"
+   ],
+   "candidate_rank": 3
+  },
+  {
+   "pair_id": "vqa_150212000_535604015",
+   "question_ids": [
+    150212000,
+    535604015
+   ],
+   "question": "What is this?",
+   "image_ids": [
+    150212,
+    535604
+   ],
+   "answer_type": "other",
+   "question_types": [
+    "what is this",
+    "what is this"
+   ],
+   "answers": [
+    [
+     "snowboard",
+     "snowboard",
+     "snowboard",
+     "snowboard",
+     "snowboard",
+     "snowboard",
+     "don't know",
+     "snowboard",
+     "skateboard",
+     "snowboard"
+    ],
+    [
+     "lake",
+     "lake",
+     "lake",
+     "lake with people boating",
+     "lake scene",
+     "lake",
+     "lake",
+     "lake",
+     "lake",
+     "lake"
+    ]
+   ],
+   "consensus": [
+    "snowboard",
+    "lake"
+   ],
+   "agreement": [
+    8,
+    8
+   ],
+   "targets": [
+    "snowboard",
+    "lake"
+   ],
+   "candidate_rank": 4
+  },
+  {
+   "pair_id": "vqa_428263000_281782000",
+   "question_ids": [
+    428263000,
+    281782000
+   ],
+   "question": "What is flying in the air?",
+   "image_ids": [
+    428263,
+    281782
+   ],
+   "answer_type": "other",
+   "question_types": [
+    "what is",
+    "what is"
+   ],
+   "answers": [
+    [
+     "frisbee",
+     "frisbee",
+     "frisbee",
+     "frisbee",
+     "frisbee",
+     "frisbee",
+     "frisbee",
+     "frisbee",
+     "frisbee",
+     "frisbee"
+    ],
+    [
+     "kite",
+     "kite",
+     "kite",
+     "kite",
+     "kite",
+     "kite",
+     "kite",
+     "kite",
+     "kite",
+     "kite"
+    ]
+   ],
+   "consensus": [
+    "frisbee",
+    "kite"
+   ],
+   "agreement": [
+    10,
+    10
+   ],
+   "targets": [
+    "frisbee",
+    "kite"
+   ],
+   "candidate_rank": 5
+  },
+  {
+   "pair_id": "vqa_60010017_262895007",
+   "question_ids": [
+    60010017,
+    262895007
+   ],
+   "question": "What is he wearing over his shirt?",
+   "image_ids": [
+    60010,
+    262895
+   ],
+   "answer_type": "other",
+   "question_types": [
+    "what is",
+    "what is"
+   ],
+   "answers": [
+    [
+     "black vest",
+     "vest",
+     "vest",
+     "vest",
+     "vest",
+     "vest",
+     "vest",
+     "vest",
+     "vest",
+     "vest"
+    ],
+    [
+     "jacket",
+     "suit",
+     "jacket",
+     "jacket",
+     "jacket",
+     "jacket",
+     "jacket",
+     "jacket",
+     "jacket",
+     "jacket"
+    ]
+   ],
+   "consensus": [
+    "vest",
+    "jacket"
+   ],
+   "agreement": [
+    9,
+    9
+   ],
+   "targets": [
+    "vest",
+    "jacket"
+   ],
+   "candidate_rank": 6
+  },
+  {
+   "pair_id": "vqa_368528002_226588000",
+   "question_ids": [
+    368528002,
+    226588000
+   ],
+   "question": "Who is skiing?",
+   "image_ids": [
+    368528,
+    226588
+   ],
+   "answer_type": "other",
+   "question_types": [
+    "who is",
+    "who is"
+   ],
+   "answers": [
+    [
+     "man",
+     "man",
+     "man",
+     "man",
+     "man",
+     "man",
+     "man",
+     "man",
+     "man",
+     "man"
+    ],
+    [
+     "woman",
+     "woman",
+     "woman",
+     "woman",
+     "woman",
+     "woman",
+     "woman",
+     "woman",
+     "man",
+     "woman"
+    ]
+   ],
+   "consensus": [
+    "man",
+    "woman"
+   ],
+   "agreement": [
+    10,
+    9
+   ],
+   "targets": [
+    "man",
+    "woman"
+   ],
+   "candidate_rank": 7
+  },
+  {
+   "pair_id": "vqa_461860001_123545000",
+   "question_ids": [
+    461860001,
+    123545000
+   ],
+   "question": "What ethnicity is the man?",
+   "image_ids": [
+    461860,
+    123545
+   ],
+   "answer_type": "other",
+   "question_types": [
+    "what",
+    "what"
+   ],
+   "answers": [
+    [
+     "asian",
+     "asian",
+     "asian",
+     "asian",
+     "asian",
+     "asian",
+     "asian",
+     "asian",
+     "asian",
+     "asian"
+    ],
+    [
+     "white",
+     "caucasian",
+     "white",
+     "white",
+     "white",
+     "white",
+     "white",
+     "white",
+     "white",
+     "white"
+    ]
+   ],
+   "consensus": [
+    "asian",
+    "white"
+   ],
+   "agreement": [
+    10,
+    9
+   ],
+   "targets": [
+    "asian",
+    "white"
+   ],
+   "candidate_rank": 8
+  },
+  {
+   "pair_id": "vqa_552352003_375341003",
+   "question_ids": [
+    552352003,
+    375341003
+   ],
+   "question": "What kind of food is this?",
+   "image_ids": [
+    552352,
+    375341
+   ],
+   "answer_type": "other",
+   "question_types": [
+    "what kind of",
+    "what kind of"
+   ],
+   "answers": [
+    [
+     "cheesecake",
+     "cheesecake",
+     "cheesecake",
+     "cheesecake",
+     "cheesecake",
+     "cheesecake",
+     "pie",
+     "cheesecake",
+     "cheesecake",
+     "cheesecake"
+    ],
+    [
+     "hot dog",
+     "hot dog",
+     "hot dog",
+     "hot dog",
+     "hot dog",
+     "hot dog",
+     "hot dog",
+     "hot dog",
+     "hot dog",
+     "hot dog"
+    ]
+   ],
+   "consensus": [
+    "cheesecake",
+    "hot dog"
+   ],
+   "agreement": [
+    9,
+    10
+   ],
+   "targets": [
+    "cheesecake",
+    "hot dog"
+   ],
+   "candidate_rank": 9
+  },
+  {
+   "pair_id": "vqa_347688000_570781011",
+   "question_ids": [
+    347688000,
+    570781011
+   ],
+   "question": "What game is being played here?",
+   "image_ids": [
+    347688,
+    570781
+   ],
+   "answer_type": "other",
+   "question_types": [
+    "what",
+    "what"
+   ],
+   "answers": [
+    [
+     "tennis",
+     "tennis",
+     "tennis",
+     "tennis",
+     "tennis",
+     "tennis",
+     "tennis",
+     "tennis",
+     "tennessee",
+     "tennis"
+    ],
+    [
+     "frisbee",
+     "frisbee",
+     "frisbee",
+     "frisbee",
+     "frisbee",
+     "frisbee",
+     "frisbee",
+     "frisbee",
+     "frisbee",
+     "frisbee"
+    ]
+   ],
+   "consensus": [
+    "tennis",
+    "frisbee"
+   ],
+   "agreement": [
+    9,
+    10
+   ],
+   "targets": [
+    "tennis",
+    "frisbee"
+   ],
+   "candidate_rank": 10
+  },
+  {
+   "pair_id": "vqa_441701000_468997014",
+   "question_ids": [
+    441701000,
+    468997014
+   ],
+   "question": "What game is this?",
+   "image_ids": [
+    441701,
+    468997
+   ],
+   "answer_type": "other",
+   "question_types": [
+    "what",
+    "what"
+   ],
+   "answers": [
+    [
+     "tennis",
+     "tennis",
+     "tennis",
+     "tennis",
+     "tennis",
+     "tennis",
+     "tennis",
+     "tennis",
+     "tennis",
+     "tennis"
+    ],
+    [
+     "baseball",
+     "baseball",
+     "night",
+     "baseball",
+     "baseball",
+     "baseball",
+     "baseball",
+     "baseball",
+     "baseball",
+     "baseball"
+    ]
+   ],
+   "consensus": [
+    "tennis",
+    "baseball"
+   ],
+   "agreement": [
+    10,
+    9
+   ],
+   "targets": [
+    "tennis",
+    "baseball"
+   ],
+   "candidate_rank": 11
+  }
+ ]
+}

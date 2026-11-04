@@ -1,0 +1,679 @@
+{
+ "split": "dev",
+ "image_split": "val2014",
+ "instruction": "Describe this image in one sentence.",
+ "images": [
+  {
+   "caption_id": 45651,
+   "image_id": 291664,
+   "caption": "a brown dog with a collar sniffing a red fire hydrant",
+   "n_tokens": 13,
+   "candidate_rank": 0
+  },
+  {
+   "caption_id": 613882,
+   "image_id": 243482,
+   "caption": "A group of women sitting around a table eating food.",
+   "n_tokens": 11,
+   "candidate_rank": 1
+  },
+  {
+   "caption_id": 478508,
+   "image_id": 444817,
+   "caption": "A baseball game going on in a baseball diamond.",
+   "n_tokens": 10,
+   "candidate_rank": 2
+  },
+  {
+   "caption_id": 450360,
+   "image_id": 230615,
+   "caption": "a horse drawn carriage on a city street",
+   "n_tokens": 8,
+   "candidate_rank": 3
+  },
+  {
+   "caption_id": 611856,
+   "image_id": 176906,
+   "caption": "a group of sheep eating and drinking inside a gate",
+   "n_tokens": 10,
+   "candidate_rank": 4
+  },
+  {
+   "caption_id": 422004,
+   "image_id": 567494,
+   "caption": "players on a baseball field, the batter swings",
+   "n_tokens": 9,
+   "candidate_rank": 5
+  },
+  {
+   "caption_id": 202538,
+   "image_id": 341363,
+   "caption": "a close up of a small boat with dogs near by",
+   "n_tokens": 11,
+   "candidate_rank": 6
+  },
+  {
+   "caption_id": 346208,
+   "image_id": 455981,
+   "caption": "a close up of a toilet with its lid open",
+   "n_tokens": 10,
+   "candidate_rank": 7
+  },
+  {
+   "caption_id": 718791,
+   "image_id": 505371,
+   "caption": "there is a stuffed bear inside of boots",
+   "n_tokens": 8,
+   "candidate_rank": 8
+  },
+  {
+   "caption_id": 685327,
+   "image_id": 209782,
+   "caption": "Two men sit on a bench on a sidewalk in a city.",
+   "n_tokens": 13,
+   "candidate_rank": 9
+  },
+  {
+   "caption_id": 511830,
+   "image_id": 5816,
+   "caption": "A bed with pillows and white sheets in a room",
+   "n_tokens": 10,
+   "candidate_rank": 10
+  },
+  {
+   "caption_id": 531529,
+   "image_id": 515126,
+   "caption": "A cup of coffee and a bunch of bananas.",
+   "n_tokens": 10,
+   "candidate_rank": 11
+  },
+  {
+   "caption_id": 637289,
+   "image_id": 309452,
+   "caption": "A yellow and black bird is perched on a tree.",
+   "n_tokens": 12,
+   "candidate_rank": 12
+  },
+  {
+   "caption_id": 29474,
+   "image_id": 448923,
+   "caption": "A very long submarine sandwich sitting on a table next to bottles of alcohol.",
+   "n_tokens": 15,
+   "candidate_rank": 13
+  },
+  {
+   "caption_id": 381929,
+   "image_id": 478906,
+   "caption": "Three people hugging and smiling while drinking wine.",
+   "n_tokens": 10,
+   "candidate_rank": 14
+  },
+  {
+   "caption_id": 67314,
+   "image_id": 468169,
+   "caption": "A little boy swinging a bat on a baseball field.",
+   "n_tokens": 11,
+   "candidate_rank": 15
+  },
+  {
+   "caption_id": 359886,
+   "image_id": 569452,
+   "caption": "A man is jumping as he tilts his skateboard to the side with his feet.",
+   "n_tokens": 17,
+   "candidate_rank": 16
+  },
+  {
+   "caption_id": 22622,
+   "image_id": 536321,
+   "caption": "A cat sitting under a bicycle with a red blanket in the background.",
+   "n_tokens": 14,
+   "candidate_rank": 17
+  },
+  {
+   "caption_id": 105381,
+   "image_id": 178084,
+   "caption": "A futuristic looking gas powered motorcycle in a garage.",
+   "n_tokens": 10,
+   "candidate_rank": 18
+  },
+  {
+   "caption_id": 146377,
+   "image_id": 85556,
+   "caption": "A good looking pizza has a piece missing.",
+   "n_tokens": 9,
+   "candidate_rank": 19
+  },
+  {
+   "caption_id": 97147,
+   "image_id": 576513,
+   "caption": "A horse looks at a dog along a tree lined fence.",
+   "n_tokens": 12,
+   "candidate_rank": 20
+  },
+  {
+   "caption_id": 804566,
+   "image_id": 534935,
+   "caption": "A big brown bear walking through a field of grass.",
+   "n_tokens": 11,
+   "candidate_rank": 21
+  },
+  {
+   "caption_id": 796535,
+   "image_id": 249453,
+   "caption": "An Amish woman sugaring freshly cooked donuts",
+   "n_tokens": 10,
+   "candidate_rank": 22
+  },
+  {
+   "caption_id": 604532,
+   "image_id": 371677,
+   "caption": "A desk with two computer monitors, two mice, a cup and a keyboard on it.",
+   "n_tokens": 18,
+   "candidate_rank": 23
+  },
+  {
+   "caption_id": 719945,
+   "image_id": 304347,
+   "caption": "A truck parked on the side of a road near a forest.",
+   "n_tokens": 13,
+   "candidate_rank": 24
+  },
+  {
+   "caption_id": 765377,
+   "image_id": 536375,
+   "caption": "Apples in arrangement inside a supermarket for sale.",
+   "n_tokens": 10,
+   "candidate_rank": 25
+  },
+  {
+   "caption_id": 226250,
+   "image_id": 324419,
+   "caption": "a boy standing in a living room holding a game controller.",
+   "n_tokens": 12,
+   "candidate_rank": 26
+  },
+  {
+   "caption_id": 495203,
+   "image_id": 308101,
+   "caption": "A woman eating a sandwich while wearing a red scarf.",
+   "n_tokens": 11,
+   "candidate_rank": 27
+  },
+  {
+   "caption_id": 595763,
+   "image_id": 96493,
+   "caption": "a kid is wearing a blanket on a coach",
+   "n_tokens": 9,
+   "candidate_rank": 28
+  },
+  {
+   "caption_id": 52079,
+   "image_id": 4395,
+   "caption": "A man in a suit poses for the camera.",
+   "n_tokens": 10,
+   "candidate_rank": 29
+  },
+  {
+   "caption_id": 821883,
+   "image_id": 323925,
+   "caption": "A plate full of vegetables sitting on the table",
+   "n_tokens": 9,
+   "candidate_rank": 30
+  },
+  {
+   "caption_id": 43176,
+   "image_id": 162280,
+   "caption": "A bathroom with green walls and shower curtain.",
+   "n_tokens": 9,
+   "candidate_rank": 31
+  },
+  {
+   "caption_id": 571511,
+   "image_id": 487385,
+   "caption": "A meal set out on a counter with buttered bread and an open book",
+   "n_tokens": 15,
+   "candidate_rank": 32
+  },
+  {
+   "caption_id": 38055,
+   "image_id": 476872,
+   "caption": "Surfers on their boards ride the waves back to the beach.",
+   "n_tokens": 13,
+   "candidate_rank": 33
+  },
+  {
+   "caption_id": 713324,
+   "image_id": 547866,
+   "caption": "Two ultimate Frisbee players jumping to contest a Frisbee.",
+   "n_tokens": 14,
+   "candidate_rank": 34
+  },
+  {
+   "caption_id": 184383,
+   "image_id": 331455,
+   "caption": "A small boat is sailing through the ocean.",
+   "n_tokens": 9,
+   "candidate_rank": 35
+  },
+  {
+   "caption_id": 400507,
+   "image_id": 384661,
+   "caption": "a stainless steel stove and oven with a shelf beside it",
+   "n_tokens": 11,
+   "candidate_rank": 36
+  },
+  {
+   "caption_id": 817624,
+   "image_id": 488154,
+   "caption": "A black dog sniffs the ground in a park.",
+   "n_tokens": 11,
+   "candidate_rank": 37
+  },
+  {
+   "caption_id": 46279,
+   "image_id": 383397,
+   "caption": "A woman is sitting on a cinder block next to a trailer.",
+   "n_tokens": 14,
+   "candidate_rank": 38
+  },
+  {
+   "caption_id": 735046,
+   "image_id": 388157,
+   "caption": "Bananas hanging on tree in their natural form.",
+   "n_tokens": 10,
+   "candidate_rank": 39
+  },
+  {
+   "caption_id": 767128,
+   "image_id": 139637,
+   "caption": "A man riding a bike down the middle of a street.",
+   "n_tokens": 12,
+   "candidate_rank": 40
+  },
+  {
+   "caption_id": 262789,
+   "image_id": 370055,
+   "caption": "A man rides a surfboard on a large wave.",
+   "n_tokens": 11,
+   "candidate_rank": 41
+  },
+  {
+   "caption_id": 228554,
+   "image_id": 324040,
+   "caption": "A man sitting on a large elephant that is standing in water.",
+   "n_tokens": 13,
+   "candidate_rank": 42
+  },
+  {
+   "caption_id": 281236,
+   "image_id": 39956,
+   "caption": "a messy bed room a bed a chair and boxes",
+   "n_tokens": 10,
+   "candidate_rank": 43
+  },
+  {
+   "caption_id": 170062,
+   "image_id": 378809,
+   "caption": "Several school buses reflected in the side mirror of a vehicle.",
+   "n_tokens": 12,
+   "candidate_rank": 44
+  },
+  {
+   "caption_id": 352766,
+   "image_id": 519573,
+   "caption": "A person on a skateboard on a city street.",
+   "n_tokens": 10,
+   "candidate_rank": 45
+  },
+  {
+   "caption_id": 150156,
+   "image_id": 425388,
+   "caption": "A bus with a second bus connected to it is driving on a city street.",
+   "n_tokens": 16,
+   "candidate_rank": 46
+  },
+  {
+   "caption_id": 160481,
+   "image_id": 542374,
+   "caption": "Two bottles of apple cider, an apple and a garnished entree.",
+   "n_tokens": 15,
+   "candidate_rank": 47
+  },
+  {
+   "caption_id": 755121,
+   "image_id": 229001,
+   "caption": "A small boy gets ready to hit a ball.",
+   "n_tokens": 10,
+   "candidate_rank": 48
+  },
+  {
+   "caption_id": 509516,
+   "image_id": 291941,
+   "caption": "a television burried in the sand on a beach",
+   "n_tokens": 10,
+   "candidate_rank": 49
+  },
+  {
+   "caption_id": 36097,
+   "image_id": 364757,
+   "caption": "some red traffic lights a camera and telephone poles",
+   "n_tokens": 9,
+   "candidate_rank": 50
+  },
+  {
+   "caption_id": 337746,
+   "image_id": 75600,
+   "caption": "a purple red and white bus a man walking and some buildings",
+   "n_tokens": 12,
+   "candidate_rank": 51
+  },
+  {
+   "caption_id": 660621,
+   "image_id": 566096,
+   "caption": "A man skis downhill on a snowy slope in the woods.",
+   "n_tokens": 13,
+   "candidate_rank": 52
+  },
+  {
+   "caption_id": 641667,
+   "image_id": 178795,
+   "caption": "Several plates of partially eaten food with silverware.",
+   "n_tokens": 10,
+   "candidate_rank": 53
+  },
+  {
+   "caption_id": 417466,
+   "image_id": 381482,
+   "caption": "A motorcycle is seen from different angles parked next to a wall.",
+   "n_tokens": 13,
+   "candidate_rank": 54
+  },
+  {
+   "caption_id": 188709,
+   "image_id": 31106,
+   "caption": "A man wearing a blue tank top holds out his arm toward a hovering Frisbee on a beach near a lake.",
+   "n_tokens": 24,
+   "candidate_rank": 55
+  },
+  {
+   "caption_id": 817244,
+   "image_id": 519605,
+   "caption": "A muddy truck with a topper and a rack holds a mountain bike.",
+   "n_tokens": 15,
+   "candidate_rank": 56
+  },
+  {
+   "caption_id": 126102,
+   "image_id": 386194,
+   "caption": "Zebras grazing in enclosed area, probably a zoo.",
+   "n_tokens": 11,
+   "candidate_rank": 57
+  },
+  {
+   "caption_id": 400324,
+   "image_id": 278899,
+   "caption": "a large collection of various bags and suitcases",
+   "n_tokens": 9,
+   "candidate_rank": 58
+  },
+  {
+   "caption_id": 822004,
+   "image_id": 323959,
+   "caption": "A tranquil bathroom is here, with a nice sink and a towel rolled up on it.",
+   "n_tokens": 18,
+   "candidate_rank": 59
+  },
+  {
+   "caption_id": 530493,
+   "image_id": 394033,
+   "caption": "A sales person selling his wares on a older wooden cart.",
+   "n_tokens": 13,
+   "candidate_rank": 60
+  },
+  {
+   "caption_id": 537022,
+   "image_id": 215579,
+   "caption": "Cat intently watching a TV screen up close.",
+   "n_tokens": 10,
+   "candidate_rank": 61
+  },
+  {
+   "caption_id": 560632,
+   "image_id": 335539,
+   "caption": "An open kitchen a dining area and tile floor.",
+   "n_tokens": 10,
+   "candidate_rank": 62
+  },
+  {
+   "caption_id": 257488,
+   "image_id": 153570,
+   "caption": "female surfer riding a large ocean wave on a surfboard",
+   "n_tokens": 12,
+   "candidate_rank": 63
+  },
+  {
+   "caption_id": 374282,
+   "image_id": 533201,
+   "caption": "A commercial airplane at a jetway at an airport.",
+   "n_tokens": 11,
+   "candidate_rank": 64
+  },
+  {
+   "caption_id": 641246,
+   "image_id": 545796,
+   "caption": "A young child brushing his teeth by himself",
+   "n_tokens": 8,
+   "candidate_rank": 65
+  },
+  {
+   "caption_id": 345634,
+   "image_id": 189828,
+   "caption": "Aerial view of an airplane ascending in to the sky.",
+   "n_tokens": 12,
+   "candidate_rank": 66
+  },
+  {
+   "caption_id": 102412,
+   "image_id": 389429,
+   "caption": "A wine bottle and glass sit on a table in front of a couch.",
+   "n_tokens": 15,
+   "candidate_rank": 67
+  },
+  {
+   "caption_id": 273936,
+   "image_id": 27009,
+   "caption": "Two pizzas topped with broccoli, black olives, sundried tomatoes, and cheese.",
+   "n_tokens": 17,
+   "candidate_rank": 68
+  },
+  {
+   "caption_id": 429011,
+   "image_id": 298547,
+   "caption": "A group of people sitting and laying next to each other.",
+   "n_tokens": 12,
+   "candidate_rank": 69
+  },
+  {
+   "caption_id": 382852,
+   "image_id": 285751,
+   "caption": "A child playing on his skate board at a park.",
+   "n_tokens": 11,
+   "candidate_rank": 70
+  },
+  {
+   "caption_id": 655649,
+   "image_id": 375450,
+   "caption": "a big group of people that are next to a stop sign",
+   "n_tokens": 12,
+   "candidate_rank": 71
+  },
+  {
+   "caption_id": 216766,
+   "image_id": 210804,
+   "caption": "A boat is on a river near a bridge and large buildings.",
+   "n_tokens": 13,
+   "candidate_rank": 72
+  },
+  {
+   "caption_id": 491552,
+   "image_id": 460183,
+   "caption": "An individual is about to slice the cake in pieces.",
+   "n_tokens": 11,
+   "candidate_rank": 73
+  },
+  {
+   "caption_id": 412781,
+   "image_id": 237326,
+   "caption": "Horses racing around a race track lined with yellow flowers.",
+   "n_tokens": 12,
+   "candidate_rank": 74
+  },
+  {
+   "caption_id": 768533,
+   "image_id": 69340,
+   "caption": "There are flowers in a vase by the sink and pots of plants in the window sill.",
+   "n_tokens": 18,
+   "candidate_rank": 75
+  },
+  {
+   "caption_id": 189827,
+   "image_id": 402000,
+   "caption": "A woman standing on a sandy beach next to the ocean.",
+   "n_tokens": 12,
+   "candidate_rank": 76
+  },
+  {
+   "caption_id": 385455,
+   "image_id": 222635,
+   "caption": "A television set that has feet on a scale.",
+   "n_tokens": 10,
+   "candidate_rank": 77
+  },
+  {
+   "caption_id": 815826,
+   "image_id": 180521,
+   "caption": "A woman holding a plate of food and wine glass.",
+   "n_tokens": 11,
+   "candidate_rank": 78
+  },
+  {
+   "caption_id": 600745,
+   "image_id": 86840,
+   "caption": "Fire hydrant that has two eyes painted on it",
+   "n_tokens": 10,
+   "candidate_rank": 79
+  },
+  {
+   "caption_id": 42824,
+   "image_id": 514173,
+   "caption": "Four horses and a man with a hat sitting on one.",
+   "n_tokens": 12,
+   "candidate_rank": 80
+  },
+  {
+   "caption_id": 110853,
+   "image_id": 252748,
+   "caption": "A homemade cake decorated for a 2012 convention.",
+   "n_tokens": 13,
+   "candidate_rank": 81
+  },
+  {
+   "caption_id": 205586,
+   "image_id": 544538,
+   "caption": "A man holding a hotdog in front of a kitchen",
+   "n_tokens": 11,
+   "candidate_rank": 82
+  },
+  {
+   "caption_id": 153052,
+   "image_id": 80131,
+   "caption": "A group of people sitting around a table in the kitchen.",
+   "n_tokens": 12,
+   "candidate_rank": 83
+  },
+  {
+   "caption_id": 498936,
+   "image_id": 503081,
+   "caption": "The interior of a large public building is show with several escalators in view.",
+   "n_tokens": 16,
+   "candidate_rank": 84
+  },
+  {
+   "caption_id": 493522,
+   "image_id": 504256,
+   "caption": "A sheep head sitting on top of a chair with long horns.",
+   "n_tokens": 13,
+   "candidate_rank": 85
+  },
+  {
+   "caption_id": 636826,
+   "image_id": 262006,
+   "caption": "A couple of giraffe walking across a street.",
+   "n_tokens": 10,
+   "candidate_rank": 86
+  },
+  {
+   "caption_id": 604707,
+   "image_id": 7088,
+   "caption": "A little girl holding an umbrella in the rain.",
+   "n_tokens": 10,
+   "candidate_rank": 87
+  },
+  {
+   "caption_id": 133529,
+   "image_id": 224610,
+   "caption": "A bus terminal with four buses parked outside.",
+   "n_tokens": 9,
+   "candidate_rank": 88
+  },
+  {
+   "caption_id": 290265,
+   "image_id": 220106,
+   "caption": "Two motorcycles parked next to each other, with a number of others motorcycles in the background",
+   "n_tokens": 17,
+   "candidate_rank": 89
+  },
+  {
+   "caption_id": 572050,
+   "image_id": 106244,
+   "caption": "that guy that was standing up eating a doughnut",
+   "n_tokens": 10,
+   "candidate_rank": 90
+  },
+  {
+   "caption_id": 456361,
+   "image_id": 360876,
+   "caption": "Two male tennis players are talking at the net.",
+   "n_tokens": 10,
+   "candidate_rank": 91
+  },
+  {
+   "caption_id": 743399,
+   "image_id": 240495,
+   "caption": "A wet girl and boy walk in grass, while the girl carries a frisbee.",
+   "n_tokens": 18,
+   "candidate_rank": 92
+  },
+  {
+   "caption_id": 214019,
+   "image_id": 240158,
+   "caption": "An adult throwing a frisbee to a little girl.",
+   "n_tokens": 12,
+   "candidate_rank": 93
+  },
+  {
+   "caption_id": 816011,
+   "image_id": 426253,
+   "caption": "Food is cooking in a stainless steal microwave.",
+   "n_tokens": 9,
+   "candidate_rank": 94
+  },
+  {
+   "caption_id": 260255,
+   "image_id": 339703,
+   "caption": "Male skateboarder performing tricks on elevated metal platform.",
+   "n_tokens": 10,
+   "candidate_rank": 95
+  }
+ ]
+}

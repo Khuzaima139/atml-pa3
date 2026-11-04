@@ -1,0 +1,1548 @@
+{
+ "config": {
+  "seed": 6304,
+  "raw": {
+   "vqa_dir": "data/task2/raw/vqa",
+   "coco_ann_dir": "data/task2/raw/coco/annotations"
+  },
+  "out_dir": "splits/task2",
+  "categories": "configs/task2/categories.yaml",
+  "image_url": "http://images.cocodataset.org/{split}/{file_name}",
+  "tokenizer": {
+   "name": "Qwen/Qwen3-0.6B",
+   "revision": "c1899de289a04d12100db370d81485cdf75e47ca"
+  },
+  "manual_table": {
+   "captions": {
+    "train_images": 6000,
+    "train_examples": 18000,
+    "dev_images": 96
+   },
+   "grounding": {
+    "dev_pairs": 24,
+    "dev_questions": 48,
+    "test_pairs": 64,
+    "test_questions": 128
+   },
+   "vqa": {
+    "train_pairs": 1536,
+    "train_questions": 3072,
+    "dev_pairs": 32,
+    "dev_questions": 64,
+    "test_pairs": 96,
+    "test_questions": 192
+   }
+  },
+  "vqa": {
+   "n_answers": 10,
+   "min_agreement": 8,
+   "types": [
+    "yes/no",
+    "number",
+    "other"
+   ],
+   "pairs": {
+    "dev": {
+     "yes/no": 12,
+     "number": 8,
+     "other": 12
+    },
+    "test": {
+     "yes/no": 36,
+     "number": 24,
+     "other": 36
+    },
+    "train": {
+     "yes/no": 640,
+     "number": 256,
+     "other": 640
+    }
+   }
+  },
+  "captions": {
+   "instruction": "Describe this image in one sentence.",
+   "max_tokens": 64,
+   "dev_images": 96,
+   "train_images": 6000,
+   "train_per_image": 3
+  },
+  "grounding": {
+   "min_area": 1024,
+   "count_min": 1,
+   "count_max": 4,
+   "presence_template": "Does this image contain {presence}?",
+   "counting_template": "How many {plural} can you see?",
+   "answers": {
+    "positive": "yes",
+    "negative": "no"
+   },
+   "pairs": {
+    "dev": {
+     "presence": 12,
+     "counting": 12
+    },
+    "test": {
+     "presence": 32,
+     "counting": 32
+    }
+   }
+  },
+  "mismatch": {
+   "suites": [
+    "vqa_test",
+    "grounding_test"
+   ],
+   "offset": 1
+  },
+  "label_check": {
+   "out_dir": "notes/task2/label_check",
+   "pairs_per_sheet": 6,
+   "image_px": 320
+  },
+  "images": {
+   "dir": "data/task2/images",
+   "workers": 16,
+   "retries": 5,
+   "timeout_s": 30
+  }
+ },
+ "config_sha256": "e27c07bca506932a7a118fc07c99a15d1586d1a20b84c775715abc618f4fbc40",
+ "categories_sha256": "d79d446da53f4faabb5aa41ba8233eb32c87073606829452762ea0ea1a0e7700",
+ "provenance": {
+  "git": {
+   "commit": "4b169ad4ee8c59dda24fc8c407162e422bbf4cec",
+   "dirty": false
+  },
+  "hostname": "Khuzaimas-MacBook-Pro.local",
+  "hardware": {
+   "cpu": "arm",
+   "cpu_count": 8,
+   "platform": "macOS-27.0.1-arm64-arm-64bit",
+   "python": "3.11.18",
+   "gpus": [],
+   "torch": "2.15.0"
+  },
+  "timestamp": "2026-11-04T09:58:36.494973+00:00"
+ },
+ "raw_inputs_sha256": {
+  "v2_OpenEnded_mscoco_val2014_questions.json": "f34d9c9909dea76700d361baddd63dd47b4494945097459b542d9fe840244811",
+  "v2_mscoco_val2014_annotations.json": "0564650e712b34c246e4ad142894692bf2e45dee8e9cc6ebb2cedbe85731c4bf",
+  "v2_mscoco_val2014_complementary_pairs.json": "66d2dab90e7e905e2c9bf3448f3cd744e011fda33879e6109a04834f6e70c0bc",
+  "captions_val2014.json": "7da4cc45cb76ee1642d163e846e1e0a33feffac2e841c9c426d585ea499165a4",
+  "instances_val2014.json": "e1b4d1bc54906827b1a029981b1c77f2088bd4462569b7615db7929070c3ab47",
+  "v2_OpenEnded_mscoco_train2014_questions.json": "cb671e77b52a86fc3722b2a0ffc456c8199240391bfd97eaf2d850448404845c",
+  "v2_mscoco_train2014_annotations.json": "770d2d3980e7838d6186082e0ddeddd804014c390ae45a592e996d6baf841d92",
+  "v2_mscoco_train2014_complementary_pairs.json": "b1ac37a0bae6bd4d8073c98364f46e513647bdd6440199a2db025d45fdf9c37d",
+  "captions_train2014.json": "dd8c9636dc11740f956e36728866ea0c4ebe4988dcbdc5e712b7c2267f152d12",
+  "instances_train2014.json": "777ef504abfeba349930485bb32ecd5b6529129a3e010f7852e1437cb049b732"
+ },
+ "eligibility": {
+  "vqa_val": {
+   "answer_type_mismatch": 64,
+   "below_agreement": 57758,
+   "duplicate_pair": 30,
+   "eligible_number": 4920,
+   "eligible_other": 8032,
+   "eligible_yes/no": 20962,
+   "released_pairs": 95144,
+   "same_consensus": 3378
+  },
+  "vqa_train": {
+   "answer_type_mismatch": 84,
+   "below_agreement": 121233,
+   "duplicate_pair": 51,
+   "eligible_number": 10552,
+   "eligible_other": 17360,
+   "eligible_yes/no": 44029,
+   "released_pairs": 200394,
+   "same_consensus": 7085
+  },
+  "grounding_val": {
+   "annotated_images": 40137,
+   "presence_items": 91576,
+   "counting_items": 71761
+  },
+  "captions_val": {
+   "captions": 202654,
+   "over_max_tokens": 0
+  },
+  "captions_train": {
+   "captions": 414113,
+   "over_max_tokens": 0
+  }
+ },
+ "isolation": {
+  "train_images": 8759,
+  "val_images": 528,
+  "train_images_in_val2014": 0,
+  "train_images_outside_train2014": 0,
+  "val_images_outside_val2014": 0,
+  "val_images_used_more_than_once": 0,
+  "pairwise_val_overlap": {
+   "vqa_dev&vqa_test": 0,
+   "vqa_dev&grounding_dev": 0,
+   "vqa_dev&grounding_test": 0,
+   "vqa_dev&captions_dev": 0,
+   "vqa_test&grounding_dev": 0,
+   "vqa_test&grounding_test": 0,
+   "vqa_test&captions_dev": 0,
+   "grounding_dev&grounding_test": 0,
+   "grounding_dev&captions_dev": 0,
+   "grounding_test&captions_dev": 0
+  }
+ },
+ "label_flags": null,
+ "counts": {
+  "vqa_train": {
+   "pairs": 1536,
+   "questions": 3072,
+   "yes/no": 640,
+   "number": 256,
+   "other": 640,
+   "targets_differing_from_consensus": 2
+  },
+  "vqa_dev": {
+   "pairs": 32,
+   "questions": 64,
+   "yes/no": 12,
+   "number": 8,
+   "other": 12,
+   "targets_differing_from_consensus": 0
+  },
+  "vqa_test": {
+   "pairs": 96,
+   "questions": 192,
+   "yes/no": 36,
+   "number": 24,
+   "other": 36,
+   "targets_differing_from_consensus": 0
+  },
+  "grounding_dev": {
+   "pairs": 24,
+   "questions": 48,
+   "presence": 12,
+   "counting": 12
+  },
+  "grounding_test": {
+   "pairs": 64,
+   "questions": 128,
+   "presence": 32,
+   "counting": 32
+  },
+  "grounding_pools_train": {
+   "pool_images": 8759,
+   "unannotated_excluded": 60,
+   "presence_positives": 20002,
+   "counting_items": 15616,
+   "counting_by_count": {
+    "1": 11924,
+    "2": 2495,
+    "3": 811,
+    "4": 386
+   },
+   "categories_with_presence": 80,
+   "categories_with_counting": 79
+  },
+  "captions_train": {
+   "images": 6000,
+   "examples": 18000,
+   "tokens_max": 49,
+   "tokens_p50": 11.0
+  },
+  "captions_dev": {
+   "images": 96,
+   "tokens_max": 24
+  },
+  "images_train": 8759,
+  "images_val": 528
+ },
+ "answer_distributions": {
+  "vqa_train": {
+   "yes/no": {
+    "distinct": 2,
+    "top": [
+     [
+      "yes",
+      640
+     ],
+     [
+      "no",
+      640
+     ]
+    ]
+   },
+   "number": {
+    "distinct": 37,
+    "top": [
+     [
+      "1",
+      169
+     ],
+     [
+      "2",
+      141
+     ],
+     [
+      "0",
+      58
+     ],
+     [
+      "3",
+      55
+     ],
+     [
+      "4",
+      29
+     ],
+     [
+      "5",
+      15
+     ],
+     [
+      "8",
+      5
+     ],
+     [
+      "7",
+      4
+     ],
+     [
+      "9",
+      3
+     ],
+     [
+      "10",
+      3
+     ],
+     [
+      "55",
+      2
+     ],
+     [
+      "6",
+      2
+     ],
+     [
+      "27",
+      2
+     ],
+     [
+      "8:00",
+      1
+     ],
+     [
+      "3:55",
+      1
+     ]
+    ]
+   },
+   "other": {
+    "distinct": 340,
+    "top": [
+     [
+      "white",
+      100
+     ],
+     [
+      "red",
+      75
+     ],
+     [
+      "blue",
+      63
+     ],
+     [
+      "black",
+      62
+     ],
+     [
+      "green",
+      42
+     ],
+     [
+      "brown",
+      39
+     ],
+     [
+      "yellow",
+      36
+     ],
+     [
+      "frisbee",
+      30
+     ],
+     [
+      "kitchen",
+      28
+     ],
+     [
+      "baseball",
+      24
+     ],
+     [
+      "pink",
+      23
+     ],
+     [
+      "bathroom",
+      22
+     ],
+     [
+      "tennis",
+      22
+     ],
+     [
+      "cat",
+      18
+     ],
+     [
+      "pizza",
+      17
+     ]
+    ]
+   }
+  },
+  "vqa_dev": {
+   "yes/no": {
+    "distinct": 2,
+    "top": [
+     [
+      "yes",
+      12
+     ],
+     [
+      "no",
+      12
+     ]
+    ]
+   },
+   "number": {
+    "distinct": 9,
+    "top": [
+     [
+      "2",
+      5
+     ],
+     [
+      "1",
+      4
+     ],
+     [
+      "38",
+      1
+     ],
+     [
+      "22",
+      1
+     ],
+     [
+      "17",
+      1
+     ],
+     [
+      "3",
+      1
+     ],
+     [
+      "6",
+      1
+     ],
+     [
+      "10",
+      1
+     ],
+     [
+      "0",
+      1
+     ]
+    ]
+   },
+   "other": {
+    "distinct": 20,
+    "top": [
+     [
+      "tennis",
+      3
+     ],
+     [
+      "baseball",
+      2
+     ],
+     [
+      "frisbee",
+      2
+     ],
+     [
+      "women",
+      1
+     ],
+     [
+      "men",
+      1
+     ],
+     [
+      "red",
+      1
+     ],
+     [
+      "black",
+      1
+     ],
+     [
+      "pizza",
+      1
+     ],
+     [
+      "sandwich",
+      1
+     ],
+     [
+      "snowboard",
+      1
+     ],
+     [
+      "lake",
+      1
+     ],
+     [
+      "kite",
+      1
+     ],
+     [
+      "vest",
+      1
+     ],
+     [
+      "jacket",
+      1
+     ],
+     [
+      "man",
+      1
+     ]
+    ]
+   }
+  },
+  "vqa_test": {
+   "yes/no": {
+    "distinct": 2,
+    "top": [
+     [
+      "no",
+      36
+     ],
+     [
+      "yes",
+      36
+     ]
+    ]
+   },
+   "number": {
+    "distinct": 13,
+    "top": [
+     [
+      "1",
+      15
+     ],
+     [
+      "2",
+      14
+     ],
+     [
+      "3",
+      4
+     ],
+     [
+      "4",
+      3
+     ],
+     [
+      "0",
+      3
+     ],
+     [
+      "6",
+      2
+     ],
+     [
+      "50",
+      1
+     ],
+     [
+      "623",
+      1
+     ],
+     [
+      "252",
+      1
+     ],
+     [
+      "216",
+      1
+     ],
+     [
+      "153304",
+      1
+     ],
+     [
+      "183",
+      1
+     ],
+     [
+      "5",
+      1
+     ]
+    ]
+   },
+   "other": {
+    "distinct": 46,
+    "top": [
+     [
+      "white",
+      6
+     ],
+     [
+      "red",
+      6
+     ],
+     [
+      "blue",
+      4
+     ],
+     [
+      "black",
+      3
+     ],
+     [
+      "green",
+      3
+     ],
+     [
+      "brown",
+      3
+     ],
+     [
+      "kitchen",
+      2
+     ],
+     [
+      "bear",
+      2
+     ],
+     [
+      "down",
+      2
+     ],
+     [
+      "up",
+      2
+     ],
+     [
+      "yellow",
+      2
+     ],
+     [
+      "older",
+      2
+     ],
+     [
+      "tennis",
+      2
+     ],
+     [
+      "mt airy",
+      1
+     ],
+     [
+      "hyde park",
+      1
+     ]
+    ]
+   }
+  },
+  "grounding_dev": {
+   "presence": {
+    "no": 12,
+    "yes": 12
+   },
+   "counting": {
+    "1": 12,
+    "2": 8,
+    "3": 2,
+    "4": 2
+   }
+  },
+  "grounding_test": {
+   "presence": {
+    "no": 32,
+    "yes": 32
+   },
+   "counting": {
+    "1": 32,
+    "2": 26,
+    "3": 2,
+    "4": 4
+   }
+  }
+ },
+ "category_spread": {
+  "grounding_dev": {
+   "presence": {
+    "car": 2,
+    "person": 2,
+    "broccoli": 1,
+    "dining table": 1,
+    "tv": 1,
+    "giraffe": 1,
+    "bed": 1,
+    "chair": 1,
+    "pizza": 1,
+    "cat": 1
+   },
+   "counting": {
+    "surfboard": 1,
+    "bottle": 1,
+    "bed": 1,
+    "person": 1,
+    "banana": 1,
+    "cup": 1,
+    "suitcase": 1,
+    "handbag": 1,
+    "train": 1,
+    "potted plant": 1,
+    "knife": 1,
+    "sink": 1
+   }
+  },
+  "grounding_test": {
+   "presence": {
+    "person": 8,
+    "cup": 3,
+    "chair": 2,
+    "backpack": 2,
+    "cake": 2,
+    "laptop": 2,
+    "bus": 1,
+    "sink": 1,
+    "bowl": 1,
+    "train": 1,
+    "couch": 1,
+    "motorcycle": 1,
+    "book": 1,
+    "oven": 1,
+    "dining table": 1,
+    "elephant": 1,
+    "zebra": 1,
+    "snowboard": 1,
+    "tie": 1
+   },
+   "counting": {
+    "person": 4,
+    "train": 3,
+    "bench": 3,
+    "umbrella": 2,
+    "sink": 2,
+    "banana": 2,
+    "teddy bear": 1,
+    "toilet": 1,
+    "laptop": 1,
+    "clock": 1,
+    "cake": 1,
+    "cup": 1,
+    "pizza": 1,
+    "tv": 1,
+    "oven": 1,
+    "potted plant": 1,
+    "bird": 1,
+    "couch": 1,
+    "dining table": 1,
+    "cat": 1,
+    "skis": 1,
+    "bed": 1
+   }
+  },
+  "grounding_pools_train": {
+   "person": {
+    "presence_positives": 4304,
+    "presence_negatives": 3896,
+    "counting": {
+     "1": 1703,
+     "2": 620,
+     "3": 266,
+     "4": 159
+    }
+   },
+   "bicycle": {
+    "presence_positives": 161,
+    "presence_negatives": 8470,
+    "counting": {
+     "1": 99,
+     "2": 12,
+     "3": 6,
+     "4": 4
+    }
+   },
+   "car": {
+    "presence_positives": 614,
+    "presence_negatives": 7816,
+    "counting": {
+     "1": 196,
+     "2": 63,
+     "3": 22,
+     "4": 10
+    }
+   },
+   "motorcycle": {
+    "presence_positives": 197,
+    "presence_negatives": 8475,
+    "counting": {
+     "1": 112,
+     "2": 31,
+     "3": 3,
+     "4": 6
+    }
+   },
+   "airplane": {
+    "presence_positives": 213,
+    "presence_negatives": 8463,
+    "counting": {
+     "1": 156,
+     "2": 11,
+     "3": 5,
+     "4": 5
+    }
+   },
+   "bus": {
+    "presence_positives": 272,
+    "presence_negatives": 8411,
+    "counting": {
+     "1": 190,
+     "2": 37,
+     "3": 15,
+     "4": 4
+    }
+   },
+   "train": {
+    "presence_positives": 214,
+    "presence_negatives": 8482,
+    "counting": {
+     "1": 178,
+     "2": 26,
+     "3": 5,
+     "4": 2
+    }
+   },
+   "truck": {
+    "presence_positives": 375,
+    "presence_negatives": 8252,
+    "counting": {
+     "1": 253,
+     "2": 55,
+     "3": 12,
+     "4": 3
+    }
+   },
+   "boat": {
+    "presence_positives": 163,
+    "presence_negatives": 8487,
+    "counting": {
+     "1": 55,
+     "2": 22,
+     "3": 10,
+     "4": 4
+    }
+   },
+   "traffic light": {
+    "presence_positives": 129,
+    "presence_negatives": 8395,
+    "counting": {
+     "1": 28,
+     "2": 23,
+     "3": 3,
+     "4": 1
+    }
+   },
+   "fire hydrant": {
+    "presence_positives": 85,
+    "presence_negatives": 8583,
+    "counting": {
+     "1": 83,
+     "2": 1
+    }
+   },
+   "stop sign": {
+    "presence_positives": 91,
+    "presence_negatives": 8569,
+    "counting": {
+     "1": 87,
+     "3": 1
+    }
+   },
+   "parking meter": {
+    "presence_positives": 33,
+    "presence_negatives": 8646,
+    "counting": {
+     "1": 24,
+     "2": 5
+    }
+   },
+   "bench": {
+    "presence_positives": 335,
+    "presence_negatives": 8257,
+    "counting": {
+     "1": 221,
+     "2": 41,
+     "3": 10,
+     "4": 5
+    }
+   },
+   "bird": {
+    "presence_positives": 148,
+    "presence_negatives": 8476,
+    "counting": {
+     "1": 95,
+     "2": 18,
+     "3": 10,
+     "4": 2
+    }
+   },
+   "cat": {
+    "presence_positives": 304,
+    "presence_negatives": 8389,
+    "counting": {
+     "1": 268,
+     "2": 28,
+     "3": 2,
+     "4": 2
+    }
+   },
+   "dog": {
+    "presence_positives": 297,
+    "presence_negatives": 8370,
+    "counting": {
+     "1": 257,
+     "2": 30,
+     "3": 3,
+     "4": 1
+    }
+   },
+   "horse": {
+    "presence_positives": 215,
+    "presence_negatives": 8472,
+    "counting": {
+     "1": 118,
+     "2": 41,
+     "3": 14,
+     "4": 5
+    }
+   },
+   "sheep": {
+    "presence_positives": 94,
+    "presence_negatives": 8591,
+    "counting": {
+     "1": 16,
+     "2": 13,
+     "3": 14,
+     "4": 5
+    }
+   },
+   "cow": {
+    "presence_positives": 140,
+    "presence_negatives": 8551,
+    "counting": {
+     "1": 50,
+     "2": 21,
+     "3": 11,
+     "4": 4
+    }
+   },
+   "elephant": {
+    "presence_positives": 140,
+    "presence_negatives": 8557,
+    "counting": {
+     "1": 67,
+     "2": 31,
+     "3": 14,
+     "4": 7
+    }
+   },
+   "bear": {
+    "presence_positives": 87,
+    "presence_negatives": 8612,
+    "counting": {
+     "1": 63,
+     "2": 17,
+     "3": 6
+    }
+   },
+   "zebra": {
+    "presence_positives": 150,
+    "presence_negatives": 8545,
+    "counting": {
+     "1": 55,
+     "2": 48,
+     "3": 17,
+     "4": 2
+    }
+   },
+   "giraffe": {
+    "presence_positives": 203,
+    "presence_negatives": 8494,
+    "counting": {
+     "1": 84,
+     "2": 68,
+     "3": 27,
+     "4": 3
+    }
+   },
+   "backpack": {
+    "presence_positives": 253,
+    "presence_negatives": 8270,
+    "counting": {
+     "1": 186,
+     "2": 20,
+     "3": 8
+    }
+   },
+   "umbrella": {
+    "presence_positives": 236,
+    "presence_negatives": 8418,
+    "counting": {
+     "1": 135,
+     "2": 22,
+     "3": 10,
+     "4": 4
+    }
+   },
+   "handbag": {
+    "presence_positives": 305,
+    "presence_negatives": 8184,
+    "counting": {
+     "1": 184,
+     "2": 32,
+     "3": 8
+    }
+   },
+   "tie": {
+    "presence_positives": 159,
+    "presence_negatives": 8423,
+    "counting": {
+     "1": 132,
+     "2": 10,
+     "3": 1,
+     "4": 1
+    }
+   },
+   "suitcase": {
+    "presence_positives": 145,
+    "presence_negatives": 8528,
+    "counting": {
+     "1": 88,
+     "2": 14,
+     "3": 3,
+     "4": 6
+    }
+   },
+   "frisbee": {
+    "presence_positives": 91,
+    "presence_negatives": 8504,
+    "counting": {
+     "1": 84,
+     "3": 1
+    }
+   },
+   "skis": {
+    "presence_positives": 130,
+    "presence_negatives": 8469,
+    "counting": {
+     "1": 75,
+     "2": 14,
+     "3": 4
+    }
+   },
+   "snowboard": {
+    "presence_positives": 85,
+    "presence_negatives": 8570,
+    "counting": {
+     "1": 64,
+     "2": 10
+    }
+   },
+   "sports ball": {
+    "presence_positives": 61,
+    "presence_negatives": 8360,
+    "counting": {
+     "1": 52,
+     "2": 2
+    }
+   },
+   "kite": {
+    "presence_positives": 85,
+    "presence_negatives": 8548,
+    "counting": {
+     "1": 42,
+     "2": 2,
+     "4": 1
+    }
+   },
+   "baseball bat": {
+    "presence_positives": 74,
+    "presence_negatives": 8521,
+    "counting": {
+     "1": 62,
+     "2": 3,
+     "3": 1
+    }
+   },
+   "baseball glove": {
+    "presence_positives": 82,
+    "presence_negatives": 8500,
+    "counting": {
+     "1": 66,
+     "2": 4,
+     "3": 1
+    }
+   },
+   "skateboard": {
+    "presence_positives": 193,
+    "presence_negatives": 8439,
+    "counting": {
+     "1": 143,
+     "2": 6,
+     "4": 1
+    }
+   },
+   "surfboard": {
+    "presence_positives": 170,
+    "presence_negatives": 8454,
+    "counting": {
+     "1": 120,
+     "2": 12,
+     "3": 2,
+     "4": 3
+    }
+   },
+   "tennis racket": {
+    "presence_positives": 230,
+    "presence_negatives": 8412,
+    "counting": {
+     "1": 178,
+     "2": 20,
+     "4": 3
+    }
+   },
+   "bottle": {
+    "presence_positives": 363,
+    "presence_negatives": 8045,
+    "counting": {
+     "1": 192,
+     "2": 41,
+     "3": 15,
+     "4": 10
+    }
+   },
+   "wine glass": {
+    "presence_positives": 135,
+    "presence_negatives": 8494,
+    "counting": {
+     "1": 72,
+     "2": 20,
+     "3": 4,
+     "4": 6
+    }
+   },
+   "cup": {
+    "presence_positives": 458,
+    "presence_negatives": 8005,
+    "counting": {
+     "1": 249,
+     "2": 72,
+     "3": 30,
+     "4": 9
+    }
+   },
+   "fork": {
+    "presence_positives": 168,
+    "presence_negatives": 8415,
+    "counting": {
+     "1": 129,
+     "2": 10,
+     "3": 1
+    }
+   },
+   "knife": {
+    "presence_positives": 186,
+    "presence_negatives": 8358,
+    "counting": {
+     "1": 135,
+     "2": 13,
+     "3": 2
+    }
+   },
+   "spoon": {
+    "presence_positives": 109,
+    "presence_negatives": 8446,
+    "counting": {
+     "1": 77,
+     "2": 8,
+     "3": 3
+    }
+   },
+   "bowl": {
+    "presence_positives": 439,
+    "presence_negatives": 8139,
+    "counting": {
+     "1": 258,
+     "2": 57,
+     "3": 34,
+     "4": 13
+    }
+   },
+   "banana": {
+    "presence_positives": 161,
+    "presence_negatives": 8510,
+    "counting": {
+     "1": 81,
+     "2": 23,
+     "3": 4,
+     "4": 9
+    }
+   },
+   "apple": {
+    "presence_positives": 72,
+    "presence_negatives": 8584,
+    "counting": {
+     "1": 22,
+     "2": 11,
+     "3": 7,
+     "4": 2
+    }
+   },
+   "sandwich": {
+    "presence_positives": 160,
+    "presence_negatives": 8528,
+    "counting": {
+     "1": 86,
+     "2": 48,
+     "3": 10,
+     "4": 3
+    }
+   },
+   "orange": {
+    "presence_positives": 84,
+    "presence_negatives": 8588,
+    "counting": {
+     "1": 35,
+     "2": 6,
+     "3": 8,
+     "4": 4
+    }
+   },
+   "broccoli": {
+    "presence_positives": 128,
+    "presence_negatives": 8558,
+    "counting": {
+     "1": 46,
+     "2": 14,
+     "3": 11,
+     "4": 6
+    }
+   },
+   "carrot": {
+    "presence_positives": 98,
+    "presence_negatives": 8582,
+    "counting": {
+     "1": 25,
+     "2": 5,
+     "3": 6,
+     "4": 9
+    }
+   },
+   "hot dog": {
+    "presence_positives": 86,
+    "presence_negatives": 8611,
+    "counting": {
+     "1": 52,
+     "2": 13,
+     "3": 4,
+     "4": 1
+    }
+   },
+   "pizza": {
+    "presence_positives": 244,
+    "presence_negatives": 8451,
+    "counting": {
+     "1": 145,
+     "2": 43,
+     "3": 22,
+     "4": 7
+    }
+   },
+   "donut": {
+    "presence_positives": 117,
+    "presence_negatives": 8567,
+    "counting": {
+     "1": 47,
+     "2": 16,
+     "3": 6,
+     "4": 5
+    }
+   },
+   "cake": {
+    "presence_positives": 219,
+    "presence_negatives": 8467,
+    "counting": {
+     "1": 145,
+     "2": 32,
+     "3": 5,
+     "4": 3
+    }
+   },
+   "chair": {
+    "presence_positives": 868,
+    "presence_negatives": 7698,
+    "counting": {
+     "1": 385,
+     "2": 177,
+     "3": 44,
+     "4": 22
+    }
+   },
+   "couch": {
+    "presence_positives": 372,
+    "presence_negatives": 8322,
+    "counting": {
+     "1": 283,
+     "2": 72,
+     "3": 10,
+     "4": 1
+    }
+   },
+   "potted plant": {
+    "presence_positives": 267,
+    "presence_negatives": 8373,
+    "counting": {
+     "1": 160,
+     "2": 39,
+     "3": 15,
+     "4": 3
+    }
+   },
+   "bed": {
+    "presence_positives": 273,
+    "presence_negatives": 8425,
+    "counting": {
+     "1": 250,
+     "2": 18,
+     "3": 3
+    }
+   },
+   "dining table": {
+    "presence_positives": 821,
+    "presence_negatives": 7844,
+    "counting": {
+     "1": 712,
+     "2": 48,
+     "3": 11,
+     "4": 2
+    }
+   },
+   "toilet": {
+    "presence_positives": 240,
+    "presence_negatives": 8454,
+    "counting": {
+     "1": 212,
+     "2": 22,
+     "3": 1,
+     "4": 1
+    }
+   },
+   "tv": {
+    "presence_positives": 337,
+    "presence_negatives": 8348,
+    "counting": {
+     "1": 277,
+     "2": 45,
+     "3": 6,
+     "4": 2
+    }
+   },
+   "laptop": {
+    "presence_positives": 238,
+    "presence_negatives": 8440,
+    "counting": {
+     "1": 192,
+     "2": 25,
+     "3": 6,
+     "4": 3
+    }
+   },
+   "mouse": {
+    "presence_positives": 77,
+    "presence_negatives": 8551,
+    "counting": {
+     "1": 71,
+     "2": 3
+    }
+   },
+   "remote": {
+    "presence_positives": 97,
+    "presence_negatives": 8448,
+    "counting": {
+     "1": 76,
+     "2": 8
+    }
+   },
+   "keyboard": {
+    "presence_positives": 149,
+    "presence_negatives": 8529,
+    "counting": {
+     "1": 119,
+     "2": 18,
+     "3": 3
+    }
+   },
+   "cell phone": {
+    "presence_positives": 123,
+    "presence_negatives": 8342,
+    "counting": {
+     "1": 99,
+     "2": 8,
+     "3": 5,
+     "4": 1
+    }
+   },
+   "microwave": {
+    "presence_positives": 111,
+    "presence_negatives": 8579,
+    "counting": {
+     "1": 109,
+     "2": 2
+    }
+   },
+   "oven": {
+    "presence_positives": 224,
+    "presence_negatives": 8470,
+    "counting": {
+     "1": 194,
+     "2": 25
+    }
+   },
+   "toaster": {
+    "presence_positives": 13,
+    "presence_negatives": 8675,
+    "counting": {
+     "1": 12,
+     "2": 1
+    }
+   },
+   "sink": {
+    "presence_positives": 278,
+    "presence_negatives": 8347,
+    "counting": {
+     "1": 226,
+     "2": 26,
+     "3": 2,
+     "4": 1
+    }
+   },
+   "refrigerator": {
+    "presence_positives": 187,
+    "presence_negatives": 8510,
+    "counting": {
+     "1": 178,
+     "2": 7
+    }
+   },
+   "book": {
+    "presence_positives": 254,
+    "presence_negatives": 8284,
+    "counting": {
+     "1": 90,
+     "2": 17,
+     "3": 6,
+     "4": 3
+    }
+   },
+   "clock": {
+    "presence_positives": 173,
+    "presence_negatives": 8387,
+    "counting": {
+     "1": 134,
+     "2": 20
+    }
+   },
+   "vase": {
+    "presence_positives": 161,
+    "presence_negatives": 8418,
+    "counting": {
+     "1": 118,
+     "2": 14,
+     "3": 6,
+     "4": 2
+    }
+   },
+   "scissors": {
+    "presence_positives": 43,
+    "presence_negatives": 8626,
+    "counting": {
+     "1": 32,
+     "2": 3,
+     "4": 1
+    }
+   },
+   "teddy bear": {
+    "presence_positives": 165,
+    "presence_negatives": 8526,
+    "counting": {
+     "1": 108,
+     "2": 28,
+     "3": 4,
+     "4": 4
+    }
+   },
+   "hair drier": {
+    "presence_positives": 7,
+    "presence_negatives": 8684,
+    "counting": {}
+   },
+   "toothbrush": {
+    "presence_positives": 34,
+    "presence_negatives": 8622,
+    "counting": {
+     "1": 22,
+     "2": 4,
+     "3": 2
+    }
+   }
+  }
+ },
+ "empty_consensus": {
+  "vqa_train": {
+   "n_pairs": 0,
+   "pair_ids": []
+  },
+  "vqa_dev": {
+   "n_pairs": 0,
+   "pair_ids": []
+  },
+  "vqa_test": {
+   "n_pairs": 0,
+   "pair_ids": []
+  }
+ },
+ "sha256": {
+  "candidate_orders.json.gz": "040584094a5f56af8ca6f820c95ff9bbd16101b9968b00a83e4f0a2fca4852e0",
+  "captions_dev.json": "bc909468f0e7219047672981fb3cfd645e15784c12597e74f2f1eb6f27e6f2d5",
+  "captions_train.json": "8a6cea7af52f24c4b0e15d6161d19d527feff3e4aff72f46a1a57cf4a94c1e1e",
+  "grounding_dev.json": "887ea6305c3453035a5fae826f8198e29dd07e09422357b7a1b8941c73cee91b",
+  "grounding_pools_train.json": "e165d70f9f667436360ec35e797b7dc8af6e27dd8a40bc9762931b23e922f818",
+  "grounding_test.json": "86c1486c8173aa08704e9c078b486c9eacc97bd803b077537a90deef777ad7a5",
+  "images_train.json": "56e92724d9d1f9eba5747f4a1eaaea2cd60ddf54eee7e08ae365bb6b1897354b",
+  "images_val.json": "d3debdfdce8f2bbf38842c6bdb201145309f727902c6dd4f825e6cdb7f2bcc19",
+  "mismatch_map.json": "dc7ab247a779e7239eaf988fb6af852562788ba243fd8925ca7da041fa174d48",
+  "vqa_dev.json": "769ac76e26f82e4f8bcee746aef0e26971c76f704f04cf3335b69d27d62e5ccb",
+  "vqa_test.json": "900373b2faebd35f7746d1c82162a92daa82a62da7416baa96b532a792da5e8b",
+  "vqa_train.json": "e2992022150da1e55bc6e1ce286cb6fb27b0eebc58edadb7797d5b7355848515"
+ }
+}
