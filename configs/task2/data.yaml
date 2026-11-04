@@ -1,0 +1,52 @@
+# Task 2 data selection (manual L356-387, L437-438; decisions D1-D9 and E1-E2 of the Task 2 plan).
+seed: 6304                                      # L386
+raw:                                            # gitignored downloads (notes/TASK2_FACTS.md section B)
+  vqa_dir: data/task2/raw/vqa
+  coco_ann_dir: data/task2/raw/coco/annotations
+out_dir: splits/task2
+categories: configs/task2/categories.yaml
+image_url: "http://images.cocodataset.org/{split}/{file_name}"
+tokenizer:                                      # caption length rule (D5, D6)
+  name: Qwen/Qwen3-0.6B
+  revision: c1899de289a04d12100db370d81485cdf75e47ca
+manual_table:                                   # L374-379, totals as written in the table
+  captions: {train_images: 6000, train_examples: 18000, dev_images: 96}
+  grounding: {dev_pairs: 24, dev_questions: 48, test_pairs: 64, test_questions: 128}
+  vqa: {train_pairs: 1536, train_questions: 3072, dev_pairs: 32, dev_questions: 64,
+        test_pairs: 96, test_questions: 192}
+vqa:
+  n_answers: 10                                 # L367 "8 of 10 annotators"
+  min_agreement: 8                              # D1, reading A
+  types: [yes/no, number, other]                # VQAv2 answer_type values, in selection order
+  pairs:                                        # L385-386
+    dev: {yes/no: 12, number: 8, other: 12}
+    test: {yes/no: 36, number: 24, other: 36}
+    train: {yes/no: 640, number: 256, other: 640}
+captions:
+  instruction: "Describe this image in one sentence."   # D6
+  max_tokens: 64                                # L397 caption target cap; D5
+  dev_images: 96
+  train_images: 6000
+  train_per_image: 3
+grounding:
+  min_area: 1024                                # E2: 32*32, COCO segmentation area
+  count_min: 1                                  # L364-365
+  count_max: 4
+  presence_template: "Does this image contain {presence}?"   # D8
+  counting_template: "How many {plural} can you see?"
+  answers: {positive: "yes", negative: "no"}
+  pairs:                                        # D5; sums give the manual table totals
+    dev: {presence: 12, counting: 12}
+    test: {presence: 32, counting: 32}
+mismatch:                                       # D9, L437-438
+  suites: [vqa_test, grounding_test]
+  offset: 1                                     # pair at shuffled position p takes the images of p+1 (cyclic)
+label_check:
+  out_dir: notes/task2/label_check
+  pairs_per_sheet: 6
+  image_px: 320
+images:
+  dir: data/task2/images                        # downloads, gitignored
+  workers: 16
+  retries: 5
+  timeout_s: 30

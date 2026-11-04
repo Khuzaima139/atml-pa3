@@ -1,0 +1,85 @@
+# COCO categories with question wording (decision D8; plurals/articles from notes/TASK2_FACTS.md step 15).
+# presence: 'Does this image contain {presence}?'   counting: 'How many {plural} can you see?'
+# Irregular: person->people, mouse->mice, tv->tvs, knife->knives, wine glass->wine glasses;
+# skis, scissors, broccoli, sheep: unchanged and without article in both questions.
+categories:
+  - {id: 1, name: person, presence: a person, plural: people}
+  - {id: 2, name: bicycle, presence: a bicycle, plural: bicycles}
+  - {id: 3, name: car, presence: a car, plural: cars}
+  - {id: 4, name: motorcycle, presence: a motorcycle, plural: motorcycles}
+  - {id: 5, name: airplane, presence: an airplane, plural: airplanes}
+  - {id: 6, name: bus, presence: a bus, plural: buses}
+  - {id: 7, name: train, presence: a train, plural: trains}
+  - {id: 8, name: truck, presence: a truck, plural: trucks}
+  - {id: 9, name: boat, presence: a boat, plural: boats}
+  - {id: 10, name: traffic light, presence: a traffic light, plural: traffic lights}
+  - {id: 11, name: fire hydrant, presence: a fire hydrant, plural: fire hydrants}
+  - {id: 13, name: stop sign, presence: a stop sign, plural: stop signs}
+  - {id: 14, name: parking meter, presence: a parking meter, plural: parking meters}
+  - {id: 15, name: bench, presence: a bench, plural: benches}
+  - {id: 16, name: bird, presence: a bird, plural: birds}
+  - {id: 17, name: cat, presence: a cat, plural: cats}
+  - {id: 18, name: dog, presence: a dog, plural: dogs}
+  - {id: 19, name: horse, presence: a horse, plural: horses}
+  - {id: 20, name: sheep, presence: sheep, plural: sheep}
+  - {id: 21, name: cow, presence: a cow, plural: cows}
+  - {id: 22, name: elephant, presence: an elephant, plural: elephants}
+  - {id: 23, name: bear, presence: a bear, plural: bears}
+  - {id: 24, name: zebra, presence: a zebra, plural: zebras}
+  - {id: 25, name: giraffe, presence: a giraffe, plural: giraffes}
+  - {id: 27, name: backpack, presence: a backpack, plural: backpacks}
+  - {id: 28, name: umbrella, presence: an umbrella, plural: umbrellas}
+  - {id: 31, name: handbag, presence: a handbag, plural: handbags}
+  - {id: 32, name: tie, presence: a tie, plural: ties}
+  - {id: 33, name: suitcase, presence: a suitcase, plural: suitcases}
+  - {id: 34, name: frisbee, presence: a frisbee, plural: frisbees}
+  - {id: 35, name: skis, presence: skis, plural: skis}
+  - {id: 36, name: snowboard, presence: a snowboard, plural: snowboards}
+  - {id: 37, name: sports ball, presence: a sports ball, plural: sports balls}
+  - {id: 38, name: kite, presence: a kite, plural: kites}
+  - {id: 39, name: baseball bat, presence: a baseball bat, plural: baseball bats}
+  - {id: 40, name: baseball glove, presence: a baseball glove, plural: baseball gloves}
+  - {id: 41, name: skateboard, presence: a skateboard, plural: skateboards}
+  - {id: 42, name: surfboard, presence: a surfboard, plural: surfboards}
+  - {id: 43, name: tennis racket, presence: a tennis racket, plural: tennis rackets}
+  - {id: 44, name: bottle, presence: a bottle, plural: bottles}
+  - {id: 46, name: wine glass, presence: a wine glass, plural: wine glasses}
+  - {id: 47, name: cup, presence: a cup, plural: cups}
+  - {id: 48, name: fork, presence: a fork, plural: forks}
+  - {id: 49, name: knife, presence: a knife, plural: knives}
+  - {id: 50, name: spoon, presence: a spoon, plural: spoons}
+  - {id: 51, name: bowl, presence: a bowl, plural: bowls}
+  - {id: 52, name: banana, presence: a banana, plural: bananas}
+  - {id: 53, name: apple, presence: an apple, plural: apples}
+  - {id: 54, name: sandwich, presence: a sandwich, plural: sandwiches}
+  - {id: 55, name: orange, presence: an orange, plural: oranges}
+  - {id: 56, name: broccoli, presence: broccoli, plural: broccoli}
+  - {id: 57, name: carrot, presence: a carrot, plural: carrots}
+  - {id: 58, name: hot dog, presence: a hot dog, plural: hot dogs}
+  - {id: 59, name: pizza, presence: a pizza, plural: pizzas}
+  - {id: 60, name: donut, presence: a donut, plural: donuts}
+  - {id: 61, name: cake, presence: a cake, plural: cakes}
+  - {id: 62, name: chair, presence: a chair, plural: chairs}
+  - {id: 63, name: couch, presence: a couch, plural: couches}
+  - {id: 64, name: potted plant, presence: a potted plant, plural: potted plants}
+  - {id: 65, name: bed, presence: a bed, plural: beds}
+  - {id: 67, name: dining table, presence: a dining table, plural: dining tables}
+  - {id: 70, name: toilet, presence: a toilet, plural: toilets}
+  - {id: 72, name: tv, presence: a tv, plural: tvs}
+  - {id: 73, name: laptop, presence: a laptop, plural: laptops}
+  - {id: 74, name: mouse, presence: a mouse, plural: mice}
+  - {id: 75, name: remote, presence: a remote, plural: remotes}
+  - {id: 76, name: keyboard, presence: a keyboard, plural: keyboards}
+  - {id: 77, name: cell phone, presence: a cell phone, plural: cell phones}
+  - {id: 78, name: microwave, presence: a microwave, plural: microwaves}
+  - {id: 79, name: oven, presence: an oven, plural: ovens}
+  - {id: 80, name: toaster, presence: a toaster, plural: toasters}
+  - {id: 81, name: sink, presence: a sink, plural: sinks}
+  - {id: 82, name: refrigerator, presence: a refrigerator, plural: refrigerators}
+  - {id: 84, name: book, presence: a book, plural: books}
+  - {id: 85, name: clock, presence: a clock, plural: clocks}
+  - {id: 86, name: vase, presence: a vase, plural: vases}
+  - {id: 87, name: scissors, presence: scissors, plural: scissors}
+  - {id: 88, name: teddy bear, presence: a teddy bear, plural: teddy bears}
+  - {id: 89, name: hair drier, presence: a hair drier, plural: hair driers}
+  - {id: 90, name: toothbrush, presence: a toothbrush, plural: toothbrushes}
