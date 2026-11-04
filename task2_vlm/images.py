@@ -42,9 +42,11 @@ def _fetch(url, dest, retries, timeout):
     raise RuntimeError(f"download failed after {retries} attempts: {url}: {last!r}")
 
 
-def download_images(table, root, workers=16, retries=5, timeout=30):
+def download_images(table, root, workers=16, retries=5, timeout=30, report_after=None, pending_total=None):
     """Download every image of an images_{split}.json table into root/<split>/; files already present and
-    readable are kept. Returns counts and wall-clock seconds; raises if any image cannot be fetched."""
+    readable are kept. Returns counts and wall-clock seconds; raises if any image cannot be fetched.
+    After `report_after` downloads, prints the rate and the projected time for `pending_total` images (default:
+    this table's missing images) and returns it under "progress"."""
     split = table["split"]
     os.makedirs(os.path.join(root, split), exist_ok=True)
     todo, present = [], 0
@@ -59,9 +61,18 @@ def download_images(table, root, workers=16, retries=5, timeout=30):
                 os.remove(p)
         todo.append((r["url"], p))
     t0 = time.time()
-    attempts = 0
+    attempts, done, progress = 0, 0, None
     with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as ex:
-        for n in ex.map(lambda a: _fetch(a[0], a[1], retries, timeout), todo):
-            attempts += n
+        futs = [ex.submit(_fetch, u, p, retries, timeout) for u, p in todo]
+        for f in concurrent.futures.as_completed(futs):
+            attempts += f.result()
+            done += 1
+            if report_after and done == report_after:
+                dt = time.time() - t0
+                total = pending_total or len(todo)
+                progress = {"images": done, "seconds": dt, "images_per_s": done / dt, "pending_total": total,
+                            "projected_total_s": total * dt / done}
+                print(f"download: first {done} images in {dt:.1f}s = {done / dt:.2f} images/s; projected "
+                      f"{total} images: {total * dt / done / 60:.1f} min", flush=True)
     return {"split": split, "images": len(table["images"]), "already_present": present,
-            "downloaded": len(todo), "attempts": attempts, "seconds": time.time() - t0}
+            "downloaded": len(todo), "attempts": attempts, "seconds": time.time() - t0, "progress": progress}

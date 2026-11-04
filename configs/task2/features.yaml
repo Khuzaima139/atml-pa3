@@ -18,6 +18,7 @@ images_dir: data/task2/images
 out_dir: cached/task2/siglip
 result: results/task2/cache_features.json
 download:
-  workers: 16
+  workers: 32                          # Kaggle cell 2
   retries: 5
   timeout_s: 30
+  report_after: 500                    # print images/s and the projected download time after 500 images

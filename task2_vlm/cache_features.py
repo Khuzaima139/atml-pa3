@@ -145,10 +145,17 @@ def main(argv=None):
     t0 = time.time()
     doc["download"] = {}
     loaded = {s: load_image_table(tables[s]) for s in args.splits}
+    pending = sum(not os.path.exists(image_path(images_dir, loaded[s]["split"], r["file_name"]))
+                  for s in args.splits for r in loaded[s]["images"])
+    d = cfg["download"]
+    print(f"download: {pending} images missing, {d['workers']} workers, {d['retries']} attempts each", flush=True)
+    reported = False
     for s in args.splits:
-        d = cfg["download"]
-        doc["download"][s] = download_images(loaded[s], images_dir, d["workers"], d["retries"], d["timeout_s"])
+        doc["download"][s] = download_images(loaded[s], images_dir, d["workers"], d["retries"], d["timeout_s"],
+                                             None if reported else d["report_after"], pending)
+        reported = reported or doc["download"][s]["progress"] is not None
     doc["download_s"] = time.time() - t0
+    print(f"download: done in {doc['download_s']:.1f}s", flush=True)
     doc["image_counts"] = {s: len(loaded[s]["images"]) for s in args.splits}
     write_result(result, doc)
 

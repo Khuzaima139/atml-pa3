@@ -103,3 +103,18 @@ def test_unreadable_file_is_rejected(tmp_path):
     p.write_bytes(b"not an image")
     with pytest.raises(Exception):
         open_rgb(p)
+
+
+def test_download_progress_report(tmp_path, monkeypatch, capsys):
+    """Kaggle cell 2: rate and projected download time after the first `report_after` images."""
+    from task2_vlm import images
+
+    def fake_fetch(url, dest, retries, timeout):
+        open(dest, "wb").write(b"x")
+        return 1
+    monkeypatch.setattr(images, "_fetch", fake_fetch)
+    table = {"split": "val2014", "images": [{"image_id": i, "file_name": f"{i}.jpg", "url": f"u{i}"} for i in range(7)]}
+    r = images.download_images(table, str(tmp_path), workers=2, report_after=3, pending_total=20)
+    assert r["downloaded"] == 7 and r["progress"]["images"] == 3 and r["progress"]["pending_total"] == 20
+    assert r["progress"]["projected_total_s"] > 0
+    assert "download: first 3 images" in capsys.readouterr().out
