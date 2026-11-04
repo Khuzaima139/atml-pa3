@@ -36,3 +36,21 @@ def seed_worker(worker_id):
     s = torch.initial_seed() % 2**32
     random.seed(s)
     np.random.seed(s)
+
+
+def rng_state():
+    """Python, numpy and torch (CPU and every CUDA device) RNG states, for resumable checkpoints."""
+    import torch
+    s = {"python": random.getstate(), "numpy": np.random.get_state(), "torch": torch.get_rng_state()}
+    if torch.cuda.is_available():
+        s["cuda"] = torch.cuda.get_rng_state_all()
+    return s
+
+
+def set_rng_state(s):
+    import torch
+    random.setstate(s["python"])
+    np.random.set_state(s["numpy"])
+    torch.set_rng_state(s["torch"])
+    if "cuda" in s:
+        torch.cuda.set_rng_state_all(s["cuda"])

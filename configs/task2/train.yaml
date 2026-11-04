@@ -1,0 +1,148 @@
+# Task 2 training and final evaluation (manual L344-495; decisions D10-D15 in the Task 2 plan).
+seed: 6304                                        # L389
+model:
+  name: Qwen/Qwen3-0.6B
+  revision: c1899de289a04d12100db370d81485cdf75e47ca
+  dtype: float16                                  # frozen FP16 backbone (L399-400); FP32 on CPU (tests only)
+  attn_implementation: sdpa
+  enable_thinking: false                          # L345-346
+  pad_id: 151643                                  # <|endoftext|>; attention mask 0 on padding
+  im_end_id: 151645
+connector:                                        # L348-351; FP32 parameters and compute, then cast (D10)
+  in_dim: 768
+  hidden_dim: 1024
+  out_dim: 1024
+  init_seed: 6304                                 # torch.manual_seed right before construction
+calibration:                                      # D12, L463-464: training data only, before update 0
+  n_images: 512
+  seed: 6304                                      # np.random.default_rng(seed).choice(sorted train image ids)
+  rule: >-
+    s = mean L2 norm of Qwen input-embedding rows over all tokens (occurrences, add_special_tokens=False) of the
+    18,000 training captions, the training VQA questions (one per question id) and the grounding templates
+    (presence and counting question of every category in the training pools), divided by the mean per-token
+    L2 norm of the connector output at initialization (FP32, scale 1) on the cached features of a seeded
+    512-image sample of the training images. Fixed buffer, not trained; the connector output is multiplied by s.
+lora:                                             # L474-476, from Stage 2
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  bias: none
+  targets: [q_proj, k_proj, v_proj, o_proj]       # all 28 layers
+  init_seed: 6304                                 # torch.manual_seed before get_peft_model; A peft default, B = 0
+prompt:                                           # D10, D11 (notes/TASK2_FACTS.md step 20); no vision markers
+  user_prefix: "<|im_start|>user\n"
+  visual_tokens: 196
+  after_visual: "\n"
+  assistant_prefix: "<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n"
+  end: "<|im_end|>"
+  layout: >-
+    ids = tok(user_prefix) + [196 visual vectors] + tok(after_visual + question + assistant_prefix)
+    + tok(target) + [<|im_end|>]; each part tokenized alone (add_special_tokens=False). No image: the 196
+    vectors are removed and nothing else; masks and positions are rebuilt.
+caps:                                             # L397, content tokens; asserted (selection respects them)
+  question: 80
+  caption_target: 64
+  answer_target: 16
+features:
+  dir: cached/task2/siglip                        # Kaggle: --features_dir /kaggle/working/features
+  tokens: 196
+  dim: 768
+  verify_sha256: true
+data:
+  images_train: splits/task2/images_train.json
+  images_val: splits/task2/images_val.json
+  captions_train: splits/task2/captions_train.json
+  captions_dev: splits/task2/captions_dev.json
+  vqa_train: splits/task2/vqa_train.json
+  vqa_dev: splits/task2/vqa_dev.json
+  vqa_test: splits/task2/vqa_test.json
+  grounding_pools_train: splits/task2/grounding_pools_train.json
+  grounding_dev: splits/task2/grounding_dev.json
+  grounding_test: splits/task2/grounding_test.json
+  mismatch_map: splits/task2/mismatch_map.json
+batch:                                            # L390
+  microbatch: 8
+  grad_accum: 2
+  effective: 16
+  draws_per_microbatch: 4                         # Stages 2-3: each draw gives 2 examples (L472-476)
+stages:                                           # L412-415, L468-483
+  - name: caption_alignment
+    updates: 2250
+    lr: {connector: 1.0e-3}
+    lora: false
+    caption_passes: 2                             # 2 x 18,000 captions, reshuffled each pass
+  - name: visual_instruction_tuning
+    updates: 1500
+    lr: {connector: 1.0e-4, lora: 2.0e-5}
+    lora: true
+    mixture: {presence: 0.50, counting: 0.25, caption: 0.25}
+  - name: natural_vqa_specialization
+    updates: 750
+    lr: {connector: 5.0e-5, lora: 1.0e-5}
+    lora: true
+    mixture: {vqa: 0.70, presence: 0.10, counting: 0.10, caption: 0.10}
+expected_trainable_params: [1837056, 6424576, 6424576]
+schedule:                                         # D14, L394
+  warmup_percent: 5                               # W = round-half-up(5% of the stage): 113, 75, 38
+  final_fraction: 0.1
+  formula: >-
+    t = 1-based index of the update within its stage, T = stage updates; lr = peak * t / W for t <= W,
+    else peak * (0.1 + 0.45 * (1 + cos(pi * (t - W) / (T - W)))), so lr = peak at t = W and 0.1 * peak at t = T.
+optimizer:                                        # D13, L392: fresh AdamW at each stage start
+  betas: [0.9, 0.999]
+  eps: 1.0e-8
+  weight_decay: 0.01                              # all trainable parameters
+  fused_on_cuda: true
+clip_grad_norm: 1.0                               # L393, over all trainable parameters after unscale_
+precision:                                        # L399-400; one dynamic GradScaler for the whole run
+  autocast: float16
+  init_scale: 65536.0
+gradient_checkpointing:
+  enabled: true                                   # L395
+  use_reentrant: false
+loss:                                             # L401-408
+  logit_chunk: 1024                               # logits only at supervised positions, chunked, CE in FP32
+  definition: >-
+    CE on target tokens and <|im_end|>; mean over each example's supervised tokens, then mean over the 16
+    examples of the effective batch (each microbatch backpropagates sum of its example means / 16).
+dev_eval:                                         # L420-427
+  updates: [0, 500, 1000, 1500, 2000, 2250, 2500, 3000, 3500, 3750, 4000, 4500]
+  batch_size: 8
+  conditions: [correct, complementary, none]
+  definitions: >-
+    caption loss = training-loss definition (end-of-turn included) on the 96 dev captions; answer NLL = mean
+    target-token NLL (end-of-turn excluded) within an example, then mean over examples; dNLL = NLL(partner) -
+    NLL(correct) per example.
+checkpoints:                                      # L417-419
+  recovery_every: 250                             # rolling (older state deleted), --recovery_dir on Kaggle
+final_eval:                                       # L428-457
+  suites: [vqa_test, grounding_test]
+  conditions: [correct, swap, mismatched, none]
+  batch_size: 8
+  max_new_tokens: 16
+  bootstrap: {resamples: 4000, seed: 6304, percentiles: [2.5, 97.5]}
+generation:                                       # effective settings; custom greedy loop with KV cache
+  do_sample: false
+  num_beams: 1
+  temperature: null
+  top_p: null
+  top_k: null
+  max_new_tokens: 16
+  stop_token_ids: [151645]                        # <|im_end|>
+  padding_side: left
+logging:
+  json_every: 10
+  print_every: 10
+smoke:                                            # Kaggle cell 3
+  updates_per_stage: 20
+  dev_eval_updates: [0]
+  recovery_every: 20
+  final_pairs_per_suite: 8
+output:
+  result_dir: results/task2/main
+  smoke_result_dir: results/task2/smoke
+  keep_dir: checkpoints/task2/main
+  smoke_keep_dir: checkpoints/task2/smoke
+  recovery_dir: checkpoints/task2/recovery        # Kaggle: --recovery_dir /kaggle/tmp/task2_recovery
+plan:
+  limit_h: 10.5

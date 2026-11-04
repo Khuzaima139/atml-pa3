@@ -1,0 +1,14 @@
+# Qualitative example selection (decision D15; manual L489-491, L519-520). Fixed before any final result
+# is inspected; applied by later analysis to results/task2/main/final/examples.json.
+source: results/task2/main/final/examples.json
+order: saved test pair order (splits/task2/vqa_test.json, splits/task2/grounding_test.json)
+groups: per test suite and question type    # vqa_test: yes/no, number, other; grounding_test: presence, counting
+normalization: task2_vlm/vqa_norm.py::normalize   # D2, on every prediction and reference
+kinds:
+  a: >-
+    both predictions correct under the correct images (normalized prediction equals the canonical answer), and
+    under the complementary swap both predictions equal the partner's canonical answer
+  b: identical normalized answers for the two questions under the correct images
+  c: under the complementary swap, a prediction equal to neither canonical answer of the pair
+pick: the first pair of each kind in each group (a pair may be picked for more than one kind); none if no pair qualifies
+shown: shared question, both images, references (canonical and, for VQA, all ten answers), raw and normalized predictions under all four conditions
