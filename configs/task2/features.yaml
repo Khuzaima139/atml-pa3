@@ -1,0 +1,23 @@
+# Task 2 SigLIP feature cache (manual L345-355; notes/TASK2_FACTS.md step 17).
+model:
+  name: google/siglip-base-patch16-224
+  revision: 7fd15f0689c79d79e38b1c2e2e2370a7bf2761ed
+processor:
+  use_fast: false                      # PIL backend on every machine (deterministic, no torchvision dependence)
+  expected_class: SiglipImageProcessorPil
+compute_dtype: float32                 # encoder forward; features are stored in FP16 (L353-354)
+store_dtype: float16
+tokens: 196                            # 14 x 14 patches, last_hidden_state = post_layernorm(last layer), once
+dim: 768
+batch_size: 64
+shard_size: 1000                       # images per FP16 shard
+image_tables:
+  train: splits/task2/images_train.json
+  val: splits/task2/images_val.json
+images_dir: data/task2/images
+out_dir: cached/task2/siglip
+result: results/task2/cache_features.json
+download:
+  workers: 16
+  retries: 5
+  timeout_s: 30
