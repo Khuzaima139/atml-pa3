@@ -63,14 +63,14 @@
    "candidate_rank": 2
   },
   {
-   "pair_id": "grd_presence_81_73009_456559",
+   "pair_id": "grd_presence_81_350799_469061",
    "type": "presence",
    "category_id": 81,
    "category": "sink",
    "question": "Does this image contain a sink?",
    "image_ids": [
-    73009,
-    456559
+    350799,
+    469061
    ],
    "answers": [
     "yes",
@@ -80,7 +80,7 @@
     1,
     0
    ],
-   "candidate_rank": 3
+   "candidate_rank": 38
   },
   {
    "pair_id": "grd_presence_1_527029_341815",
@@ -303,24 +303,24 @@
    "candidate_rank": 14
   },
   {
-   "pair_id": "grd_presence_63_464526_5278",
+   "pair_id": "grd_presence_76_281208_318813",
    "type": "presence",
-   "category_id": 63,
-   "category": "couch",
-   "question": "Does this image contain a couch?",
+   "category_id": 76,
+   "category": "keyboard",
+   "question": "Does this image contain a keyboard?",
    "image_ids": [
-    464526,
-    5278
+    281208,
+    318813
    ],
    "answers": [
     "yes",
     "no"
    ],
    "counts": [
-    1,
+    2,
     0
    ],
-   "candidate_rank": 15
+   "candidate_rank": 39
   },
   {
    "pair_id": "grd_presence_4_417400_221864",
@@ -383,24 +383,24 @@
    "candidate_rank": 19
   },
   {
-   "pair_id": "grd_presence_61_96755_537069",
+   "pair_id": "grd_presence_33_227806_505576",
    "type": "presence",
-   "category_id": 61,
-   "category": "cake",
-   "question": "Does this image contain a cake?",
+   "category_id": 33,
+   "category": "suitcase",
+   "question": "Does this image contain a suitcase?",
    "image_ids": [
-    96755,
-    537069
+    227806,
+    505576
    ],
    "answers": [
     "yes",
     "no"
    ],
    "counts": [
-    2,
+    1,
     0
    ],
-   "candidate_rank": 20
+   "candidate_rank": 33
   },
   {
    "pair_id": "grd_presence_84_247473_342762",
@@ -423,24 +423,24 @@
    "candidate_rank": 21
   },
   {
-   "pair_id": "grd_presence_79_293148_133559",
+   "pair_id": "grd_presence_7_116957_93746",
    "type": "presence",
-   "category_id": 79,
-   "category": "oven",
-   "question": "Does this image contain an oven?",
+   "category_id": 7,
+   "category": "train",
+   "question": "Does this image contain a train?",
    "image_ids": [
-    293148,
-    133559
+    116957,
+    93746
    ],
    "answers": [
     "yes",
     "no"
    ],
    "counts": [
-    1,
+    2,
     0
    ],
-   "candidate_rank": 22
+   "candidate_rank": 34
   },
   {
    "pair_id": "grd_presence_73_19916_472833",
@@ -463,14 +463,14 @@
    "candidate_rank": 23
   },
   {
-   "pair_id": "grd_presence_1_45099_260829",
+   "pair_id": "grd_presence_25_288983_54931",
    "type": "presence",
-   "category_id": 1,
-   "category": "person",
-   "question": "Does this image contain a person?",
+   "category_id": 25,
+   "category": "giraffe",
+   "question": "Does this image contain a giraffe?",
    "image_ids": [
-    45099,
-    260829
+    288983,
+    54931
    ],
    "answers": [
     "yes",
@@ -480,7 +480,7 @@
     1,
     0
    ],
-   "candidate_rank": 24
+   "candidate_rank": 35
   },
   {
    "pair_id": "grd_presence_67_118344_45729",
@@ -643,24 +643,24 @@
    "candidate_rank": 32
   },
   {
-   "pair_id": "grd_counting_88_575822_203350",
+   "pair_id": "grd_counting_18_22874_44856",
    "type": "counting",
-   "category_id": 88,
-   "category": "teddy bear",
-   "question": "How many teddy bears can you see?",
+   "category_id": 18,
+   "category": "dog",
+   "question": "How many dogs can you see?",
    "image_ids": [
-    575822,
-    203350
+    22874,
+    44856
    ],
    "answers": [
-    "2",
-    "1"
+    "1",
+    "2"
    ],
    "counts": [
-    2,
-    1
+    1,
+    2
    ],
-   "candidate_rank": 0
+   "candidate_rank": 52
   },
   {
    "pair_id": "grd_counting_70_531569_291833",
@@ -723,24 +723,24 @@
    "candidate_rank": 3
   },
   {
-   "pair_id": "grd_counting_7_257359_236837",
+   "pair_id": "grd_counting_4_120021_545978",
    "type": "counting",
-   "category_id": 7,
-   "category": "train",
-   "question": "How many trains can you see?",
+   "category_id": 4,
+   "category": "motorcycle",
+   "question": "How many motorcycles can you see?",
    "image_ids": [
-    257359,
-    236837
+    120021,
+    545978
    ],
    "answers": [
     "1",
-    "4"
+    "2"
    ],
    "counts": [
     1,
-    4
+    2
    ],
-   "candidate_rank": 5
+   "candidate_rank": 56
   },
   {
    "pair_id": "grd_counting_1_392640_196453",
@@ -783,24 +783,24 @@
    "candidate_rank": 7
   },
   {
-   "pair_id": "grd_counting_73_441614_354976",
+   "pair_id": "grd_counting_6_151844_210394",
    "type": "counting",
-   "category_id": 73,
-   "category": "laptop",
-   "question": "How many laptops can you see?",
+   "category_id": 6,
+   "category": "bus",
+   "question": "How many buses can you see?",
    "image_ids": [
-    441614,
-    354976
+    151844,
+    210394
    ],
    "answers": [
-    "1",
-    "2"
+    "2",
+    "1"
    ],
    "counts": [
-    1,
-    2
+    2,
+    1
    ],
-   "candidate_rank": 8
+   "candidate_rank": 46
   },
   {
    "pair_id": "grd_counting_85_367452_285683",
@@ -823,34 +823,14 @@
    "candidate_rank": 9
   },
   {
-   "pair_id": "grd_counting_61_67431_41671",
+   "pair_id": "grd_counting_1_462845_121519",
    "type": "counting",
-   "category_id": 61,
-   "category": "cake",
-   "question": "How many cakes can you see?",
+   "category_id": 1,
+   "category": "person",
+   "question": "How many people can you see?",
    "image_ids": [
-    67431,
-    41671
-   ],
-   "answers": [
-    "1",
-    "2"
-   ],
-   "counts": [
-    1,
-    2
-   ],
-   "candidate_rank": 10
-  },
-  {
-   "pair_id": "grd_counting_47_116208_303652",
-   "type": "counting",
-   "category_id": 47,
-   "category": "cup",
-   "question": "How many cups can you see?",
-   "image_ids": [
-    116208,
-    303652
+    462845,
+    121519
    ],
    "answers": [
     "2",
@@ -860,7 +840,27 @@
     2,
     1
    ],
-   "candidate_rank": 11
+   "candidate_rank": 35
+  },
+  {
+   "pair_id": "grd_counting_1_179720_466422",
+   "type": "counting",
+   "category_id": 1,
+   "category": "person",
+   "question": "How many people can you see?",
+   "image_ids": [
+    179720,
+    466422
+   ],
+   "answers": [
+    "1",
+    "3"
+   ],
+   "counts": [
+    1,
+    3
+   ],
+   "candidate_rank": 63
   },
   {
    "pair_id": "grd_counting_15_33647_380140",
@@ -923,14 +923,14 @@
    "candidate_rank": 14
   },
   {
-   "pair_id": "grd_counting_72_145101_309424",
+   "pair_id": "grd_counting_1_444913_91469",
    "type": "counting",
-   "category_id": 72,
-   "category": "tv",
-   "question": "How many tvs can you see?",
+   "category_id": 1,
+   "category": "person",
+   "question": "How many people can you see?",
    "image_ids": [
-    145101,
-    309424
+    444913,
+    91469
    ],
    "answers": [
     "1",
@@ -940,37 +940,17 @@
     1,
     2
    ],
-   "candidate_rank": 15
+   "candidate_rank": 76
   },
   {
-   "pair_id": "grd_counting_52_63740_84889",
+   "pair_id": "grd_counting_7_138073_275744",
    "type": "counting",
-   "category_id": 52,
-   "category": "banana",
-   "question": "How many bananas can you see?",
+   "category_id": 7,
+   "category": "train",
+   "question": "How many trains can you see?",
    "image_ids": [
-    63740,
-    84889
-   ],
-   "answers": [
-    "1",
-    "4"
-   ],
-   "counts": [
-    1,
-    4
-   ],
-   "candidate_rank": 16
-  },
-  {
-   "pair_id": "grd_counting_79_343466_169757",
-   "type": "counting",
-   "category_id": 79,
-   "category": "oven",
-   "question": "How many ovens can you see?",
-   "image_ids": [
-    343466,
-    169757
+    138073,
+    275744
    ],
    "answers": [
     "1",
@@ -980,37 +960,17 @@
     1,
     2
    ],
-   "candidate_rank": 17
+   "candidate_rank": 37
   },
   {
-   "pair_id": "grd_counting_52_22090_35368",
+   "pair_id": "grd_counting_1_451951_441287",
    "type": "counting",
-   "category_id": 52,
-   "category": "banana",
-   "question": "How many bananas can you see?",
+   "category_id": 1,
+   "category": "person",
+   "question": "How many people can you see?",
    "image_ids": [
-    22090,
-    35368
-   ],
-   "answers": [
-    "1",
-    "4"
-   ],
-   "counts": [
-    1,
-    4
-   ],
-   "candidate_rank": 18
-  },
-  {
-   "pair_id": "grd_counting_64_190680_334471",
-   "type": "counting",
-   "category_id": 64,
-   "category": "potted plant",
-   "question": "How many potted plants can you see?",
-   "image_ids": [
-    190680,
-    334471
+    451951,
+    441287
    ],
    "answers": [
     "1",
@@ -1020,7 +980,47 @@
     1,
     2
    ],
-   "candidate_rank": 19
+   "candidate_rank": 38
+  },
+  {
+   "pair_id": "grd_counting_32_334178_293425",
+   "type": "counting",
+   "category_id": 32,
+   "category": "tie",
+   "question": "How many ties can you see?",
+   "image_ids": [
+    334178,
+    293425
+   ],
+   "answers": [
+    "1",
+    "2"
+   ],
+   "counts": [
+    1,
+    2
+   ],
+   "candidate_rank": 66
+  },
+  {
+   "pair_id": "grd_counting_32_333182_204943",
+   "type": "counting",
+   "category_id": 32,
+   "category": "tie",
+   "question": "How many ties can you see?",
+   "image_ids": [
+    333182,
+    204943
+   ],
+   "answers": [
+    "1",
+    "2"
+   ],
+   "counts": [
+    1,
+    2
+   ],
+   "candidate_rank": 40
   },
   {
    "pair_id": "grd_counting_16_107177_215781",
@@ -1083,14 +1083,14 @@
    "candidate_rank": 22
   },
   {
-   "pair_id": "grd_counting_15_334975_349642",
+   "pair_id": "grd_counting_70_5328_94858",
    "type": "counting",
-   "category_id": 15,
-   "category": "bench",
-   "question": "How many benches can you see?",
+   "category_id": 70,
+   "category": "toilet",
+   "question": "How many toilets can you see?",
    "image_ids": [
-    334975,
-    349642
+    5328,
+    94858
    ],
    "answers": [
     "1",
@@ -1100,37 +1100,17 @@
     1,
     2
    ],
-   "candidate_rank": 23
+   "candidate_rank": 77
   },
   {
-   "pair_id": "grd_counting_63_39512_313585",
+   "pair_id": "grd_counting_1_310600_84460",
    "type": "counting",
-   "category_id": 63,
-   "category": "couch",
-   "question": "How many couches can you see?",
+   "category_id": 1,
+   "category": "person",
+   "question": "How many people can you see?",
    "image_ids": [
-    39512,
-    313585
-   ],
-   "answers": [
-    "1",
-    "2"
-   ],
-   "counts": [
-    1,
-    2
-   ],
-   "candidate_rank": 24
-  },
-  {
-   "pair_id": "grd_counting_67_95679_578821",
-   "type": "counting",
-   "category_id": 67,
-   "category": "dining table",
-   "question": "How many dining tables can you see?",
-   "image_ids": [
-    95679,
-    578821
+    310600,
+    84460
    ],
    "answers": [
     "2",
@@ -1140,17 +1120,17 @@
     2,
     1
    ],
-   "candidate_rank": 25
+   "candidate_rank": 82
   },
   {
-   "pair_id": "grd_counting_17_599_177262",
+   "pair_id": "grd_counting_22_109819_101959",
    "type": "counting",
-   "category_id": 17,
-   "category": "cat",
-   "question": "How many cats can you see?",
+   "category_id": 22,
+   "category": "elephant",
+   "question": "How many elephants can you see?",
    "image_ids": [
-    599,
-    177262
+    109819,
+    101959
    ],
    "answers": [
     "1",
@@ -1160,27 +1140,47 @@
     1,
     2
    ],
-   "candidate_rank": 26
+   "candidate_rank": 67
   },
   {
-   "pair_id": "grd_counting_35_357478_31202",
+   "pair_id": "grd_counting_17_316015_121112",
    "type": "counting",
-   "category_id": 35,
-   "category": "skis",
-   "question": "How many skis can you see?",
+   "category_id": 17,
+   "category": "cat",
+   "question": "How many cats can you see?",
    "image_ids": [
-    357478,
-    31202
+    316015,
+    121112
    ],
    "answers": [
-    "3",
-    "1"
+    "1",
+    "2"
    ],
    "counts": [
-    3,
-    1
+    1,
+    2
    ],
-   "candidate_rank": 27
+   "candidate_rank": 70
+  },
+  {
+   "pair_id": "grd_counting_75_83476_116582",
+   "type": "counting",
+   "category_id": 75,
+   "category": "remote",
+   "question": "How many remotes can you see?",
+   "image_ids": [
+    83476,
+    116582
+   ],
+   "answers": [
+    "1",
+    "2"
+   ],
+   "counts": [
+    1,
+    2
+   ],
+   "candidate_rank": 74
   },
   {
    "pair_id": "grd_counting_1_317410_578341",
@@ -1263,24 +1263,24 @@
    "candidate_rank": 31
   },
   {
-   "pair_id": "grd_counting_81_563185_146961",
+   "pair_id": "grd_counting_1_546029_487897",
    "type": "counting",
-   "category_id": 81,
-   "category": "sink",
-   "question": "How many sinks can you see?",
+   "category_id": 1,
+   "category": "person",
+   "question": "How many people can you see?",
    "image_ids": [
-    563185,
-    146961
+    546029,
+    487897
    ],
    "answers": [
     "1",
-    "2"
+    "3"
    ],
    "counts": [
     1,
-    2
+    3
    ],
-   "candidate_rank": 32
+   "candidate_rank": 44
   }
  ]
 }
