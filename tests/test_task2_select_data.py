@@ -198,6 +198,61 @@ def test_apply_label_flags_replaces_with_next_candidate(synth, tmp_path):
         A.apply_flags(sets, synth["orders"], synth["idx"], cats, cfg, ["vqa_1_2"], [])
 
 
+def test_preflagged_candidates_are_skipped_and_recorded(synth):
+    cfg, cats = synth["cfg"], synth["cats"]
+    sets = copy.deepcopy(synth["sets"])
+    flagged = sets["grounding_test"]["pairs"][1]
+    kind = flagged["type"]
+    seq = A.preview(sets, synth["orders"], synth["idx"], cats, cfg, [], {("grounding_test", kind): 4})[
+        ("grounding_test", kind)]
+    pre = [seq[0]["pair_id"], seq[2]["pair_id"]]
+    recs = A.apply_flags(sets, synth["orders"], synth["idx"], cats, cfg, [flagged["pair_id"]] + pre, [])
+    assert [(r["flagged"]["pair_id"], r.get("preflagged", False)) for r in recs] == [
+        (flagged["pair_id"], False), (seq[0]["pair_id"], True)]
+    assert recs[0]["replacement"] == seq[1] == sets["grounding_test"]["pairs"][1] and recs[1]["replacement"] is None
+    assert A.pending_preflags([flagged["pair_id"]] + pre, [], recs, sets) == [seq[2]["pair_id"]]
+    # second round: the replacement fails too; the pending pre-flag is consumed, seq[3] is selected
+    flags = [flagged["pair_id"]] + pre + [seq[1]["pair_id"]]
+    recs2 = A.apply_flags(sets, synth["orders"], synth["idx"], cats, cfg, flags, recs)
+    assert [r["flagged"]["pair_id"] for r in recs2] == [seq[1]["pair_id"], seq[2]["pair_id"]]
+    assert recs2[0]["replacement"] == seq[3] and recs2[1]["preflagged"]
+    assert A.pending_preflags(flags, recs, recs2, sets) == []
+    assert A.apply_flags(sets, synth["orders"], synth["idx"], cats, cfg, flags, recs + recs2) == []
+    used = {im for n in S.VAL_SETS for im in S.image_ids_of(n, sets[n])}
+    assert not used & {im for p in (seq[0], seq[2], flagged, seq[1]) for im in p["image_ids"]}
+
+
+@pytest.mark.parametrize("seed", range(6))
+def test_preview_sequence_does_not_depend_on_verdicts(synth, seed):
+    """Three flags in one stream, random verdicts on the previewed candidates: the slots get, in flag order,
+    the stream's candidates that are not pre-flagged, and every failing candidate before them is consumed."""
+    cfg, cats = synth["cfg"], synth["cats"]
+    sets = copy.deepcopy(synth["sets"])
+    kind = sets["grounding_test"]["pairs"][0]["type"]
+    slots = [i for i, p in enumerate(sets["grounding_test"]["pairs"]) if p["type"] == kind][:3]
+    flags = [sets["grounding_test"]["pairs"][i]["pair_id"] for i in slots]
+    seq = A.preview(sets, synth["orders"], synth["idx"], cats, cfg, [], {("grounding_test", kind): 9})[
+        ("grounding_test", kind)]
+    rng = np.random.default_rng(seed)
+    fail = [p["pair_id"] for p in seq if rng.random() < 0.4]
+    passing = [p for p in seq if p["pair_id"] not in fail]
+    if len(passing) < 3:
+        pytest.skip("too few passing candidates for this verdict draw")
+    recs = A.apply_flags(sets, synth["orders"], synth["idx"], cats, cfg, flags + fail, [])
+    assert [sets["grounding_test"]["pairs"][i] for i in slots] == passing[:3]
+    ids = [p["pair_id"] for p in seq]
+    last = ids.index(passing[2]["pair_id"])
+    assert [r["flagged"]["pair_id"] for r in recs if r.get("preflagged")] == [x for x in fail if ids.index(x) < last]
+
+
+def test_preview_refuses_streams_sharing_images(synth):
+    """With few images, two streams can compete for an image; then the interleaving (and so the verdicts)
+    could change a sequence, and the preview refuses."""
+    with pytest.raises(AssertionError, match="share images"):
+        A.preview(copy.deepcopy(synth["sets"]), synth["orders"], synth["idx"], synth["cats"], synth["cfg"], [],
+                  {("grounding_test", "presence"): 6, ("grounding_test", "counting"): 6})
+
+
 def test_apply_label_flags_rewrites_files(synth, tmp_path):
     """End to end through rewrite(): split dir with a fake flag, asserts rerun, mismatch map follows."""
     cfg = copy.deepcopy(synth["cfg"])
@@ -219,7 +274,7 @@ def test_apply_label_flags_rewrites_files(synth, tmp_path):
     old_mm = files["mismatch_map"]["suites"]["grounding_test"]["shuffled_order"]
     assert mm["shuffled_order"] == [new_id if x == fake else x for x in old_mm]  # positions unchanged
     rep = json.load(open(tmp_path / S.REPORT))
-    assert rep["label_flags"]["replaced"] == {fake: new_id}
+    assert rep["label_flags"]["replaced"] == {fake: new_id} and rep["label_flags"]["preflagged_skipped"] == []
     for name, h in rep["sha256"].items():
         assert hashlib.sha256(open(tmp_path / name, "rb").read()).hexdigest() == h
     lf = json.load(open(tmp_path / A.LABEL_FLAGS))
@@ -227,6 +282,29 @@ def test_apply_label_flags_rewrites_files(synth, tmp_path):
     ids = {r["image_id"] for r in json.load(open(tmp_path / "images_val.json"))["images"]}
     assert set(recs[0]["replacement"]["image_ids"]) <= ids
     assert not set(recs[0]["flagged"]["image_ids"]) & ids - set(recs[0]["replacement"]["image_ids"])
+
+
+def test_preflagged_skips_are_written(synth, tmp_path):
+    cfg = copy.deepcopy(synth["cfg"])
+    cfg["out_dir"] = str(tmp_path)
+    cats, sets = synth["cats"], copy.deepcopy(synth["sets"])
+    files, iso = S.finalize(copy.deepcopy(sets), synth["metas"]["train"], synth["metas"]["val"], cfg)
+    blobs = S.file_blobs(files, synth["orders"])
+    blobs[S.REPORT] = S.report_blob(files, blobs, cfg, cats, {"isolation": iso, "label_flags": None})
+    S.write_files(str(tmp_path), blobs, overwrite=False)
+    sets2, orders2, report = A.load_split_dir(str(tmp_path))
+    fake = sets2["grounding_test"]["pairs"][0]
+    seq = A.preview(sets2, orders2, synth["idx"], cats, cfg, [], {("grounding_test", fake["type"]): 2})[
+        ("grounding_test", fake["type"])]
+    recs = A.apply_flags(sets2, orders2, synth["idx"], cats, cfg, [fake["pair_id"], seq[0]["pair_id"]], [])
+    A.rewrite(str(tmp_path), sets2, orders2, report, recs, [], synth["metas"], cfg, cats)
+    lf = json.load(open(tmp_path / A.LABEL_FLAGS))["applied"]
+    assert [(r["flagged"]["pair_id"], r.get("preflagged", False)) for r in lf] == [
+        (fake["pair_id"], False), (seq[0]["pair_id"], True)]
+    rep = json.load(open(tmp_path / S.REPORT))["label_flags"]
+    assert rep["replaced"] == {fake["pair_id"]: seq[1]["pair_id"]} and rep["preflagged_skipped"] == [seq[0]["pair_id"]]
+    ids = {r["image_id"] for r in json.load(open(tmp_path / "images_val.json"))["images"]}
+    assert not set(seq[0]["image_ids"]) & ids
 
 
 def test_write_files_refuses_changes(tmp_path):
