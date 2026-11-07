@@ -67,7 +67,7 @@ def test_train_json_keys(reference):
         assert tr[k] is not None, k
     seg = tr["segments"][0]
     assert set(seg["provenance"]["git"]) == {"commit", "dirty"} and "hardware" in seg["provenance"]
-    assert {"torch", "transformers", "peft", "accelerate"} <= set(seg["versions"])
+    assert {"torch", "torch_build", "transformers", "peft", "accelerate", "torchao", "cuda"} <= set(seg["versions"])
     r = tr["resources"]
     assert r["updates_done"] == r["updates_total"] == 8 and r["skipped_updates"] == 0
     for k in ("train_s", "dev_eval_s", "ckpt_io_s", "calibration_s", "wall_s", "peak_allocated_bytes",
@@ -315,3 +315,10 @@ def test_summary_runs(reference, capsys):
     out = capsys.readouterr().out
     assert "calibration s =" in out and "correct - swap" in out and "grounding_test (6 pairs)" in out
 
+
+
+def test_lora_preflight(tinydir, capsys):
+    from task2_vlm import preflight
+    d, cfg, p = setup(tinydir, "preflight")
+    assert preflight.main(["--config", p]) == TT.LORA_PARAMS
+    assert "lora preflight OK: LoRA trainable 14,336" in capsys.readouterr().out

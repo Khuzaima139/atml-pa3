@@ -56,13 +56,19 @@ def _num(x):
 
 
 def versions():
+    import importlib.metadata
     import accelerate
     import peft
     import safetensors
     import transformers
-    return {"torch": torch.__version__, "transformers": transformers.__version__, "peft": peft.__version__,
+    try:
+        torchao = importlib.metadata.version("torchao")
+    except importlib.metadata.PackageNotFoundError:
+        torchao = None
+    return {"torch": torch.__version__, "torch_build": torch.__version__.partition("+")[2] or None,
+            "transformers": transformers.__version__, "peft": peft.__version__,
             "accelerate": accelerate.__version__, "safetensors": safetensors.__version__, "numpy": np.__version__,
-            "cuda": torch.version.cuda}
+            "cuda": torch.version.cuda, "torchao": torchao}
 
 
 # ---------------------------------------------------------------- schedule (D14)
