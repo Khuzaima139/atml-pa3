@@ -1,0 +1,246 @@
+{
+  "run_id": "task3_prepare_mathvista_20261108T123136Z",
+  "status": "done",
+  "dataset": "mathvista",
+  "config_path": "configs/task3/offline.yaml",
+  "config": {
+    "seed": 6304,
+    "paths": {
+      "data_root": "data/task3/ATML-PA3-Data",
+      "cache_dir": "cached/task3",
+      "splits_dir": "splits/task3",
+      "results_dir": "results/task3",
+      "splits_preview": "scratch/task3/splits_preview.json"
+    },
+    "sizes": {
+      "n_questions": 1000,
+      "n_rollouts": 32,
+      "n_dev": 200,
+      "n_eval": 800
+    },
+    "datasets": {
+      "math": {
+        "folder": "qwen25-math",
+        "files": {
+          "generations": "generations.parquet",
+          "probability": "probability_metrics.parquet"
+        },
+        "n_live": 50,
+        "metadata": null
+      },
+      "mathvista": {
+        "folder": "qwen25vl-mathvista",
+        "files": {
+          "generations": "generations.parquet",
+          "probability": "probability_metrics.parquet",
+          "attention": "attention_metrics.parquet"
+        },
+        "n_live": null,
+        "metadata": "data/task3/mathvista/testmini.json"
+      }
+    },
+    "token_cap": 2048,
+    "budgets": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      32
+    ],
+    "n_orders": 10,
+    "adaptive": {
+      "check_points": [
+        4,
+        8,
+        16
+      ],
+      "tau": [
+        0.5,
+        0.625,
+        0.75,
+        0.875,
+        1.0
+      ],
+      "gamma": [
+        0.0,
+        0.1,
+        0.25,
+        0.5
+      ]
+    },
+    "bootstrap": {
+      "resamples": 1000,
+      "ci": 0.95
+    },
+    "scorer": {
+      "libraries": {
+        "math-verify": "0.9.0",
+        "latex2sympy2_extended": "1.11.0",
+        "sympy": "1.14.0",
+        "antlr4-python3-runtime": "4.13.2"
+      },
+      "math_verify": {
+        "wrap": "\\boxed{...}",
+        "parse_timeout_s": 5,
+        "verify_timeout_s": 5
+      },
+      "mathvista": {
+        "repo": "lupantech/MathVista",
+        "commit": "5f6b4deca69ecd1b8a1a4f338cee085e50524e4b",
+        "testmini_sha256": "ab0148dca9d401c31cc47f29b3826eec28a76ff155a1c0878d81e8daf0413480"
+      }
+    }
+  },
+  "run_info": {
+    "git": {
+      "commit": "5d9c2d5c0fd9c034056e4c9e2207817b769ca39e",
+      "dirty": false
+    },
+    "hostname": "192.168.1.6",
+    "hardware": {
+      "cpu": "arm",
+      "cpu_count": 8,
+      "platform": "macOS-27.0.1-arm64-arm-64bit",
+      "python": "3.11.18",
+      "gpus": [],
+      "torch": "2.15.0"
+    },
+    "timestamp": "2026-11-08T12:31:38.821304+00:00"
+  },
+  "scorer_version": {
+    "answers_py_sha256": "94141ad2cd5996a3cc34e1b937c215b66fad2ee112c0fd67b530811c88020352",
+    "libraries": {
+      "math-verify": "0.9.0",
+      "latex2sympy2_extended": "1.11.0",
+      "sympy": "1.14.0",
+      "antlr4-python3-runtime": "4.13.2"
+    },
+    "math_verify": {
+      "wrap": "\\boxed{...}",
+      "parse_timeout_s": 5,
+      "verify_timeout_s": 5
+    },
+    "mathvista": {
+      "repo": "lupantech/MathVista",
+      "commit": "5f6b4deca69ecd1b8a1a4f338cee085e50524e4b",
+      "testmini_sha256": "ab0148dca9d401c31cc47f29b3826eec28a76ff155a1c0878d81e8daf0413480"
+    },
+    "id": "30e3838e83e402f5f6a0a00c8cd54351790728674fccc2ca11f037db5e900658"
+  },
+  "inputs": {
+    "input_sha256": {
+      "qwen25vl-mathvista/generations.parquet": "dac12a7dc14baaa44e6c3ed8f8dfcf9d39b8493462c8a60ea162d0a66dda5435",
+      "qwen25vl-mathvista/probability_metrics.parquet": "c1c7a9b9724aa4930673c1bb5759d2d82bacc57f4a530a83f533e9d2d43102ac",
+      "qwen25vl-mathvista/attention_metrics.parquet": "4f6cfce99519808c75f950e53c957795697d8b503a7fd407fcfdd260f06d0058"
+    },
+    "testmini_sha256": "ab0148dca9d401c31cc47f29b3826eec28a76ff155a1c0878d81e8daf0413480"
+  },
+  "outputs": {
+    "rollouts_csv": "results/task3/rollouts/mathvista_rollouts.csv",
+    "rollouts_csv_sha256": "5f337a06f0589153bd703b604dfcc496eaf82dde2e70f024d947290f19f397fc",
+    "split_file": "splits/task3/mathvista_split.json",
+    "split_sha256": "cce53c643cf58ab73fa540acaa01f549885fd3a738e97a6fd4f5575d21880adf",
+    "split_status": "written",
+    "token_cache": "cached/task3/mathvista_tokens.npz",
+    "token_cache_meta": {
+      "dataset": "mathvista",
+      "input_sha256": {
+        "qwen25vl-mathvista/generations.parquet": "dac12a7dc14baaa44e6c3ed8f8dfcf9d39b8493462c8a60ea162d0a66dda5435",
+        "qwen25vl-mathvista/probability_metrics.parquet": "c1c7a9b9724aa4930673c1bb5759d2d82bacc57f4a530a83f533e9d2d43102ac",
+        "qwen25vl-mathvista/attention_metrics.parquet": "4f6cfce99519808c75f950e53c957795697d8b503a7fd407fcfdd260f06d0058"
+      },
+      "inputs_sha256": "98ccbe457326936f54d0384df2d528773e357257e9c28d92619f9e344afaec2a",
+      "row_order": "sample_id (string sort), rollout_id",
+      "arrays": "row i uses kl_u_p[offsets[i]:offsets[i+1]] (and v)"
+    }
+  },
+  "columns": {
+    "sample_id": "question ID (string)",
+    "rollout_id": "0..31 within the question",
+    "split": "dev or eval (L593-596)",
+    "T": "retained generated tokens",
+    "capped": "hit_max_new_tokens (supplied flag)",
+    "L": "mean logp over the T tokens (float64)",
+    "K": "mean kl_u_p over the T tokens (float64)",
+    "V": "MathVista only: mean of img/(img+prompt+generated) over the T tokens (float64)",
+    "extracted": "supplied extracted_answer (empty if null)",
+    "normalized": "group key: MATH stripped extracted string (wrapped in \\boxed{} for math-verify); MathVista normalized answer (option letter for multiple choice); empty for NO_ANSWER",
+    "group_id": "answer group within the question, numbered in order of first appearance; NO_ANSWER = -1",
+    "na_reason": "NO_ANSWER only: extraction (supplied answer missing/empty) or normalization (MathVista rule returned None)",
+    "correct": "group graded against gold with the same equivalence rules; NO_ANSWER always False"
+  },
+  "counts": {
+    "rollouts": 32000,
+    "questions": 1000,
+    "rows_by_split": {
+      "eval": 25600,
+      "dev": 6400
+    },
+    "questions_by_split": {
+      "dev": 200,
+      "eval": 800,
+      "live": 0
+    },
+    "live_rows": 0,
+    "n_rollouts": 32000,
+    "n_questions": 1000,
+    "n_tokens": 8961703,
+    "capped": 487,
+    "capped_flag_vs_length_disagreements": 0,
+    "groups_per_question_excl_no_answer": {
+      "mean": 3.351,
+      "median": 2.0,
+      "min": 0,
+      "max": 28
+    },
+    "groups_per_question_incl_no_answer": {
+      "mean": 3.987,
+      "median": 3.0,
+      "min": 1,
+      "max": 29
+    },
+    "distinct_strings_per_question": {
+      "mean": 3.351,
+      "median": 2.0,
+      "min": 0,
+      "max": 28
+    },
+    "no_answer_rollouts": 4921,
+    "no_answer_by_reason": {
+      "extraction": 3032,
+      "normalization": 1889
+    },
+    "questions_with_no_answer": 636,
+    "parse_failures": null,
+    "verify_calls": {},
+    "timeouts": {
+      "total": 0
+    },
+    "gold_failures": 0
+  },
+  "checks": {
+    "a_transitivity": {
+      "applicable": false,
+      "reason": "MathVista groups are exact normalized strings (an equivalence)"
+    },
+    "b_grading_consistency": {
+      "member_strings_checked": 3351,
+      "mismatched_strings": 0,
+      "rollouts_affected": 0,
+      "examples": [],
+      "passed": true
+    },
+    "c_gold": {
+      "failures": 0,
+      "list": [],
+      "passed": true
+    }
+  },
+  "runtime_s": {
+    "load_join_cache_split": 0.91,
+    "group_grade": 0.03,
+    "checks": 0.01,
+    "total": 2.1
+  }
+}

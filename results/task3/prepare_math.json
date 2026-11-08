@@ -1,0 +1,310 @@
+{
+  "run_id": "task3_prepare_math_20261108T123145Z",
+  "status": "done",
+  "dataset": "math",
+  "config_path": "configs/task3/offline.yaml",
+  "config": {
+    "seed": 6304,
+    "paths": {
+      "data_root": "data/task3/ATML-PA3-Data",
+      "cache_dir": "cached/task3",
+      "splits_dir": "splits/task3",
+      "results_dir": "results/task3",
+      "splits_preview": "scratch/task3/splits_preview.json"
+    },
+    "sizes": {
+      "n_questions": 1000,
+      "n_rollouts": 32,
+      "n_dev": 200,
+      "n_eval": 800
+    },
+    "datasets": {
+      "math": {
+        "folder": "qwen25-math",
+        "files": {
+          "generations": "generations.parquet",
+          "probability": "probability_metrics.parquet"
+        },
+        "n_live": 50,
+        "metadata": null
+      },
+      "mathvista": {
+        "folder": "qwen25vl-mathvista",
+        "files": {
+          "generations": "generations.parquet",
+          "probability": "probability_metrics.parquet",
+          "attention": "attention_metrics.parquet"
+        },
+        "n_live": null,
+        "metadata": "data/task3/mathvista/testmini.json"
+      }
+    },
+    "token_cap": 2048,
+    "budgets": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      32
+    ],
+    "n_orders": 10,
+    "adaptive": {
+      "check_points": [
+        4,
+        8,
+        16
+      ],
+      "tau": [
+        0.5,
+        0.625,
+        0.75,
+        0.875,
+        1.0
+      ],
+      "gamma": [
+        0.0,
+        0.1,
+        0.25,
+        0.5
+      ]
+    },
+    "bootstrap": {
+      "resamples": 1000,
+      "ci": 0.95
+    },
+    "scorer": {
+      "libraries": {
+        "math-verify": "0.9.0",
+        "latex2sympy2_extended": "1.11.0",
+        "sympy": "1.14.0",
+        "antlr4-python3-runtime": "4.13.2"
+      },
+      "math_verify": {
+        "wrap": "\\boxed{...}",
+        "parse_timeout_s": 5,
+        "verify_timeout_s": 5
+      },
+      "mathvista": {
+        "repo": "lupantech/MathVista",
+        "commit": "5f6b4deca69ecd1b8a1a4f338cee085e50524e4b",
+        "testmini_sha256": "ab0148dca9d401c31cc47f29b3826eec28a76ff155a1c0878d81e8daf0413480"
+      }
+    }
+  },
+  "run_info": {
+    "git": {
+      "commit": "5d9c2d5c0fd9c034056e4c9e2207817b769ca39e",
+      "dirty": false
+    },
+    "hostname": "192.168.1.6",
+    "hardware": {
+      "cpu": "arm",
+      "cpu_count": 8,
+      "platform": "macOS-27.0.1-arm64-arm-64bit",
+      "python": "3.11.18",
+      "gpus": [],
+      "torch": "2.15.0"
+    },
+    "timestamp": "2026-11-08T12:40:28.028417+00:00"
+  },
+  "scorer_version": {
+    "answers_py_sha256": "94141ad2cd5996a3cc34e1b937c215b66fad2ee112c0fd67b530811c88020352",
+    "libraries": {
+      "math-verify": "0.9.0",
+      "latex2sympy2_extended": "1.11.0",
+      "sympy": "1.14.0",
+      "antlr4-python3-runtime": "4.13.2"
+    },
+    "math_verify": {
+      "wrap": "\\boxed{...}",
+      "parse_timeout_s": 5,
+      "verify_timeout_s": 5
+    },
+    "mathvista": {
+      "repo": "lupantech/MathVista",
+      "commit": "5f6b4deca69ecd1b8a1a4f338cee085e50524e4b",
+      "testmini_sha256": "ab0148dca9d401c31cc47f29b3826eec28a76ff155a1c0878d81e8daf0413480"
+    },
+    "id": "30e3838e83e402f5f6a0a00c8cd54351790728674fccc2ca11f037db5e900658"
+  },
+  "inputs": {
+    "input_sha256": {
+      "qwen25-math/generations.parquet": "ffdecd753a2c0183b811d5679f3cf15e91bce46d1aacb196e28afb553d7e1c84",
+      "qwen25-math/probability_metrics.parquet": "48a492cd2c93bebfbd12b0b9df6a5783b611103e7a3cfefe010573ff6e200379"
+    },
+    "testmini_sha256": "ab0148dca9d401c31cc47f29b3826eec28a76ff155a1c0878d81e8daf0413480"
+  },
+  "outputs": {
+    "rollouts_csv": "results/task3/rollouts/math_rollouts.csv",
+    "rollouts_csv_sha256": "0792d447be5a1eb8fb55d5b74b94de52d06c44da2e97def2bba6292965d59b38",
+    "split_file": "splits/task3/math_split.json",
+    "split_sha256": "fad5c0972492b50b8a316aa04458c66f10584d23c6aab027816215b714da4be3",
+    "split_status": "written",
+    "token_cache": "cached/task3/math_tokens.npz",
+    "token_cache_meta": {
+      "dataset": "math",
+      "input_sha256": {
+        "qwen25-math/generations.parquet": "ffdecd753a2c0183b811d5679f3cf15e91bce46d1aacb196e28afb553d7e1c84",
+        "qwen25-math/probability_metrics.parquet": "48a492cd2c93bebfbd12b0b9df6a5783b611103e7a3cfefe010573ff6e200379"
+      },
+      "inputs_sha256": "979c4a418f4f02dc20afa8b21f3d17e19ba8ba915b5b637e6e6f67c805d0174c",
+      "row_order": "sample_id (string sort), rollout_id",
+      "arrays": "row i uses kl_u_p[offsets[i]:offsets[i+1]] (and v)"
+    }
+  },
+  "columns": {
+    "sample_id": "question ID (string)",
+    "rollout_id": "0..31 within the question",
+    "split": "dev or eval (L593-596)",
+    "live": "MATH only: in the 50-question live subset (first 50 eval IDs)",
+    "T": "retained generated tokens",
+    "capped": "hit_max_new_tokens (supplied flag)",
+    "L": "mean logp over the T tokens (float64)",
+    "K": "mean kl_u_p over the T tokens (float64)",
+    "extracted": "supplied extracted_answer (empty if null)",
+    "normalized": "group key: MATH stripped extracted string (wrapped in \\boxed{} for math-verify); MathVista normalized answer (option letter for multiple choice); empty for NO_ANSWER",
+    "group_id": "answer group within the question, numbered in order of first appearance; NO_ANSWER = -1",
+    "na_reason": "NO_ANSWER only: extraction (supplied answer missing/empty) or normalization (MathVista rule returned None)",
+    "correct": "group graded against gold with the same equivalence rules; NO_ANSWER always False"
+  },
+  "counts": {
+    "rollouts": 32000,
+    "questions": 1000,
+    "rows_by_split": {
+      "eval": 25600,
+      "dev": 6400
+    },
+    "questions_by_split": {
+      "dev": 200,
+      "eval": 800,
+      "live": 50
+    },
+    "live_rows": 1600,
+    "n_rollouts": 32000,
+    "n_questions": 1000,
+    "n_tokens": 20742094,
+    "capped": 523,
+    "capped_flag_vs_length_disagreements": 0,
+    "groups_per_question_excl_no_answer": {
+      "mean": 5.489,
+      "median": 3.0,
+      "min": 1,
+      "max": 32
+    },
+    "groups_per_question_incl_no_answer": {
+      "mean": 5.654,
+      "median": 3.0,
+      "min": 1,
+      "max": 32
+    },
+    "distinct_strings_per_question": {
+      "mean": 5.625,
+      "median": 3.0,
+      "min": 1,
+      "max": 32
+    },
+    "no_answer_rollouts": 521,
+    "no_answer_by_reason": {
+      "extraction": 521,
+      "normalization": 0
+    },
+    "questions_with_no_answer": 165,
+    "parse_failures": {
+      "distinct_strings": 5,
+      "rollouts": 11,
+      "examples": [
+        {
+          "sample_id": "test:296",
+          "string": "\\left( -\\frac{5b}{6}, b \\right)",
+          "rollouts": 1
+        },
+        {
+          "sample_id": "test:3078",
+          "string": "-(221)_3",
+          "rollouts": 7
+        },
+        {
+          "sample_id": "test:3078",
+          "string": "-(2211)_3",
+          "rollouts": 1
+        },
+        {
+          "sample_id": "test:3677",
+          "string": "1.\\overline{3}",
+          "rollouts": 1
+        },
+        {
+          "sample_id": "test:4454",
+          "string": "0, \\|\\mathbf{a}\\|^2",
+          "rollouts": 1
+        }
+      ]
+    },
+    "verify_calls": {
+      "grading": 2416,
+      "grouping": 25674,
+      "check_a": 27001,
+      "check_b": 44
+    },
+    "timeouts": {
+      "total": 81,
+      "grouping": 37,
+      "grading": 3,
+      "check_a": 41
+    },
+    "gold_failures": 0
+  },
+  "checks": {
+    "a_transitivity": {
+      "pairs_checked": 60856,
+      "block_mismatch_pairs": 1,
+      "asymmetric_pairs": 1,
+      "non_transitive_triples": 0,
+      "non_reflexive_strings": 0,
+      "questions_affected": 1,
+      "affected_ids": [
+        "test:2563"
+      ],
+      "examples": [
+        {
+          "sample_id": "test:2563",
+          "block_mismatch_pairs": 1,
+          "asymmetric_pairs": 1,
+          "non_transitive_triples": 0,
+          "non_reflexive_strings": 0,
+          "pairs (a, b, verify(a,b), verify(b,a), group a, group b)": [
+            [
+              "[-4, 0]",
+              "-4 \\leq k \\leq 0",
+              false,
+              true,
+              0,
+              3
+            ]
+          ],
+          "non_reflexive": []
+        }
+      ],
+      "passed": false
+    },
+    "b_grading_consistency": {
+      "member_strings_checked": 5625,
+      "mismatched_strings": 0,
+      "rollouts_affected": 0,
+      "examples": [],
+      "passed": true
+    },
+    "c_gold": {
+      "failures": 0,
+      "list": [],
+      "passed": true
+    }
+  },
+  "runtime_s": {
+    "load_join_cache_split": 0.79,
+    "group_grade": 260.96,
+    "checks": 259.65,
+    "total": 522.66
+  }
+}
