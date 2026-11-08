@@ -229,7 +229,10 @@ def test_status_plan_summary(env):
     log, done = tmp / "x.log", tmp / "x.done"
     log.write_text("a\ncall q=1 last line\n")
     done.write_text("0\n")
-    p = run("--wait", "--run", env["full"], "--log", str(log), "--done", str(done), "--every", "0")
+    pid = tmp / "x.pid"
+    pid.write_text(f"{os.getpid()}\n")
+    p = run("--wait", "--run", env["full"], "--log", str(log), "--done", str(done), "--pid", str(pid),
+            "--exit", str(tmp / "x.exit"), "--every", "0", "--poll", "0")
     assert p.returncode == 0 and "questions 2/50, calls 10/250" in p.stdout and "call q=1 last line" in p.stdout
 
 

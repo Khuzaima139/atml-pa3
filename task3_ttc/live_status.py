@@ -3,12 +3,19 @@
     python -m task3_ttc.live_status --plan --smoke results/task3/live/smoke --preflight results/task3/live/preflight
                                     [--limit-h 10.5]
     python -m task3_ttc.live_status --wait --run results/task3/live/main --log notes/kaggle_logs/task3_live.log
-                                    --done notes/kaggle_logs/task3_live.done [--every 600]
+                                    --done notes/kaggle_logs/task3_live.done --exit notes/kaggle_logs/task3_live.exit
+                                    --pid notes/kaggle_logs/task3_live.pid [--every 600] [--poll 30]
     python -m task3_ttc.live_status --summary --run results/task3/live/main
 
 Plan: decode seconds per generated token from the smoke (each call's time minus its prefill at the preflight's
 measured prefill rate), times the projected 161,335 generated tokens (TASK3_FACTS item 14), plus prefill of the
 projected input tokens; exits 1 above --limit-h.
+
+Wait: the background wrapper (Kaggle cell 6) writes its pid file at launch, the exit file with the run's exit code on
+any exit, and the done file only on exit code 0. Progress is printed every --every seconds; the done file and the
+wrapper's liveness are checked every --poll seconds. Exit 0 on the done file (with exit code 0); exit 1 as soon as
+the wrapper is gone without a done file (or the pid file is missing), after printing the exit code (if any) and the
+last 30 log lines. There is no time limit, only a warning after --warn-h hours.
 """
 import argparse
 import json
@@ -77,19 +84,67 @@ def progress(run_dir, log):
     return done_q, len(calls), last
 
 
-def wait(run_dir, log, done, every, warn_h):
+def _alive(pid):
+    """True while the process exists and is not a zombie (Linux /proc state checked when available)."""
+    try:
+        os.kill(pid, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True
+    try:
+        with open(f"/proc/{pid}/stat") as f:
+            return f.read().rsplit(")", 1)[1].split()[0] != "Z"
+    except OSError:
+        return True
+
+
+def _tail(log, n=30):
+    if not (log and os.path.exists(log)):
+        return []
+    with open(log, "rb") as f:
+        return f.read().decode("utf-8", "replace").splitlines()[-n:]
+
+
+def _fail(msg, exit_file, log):
+    code = None
+    if exit_file and os.path.exists(exit_file):
+        with open(exit_file) as f:
+            code = f.read().strip()
+    print(f"STOP: {msg}; exit code: {code if code is not None else 'none written (killed?)'}", flush=True)
+    print(f"--- last 30 lines of {log} ---", flush=True)
+    for x in _tail(log):
+        print(x, flush=True)
+    return 1
+
+
+def wait(run_dir, log, done, exit_file, pid_file, every, poll, warn_h):
     t0 = time.time()
+    if not os.path.exists(pid_file):
+        return _fail(f"no pid file {pid_file} (was cell 6 run?)", exit_file, log)
+    with open(pid_file) as f:
+        pid = int(f.read().strip())
+    next_report = t0
     while True:
-        q, c, last = progress(run_dir, log)
-        el = (time.time() - t0) / 3600
-        print(f"[{time.strftime('%H:%M:%S')}] questions {q}/50, calls {c}/250 | last log line: {last[:200]}"
-              + (f" | WARNING waited {el:.1f} h" if el > warn_h else ""), flush=True)
+        if time.time() >= next_report:
+            q, c, last = progress(run_dir, log)
+            el = (time.time() - t0) / 3600
+            print(f"[{time.strftime('%H:%M:%S')}] questions {q}/50, calls {c}/250 | last log line: {last[:200]}"
+                  + (f" | WARNING waited {el:.1f} h" if el > warn_h else ""), flush=True)
+            next_report += every
         if os.path.exists(done):
             with open(done) as f:
                 code = f.read().strip()
-            print(f"done file: exit code {code}")
-            return 0 if code == "0" else 1
-        time.sleep(every)
+            if code != "0":
+                return _fail(f"done file holds {code!r}", exit_file, log)
+            q, c, _ = progress(run_dir, log)
+            print(f"done file: exit code 0; questions {q}/50, calls {c}/250", flush=True)
+            return 0
+        if not _alive(pid):
+            if os.path.exists(done):  # finished between the two checks
+                continue
+            return _fail(f"process {pid} is no longer running and there is no done file", exit_file, log)
+        time.sleep(max(0.0, min(poll, next_report - time.time())))
 
 
 def summary(run_dir):
@@ -124,14 +179,17 @@ def main(argv=None):
     ap.add_argument("--run", default="results/task3/live/main")
     ap.add_argument("--log", default="notes/kaggle_logs/task3_live.log")
     ap.add_argument("--done", default="notes/kaggle_logs/task3_live.done")
+    ap.add_argument("--exit", dest="exit_file", default="notes/kaggle_logs/task3_live.exit")
+    ap.add_argument("--pid", dest="pid_file", default="notes/kaggle_logs/task3_live.pid")
     ap.add_argument("--every", type=float, default=600)
+    ap.add_argument("--poll", type=float, default=30)
     ap.add_argument("--warn-h", type=float, default=11)
     ap.add_argument("--limit-h", type=float, default=10.5)
     a = ap.parse_args(argv)
     if a.plan:
         return plan(a.smoke, a.preflight, a.limit_h)
     if a.wait:
-        return wait(a.run, a.log, a.done, a.every, a.warn_h)
+        return wait(a.run, a.log, a.done, a.exit_file, a.pid_file, a.every, a.poll, a.warn_h)
     return summary(a.run)
 
 
