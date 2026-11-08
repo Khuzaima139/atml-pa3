@@ -1,5 +1,5 @@
 {
-  "run_id": "task3_prepare_mathvista_20261108T123136Z",
+  "run_id": "task3_prepare_mathvista_20261108T132130Z",
   "status": "done",
   "dataset": "mathvista",
   "config_path": "configs/task3/offline.yaml",
@@ -94,7 +94,7 @@
   },
   "run_info": {
     "git": {
-      "commit": "5d9c2d5c0fd9c034056e4c9e2207817b769ca39e",
+      "commit": "9d3152707419489b31e043e19f1dfe6a9c533f70",
       "dirty": false
     },
     "hostname": "192.168.1.6",
@@ -106,16 +106,17 @@
       "gpus": [],
       "torch": "2.15.0"
     },
-    "timestamp": "2026-11-08T12:31:38.821304+00:00"
+    "timestamp": "2026-11-08T13:21:31.548667+00:00"
   },
   "scorer_version": {
-    "answers_py_sha256": "94141ad2cd5996a3cc34e1b937c215b66fad2ee112c0fd67b530811c88020352",
+    "answers_py_sha256": "cdcd43a572d7b57a2f3d750e012f2567ea764d66bf92501bf7c8a1ac0d8b96a3",
     "libraries": {
       "math-verify": "0.9.0",
       "latex2sympy2_extended": "1.11.0",
       "sympy": "1.14.0",
       "antlr4-python3-runtime": "4.13.2"
     },
+    "math_equivalence": "symmetric: equal if verify(a, b) or verify(b, a) (grouping, grading, check b)",
     "math_verify": {
       "wrap": "\\boxed{...}",
       "parse_timeout_s": 5,
@@ -126,7 +127,7 @@
       "commit": "5f6b4deca69ecd1b8a1a4f338cee085e50524e4b",
       "testmini_sha256": "ab0148dca9d401c31cc47f29b3826eec28a76ff155a1c0878d81e8daf0413480"
     },
-    "id": "30e3838e83e402f5f6a0a00c8cd54351790728674fccc2ca11f037db5e900658"
+    "id": "1fac30ddd0981fb05724e7892f27d9b4fbff3da31db7e2a7b33da86ccc3dcea8"
   },
   "inputs": {
     "input_sha256": {
@@ -141,7 +142,7 @@
     "rollouts_csv_sha256": "5f337a06f0589153bd703b604dfcc496eaf82dde2e70f024d947290f19f397fc",
     "split_file": "splits/task3/mathvista_split.json",
     "split_sha256": "cce53c643cf58ab73fa540acaa01f549885fd3a738e97a6fd4f5575d21880adf",
-    "split_status": "written",
+    "split_status": "unchanged",
     "token_cache": "cached/task3/mathvista_tokens.npz",
     "token_cache_meta": {
       "dataset": "mathvista",
@@ -169,6 +170,15 @@
     "group_id": "answer group within the question, numbered in order of first appearance; NO_ANSWER = -1",
     "na_reason": "NO_ANSWER only: extraction (supplied answer missing/empty) or normalization (MathVista rule returned None)",
     "correct": "group graded against gold with the same equivalence rules; NO_ANSWER always False"
+  },
+  "replaced": {
+    "files": [
+      "results/task3/rollouts/mathvista_rollouts.csv",
+      "results/task3/prepare_mathvista.json"
+    ],
+    "run_id": "task3_prepare_mathvista_20261108T123136Z",
+    "scorer_version_id": "30e3838e83e402f5f6a0a00c8cd54351790728674fccc2ca11f037db5e900658",
+    "commit": "5d9c2d5c0fd9c034056e4c9e2207817b769ca39e"
   },
   "counts": {
     "rollouts": 32000,
@@ -238,9 +248,9 @@
     }
   },
   "runtime_s": {
-    "load_join_cache_split": 0.91,
-    "group_grade": 0.03,
-    "checks": 0.01,
-    "total": 2.1
+    "load_join_cache_split": 1.94,
+    "group_grade": 0.04,
+    "checks": 0.02,
+    "total": 2.15
   }
 }

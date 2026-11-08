@@ -1,5 +1,5 @@
 {
-  "run_id": "task3_prepare_math_20261108T123145Z",
+  "run_id": "task3_prepare_math_20261108T132126Z",
   "status": "done",
   "dataset": "math",
   "config_path": "configs/task3/offline.yaml",
@@ -94,7 +94,7 @@
   },
   "run_info": {
     "git": {
-      "commit": "5d9c2d5c0fd9c034056e4c9e2207817b769ca39e",
+      "commit": "9d3152707419489b31e043e19f1dfe6a9c533f70",
       "dirty": false
     },
     "hostname": "192.168.1.6",
@@ -106,16 +106,17 @@
       "gpus": [],
       "torch": "2.15.0"
     },
-    "timestamp": "2026-11-08T12:40:28.028417+00:00"
+    "timestamp": "2026-11-08T13:21:27.261521+00:00"
   },
   "scorer_version": {
-    "answers_py_sha256": "94141ad2cd5996a3cc34e1b937c215b66fad2ee112c0fd67b530811c88020352",
+    "answers_py_sha256": "cdcd43a572d7b57a2f3d750e012f2567ea764d66bf92501bf7c8a1ac0d8b96a3",
     "libraries": {
       "math-verify": "0.9.0",
       "latex2sympy2_extended": "1.11.0",
       "sympy": "1.14.0",
       "antlr4-python3-runtime": "4.13.2"
     },
+    "math_equivalence": "symmetric: equal if verify(a, b) or verify(b, a) (grouping, grading, check b)",
     "math_verify": {
       "wrap": "\\boxed{...}",
       "parse_timeout_s": 5,
@@ -126,7 +127,7 @@
       "commit": "5f6b4deca69ecd1b8a1a4f338cee085e50524e4b",
       "testmini_sha256": "ab0148dca9d401c31cc47f29b3826eec28a76ff155a1c0878d81e8daf0413480"
     },
-    "id": "30e3838e83e402f5f6a0a00c8cd54351790728674fccc2ca11f037db5e900658"
+    "id": "1fac30ddd0981fb05724e7892f27d9b4fbff3da31db7e2a7b33da86ccc3dcea8"
   },
   "inputs": {
     "input_sha256": {
@@ -137,10 +138,10 @@
   },
   "outputs": {
     "rollouts_csv": "results/task3/rollouts/math_rollouts.csv",
-    "rollouts_csv_sha256": "0792d447be5a1eb8fb55d5b74b94de52d06c44da2e97def2bba6292965d59b38",
+    "rollouts_csv_sha256": "230988501093d959bcc5a7ec9ef2ac1a9c23078136a63477e71e408d7341e64f",
     "split_file": "splits/task3/math_split.json",
     "split_sha256": "fad5c0972492b50b8a316aa04458c66f10584d23c6aab027816215b714da4be3",
-    "split_status": "written",
+    "split_status": "unchanged",
     "token_cache": "cached/task3/math_tokens.npz",
     "token_cache_meta": {
       "dataset": "math",
@@ -168,6 +169,15 @@
     "na_reason": "NO_ANSWER only: extraction (supplied answer missing/empty) or normalization (MathVista rule returned None)",
     "correct": "group graded against gold with the same equivalence rules; NO_ANSWER always False"
   },
+  "replaced": {
+    "files": [
+      "results/task3/rollouts/math_rollouts.csv",
+      "results/task3/prepare_math.json"
+    ],
+    "run_id": "task3_prepare_math_20261108T123145Z",
+    "scorer_version_id": "30e3838e83e402f5f6a0a00c8cd54351790728674fccc2ca11f037db5e900658",
+    "commit": "5d9c2d5c0fd9c034056e4c9e2207817b769ca39e"
+  },
   "counts": {
     "rollouts": 32000,
     "questions": 1000,
@@ -187,13 +197,13 @@
     "capped": 523,
     "capped_flag_vs_length_disagreements": 0,
     "groups_per_question_excl_no_answer": {
-      "mean": 5.489,
+      "mean": 5.488,
       "median": 3.0,
       "min": 1,
       "max": 32
     },
     "groups_per_question_incl_no_answer": {
-      "mean": 5.654,
+      "mean": 5.653,
       "median": 3.0,
       "min": 1,
       "max": 32
@@ -242,37 +252,33 @@
       ]
     },
     "verify_calls": {
-      "grading": 2416,
-      "grouping": 25674,
-      "check_a": 27001,
-      "check_b": 44
+      "grading": 3271,
+      "grouping": 49288,
+      "check_a": 3841,
+      "check_b": 78
     },
     "timeouts": {
-      "total": 81,
-      "grouping": 37,
-      "grading": 3,
-      "check_a": 41
+      "total": 84,
+      "grouping": 74,
+      "grading": 6,
+      "check_a": 4
     },
     "gold_failures": 0
   },
   "checks": {
     "a_transitivity": {
-      "pairs_checked": 60856,
-      "block_mismatch_pairs": 1,
-      "asymmetric_pairs": 1,
+      "relation": "symmetric: verify(a, b) or verify(b, a)",
+      "pairs_checked": 30428,
+      "block_mismatch_pairs": 0,
       "non_transitive_triples": 0,
       "non_reflexive_strings": 0,
-      "questions_affected": 1,
-      "affected_ids": [
-        "test:2563"
-      ],
-      "examples": [
+      "raw_asymmetric_pairs": 1,
+      "questions_affected": 0,
+      "affected_ids": [],
+      "examples": [],
+      "raw_asymmetric_examples": [
         {
           "sample_id": "test:2563",
-          "block_mismatch_pairs": 1,
-          "asymmetric_pairs": 1,
-          "non_transitive_triples": 0,
-          "non_reflexive_strings": 0,
           "pairs (a, b, verify(a,b), verify(b,a), group a, group b)": [
             [
               "[-4, 0]",
@@ -280,13 +286,12 @@
               false,
               true,
               0,
-              3
+              0
             ]
-          ],
-          "non_reflexive": []
+          ]
         }
       ],
-      "passed": false
+      "passed": true
     },
     "b_grading_consistency": {
       "member_strings_checked": 5625,
@@ -302,9 +307,9 @@
     }
   },
   "runtime_s": {
-    "load_join_cache_split": 0.79,
-    "group_grade": 260.96,
-    "checks": 259.65,
-    "total": 522.66
+    "load_join_cache_split": 2.33,
+    "group_grade": 510.02,
+    "checks": 24.87,
+    "total": 537.39
   }
 }
