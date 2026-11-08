@@ -71,6 +71,7 @@ def run(cfg, dataset, config_path, replace=False):
             replaced.update({"run_id": old.get("run_id"), "scorer_version_id": old.get("scorer_version", {}).get("id"),
                              "commit": old.get("run_info", {}).get("git", {}).get("commit")})
     run_id = f"task3_prepare_{dataset}_{datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%SZ')}"
+    info = run_info()   # provenance (commit, dirty) before any output is written: --replace rewrites tracked files
 
     # scorer identity first: library versions are checked before any work
     mv_meta_path = cfg["datasets"]["mathvista"]["metadata"]
@@ -148,7 +149,7 @@ def run(cfg, dataset, config_path, replace=False):
     }
     out = {
         "run_id": run_id, "status": "done", "dataset": dataset,
-        "config_path": config_path, "config": cfg, "run_info": run_info(),
+        "config_path": config_path, "config": cfg, "run_info": info,
         "scorer_version": sv,
         "inputs": {"input_sha256": data["input_sha256"], "testmini_sha256": sv["mathvista"].get("testmini_sha256")},
         "outputs": {"rollouts_csv": os.path.relpath(csv_path, resolve(".")), "rollouts_csv_sha256": sha256_file(csv_path),

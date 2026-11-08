@@ -119,3 +119,28 @@ def test_capped_column_matches_flag(synth_cfg):
     df = pd.read_csv(csv_path)
     assert df["capped"].sum() == 1 and (df.loc[df["capped"], "T"] == synth.CAP).all()
     assert np.isfinite(df[["L", "K"]].to_numpy()).all()
+
+
+def test_replace_records_provenance_before_writing(synth_cfg, monkeypatch):
+    """Regression: with --replace the tracked outputs are rewritten, so run_info (git dirty flag) must be read
+    before any output is written, or every replacement run would record dirty = true."""
+    from task3_ttc import prepare
+    from task3_ttc.data import load_config
+    tmp, cfg_path = synth_cfg
+    csv_path = os.path.join(tmp, "results", "rollouts", "mathvista_rollouts.csv")
+    if not os.path.exists(csv_path):
+        assert _run(cfg_path, "mathvista").returncode == 0
+    seen = {}
+
+    def fake_run_info():
+        seen["csv_mtime"] = os.path.getmtime(csv_path)
+        seen["csv_size"] = os.path.getsize(csv_path)
+        return {"git": {"commit": "x", "dirty": False}}
+
+    monkeypatch.setattr(prepare, "run_info", fake_run_info)
+    before = os.stat(csv_path).st_mtime_ns
+    import time
+    time.sleep(0.01)
+    out, _, _ = prepare.run(load_config(cfg_path), "mathvista", cfg_path, replace=True)
+    assert seen["csv_mtime"] * 1e9 <= before + 1e6 and os.stat(csv_path).st_mtime_ns > before
+    assert out["run_info"]["git"]["commit"] == "x"
