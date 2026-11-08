@@ -1,0 +1,50 @@
+# Task 3 offline setup (manual L577-615, L720-739; decisions of the Task 3 plan, prompt b1).
+# Relative paths are resolved from the repo root.
+seed: 6304                                      # L594, L596
+paths:
+  data_root: data/task3/ATML-PA3-Data           # supplied rollouts (gitignored)
+  cache_dir: cached/task3                       # token-level caches (gitignored)
+  splits_dir: splits/task3
+  results_dir: results/task3
+  splits_preview: scratch/task3/splits_preview.json   # prompt a preview; split IDs must match it (null: no check)
+sizes:                                          # L582-584, L594-596
+  n_questions: 1000
+  n_rollouts: 32
+  n_dev: 200
+  n_eval: 800
+datasets:
+  math:
+    folder: qwen25-math
+    files: {generations: generations.parquet, probability: probability_metrics.parquet}
+    n_live: 50                                  # L595-596: first 50 MATH evaluation IDs
+    metadata: null
+  mathvista:
+    folder: qwen25vl-mathvista
+    files: {generations: generations.parquet, probability: probability_metrics.parquet,
+            attention: attention_metrics.parquet}
+    n_live: null
+    metadata: data/task3/mathvista/testmini.json   # released question metadata (L601-602)
+token_cap: 2048                                 # README R56, L584
+budgets: [1, 2, 4, 8, 16, 32]                   # L608
+n_orders: 10                                    # L608-609
+adaptive:                                       # L722, L734-739
+  check_points: [4, 8, 16]
+  tau: [0.5, 0.625, 0.75, 0.875, 1.0]
+  gamma: [0.0, 0.1, 0.25, 0.5]
+bootstrap:                                      # L614-615
+  resamples: 1000
+  ci: 0.95
+scorer:                                         # L600-601; installed versions must match
+  libraries:
+    math-verify: 0.9.0
+    latex2sympy2_extended: 1.11.0
+    sympy: 1.14.0
+    antlr4-python3-runtime: 4.13.2
+  math_verify:
+    wrap: "\\boxed{...}"                        # every extracted answer and gold string
+    parse_timeout_s: 5                          # math-verify defaults
+    verify_timeout_s: 5
+  mathvista:
+    repo: lupantech/MathVista
+    commit: 5f6b4deca69ecd1b8a1a4f338cee085e50524e4b
+    testmini_sha256: ab0148dca9d401c31cc47f29b3826eec28a76ff155a1c0878d81e8daf0413480
