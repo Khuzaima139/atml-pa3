@@ -1,0 +1,97 @@
+{
+  "run_id": "task2_analysis_counting",
+  "provenance": {
+    "git": {
+      "commit": "1e2cedb4d43c10de45938a4af85ddce425588a5a",
+      "dirty": false
+    },
+    "hostname": "192.168.1.6",
+    "hardware": {
+      "cpu": "arm",
+      "cpu_count": 8,
+      "platform": "macOS-27.0.1-arm64-arm-64bit",
+      "python": "3.11.18",
+      "gpus": [],
+      "torch": "2.15.0"
+    },
+    "timestamp": "2026-11-08T11:35:01.358559+00:00"
+  },
+  "eval_run_id": "task2_eval_20261107T225758Z",
+  "train_run_id": "task2_train_20261107T211140Z",
+  "suite": "grounding_test",
+  "true_count": "count of the slot's own (original) image",
+  "conditions": {
+    "correct": {
+      "1": {
+        "n": 32,
+        "accuracy": 0.9375
+      },
+      "2": {
+        "n": 28,
+        "accuracy": 0.6428571428571429
+      },
+      "3": {
+        "n": 3,
+        "accuracy": 0.3333333333333333
+      },
+      "4": {
+        "n": 1,
+        "accuracy": 1.0
+      }
+    },
+    "swap": {
+      "1": {
+        "n": 32,
+        "accuracy": 0.25
+      },
+      "2": {
+        "n": 28,
+        "accuracy": 0.03571428571428571
+      },
+      "3": {
+        "n": 3,
+        "accuracy": 0.0
+      },
+      "4": {
+        "n": 1,
+        "accuracy": 0.0
+      }
+    },
+    "mismatched": {
+      "1": {
+        "n": 32,
+        "accuracy": 0.65625
+      },
+      "2": {
+        "n": 28,
+        "accuracy": 0.10714285714285714
+      },
+      "3": {
+        "n": 3,
+        "accuracy": 0.0
+      },
+      "4": {
+        "n": 1,
+        "accuracy": 0.0
+      }
+    },
+    "none": {
+      "1": {
+        "n": 32,
+        "accuracy": 0.1875
+      },
+      "2": {
+        "n": 28,
+        "accuracy": 0.0
+      },
+      "3": {
+        "n": 3,
+        "accuracy": 0.0
+      },
+      "4": {
+        "n": 1,
+        "accuracy": 0.0
+      }
+    }
+  }
+}

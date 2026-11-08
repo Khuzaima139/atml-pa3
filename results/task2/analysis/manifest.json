@@ -1,0 +1,50 @@
+{
+  "run_id": "task2_analysis_manifest",
+  "provenance": {
+    "git": {
+      "commit": "1e2cedb4d43c10de45938a4af85ddce425588a5a",
+      "dirty": false
+    },
+    "hostname": "192.168.1.6",
+    "hardware": {
+      "cpu": "arm",
+      "cpu_count": 8,
+      "platform": "macOS-27.0.1-arm64-arm-64bit",
+      "python": "3.11.18",
+      "gpus": [],
+      "torch": "2.15.0"
+    },
+    "timestamp": "2026-11-08T11:35:01.358559+00:00"
+  },
+  "sources": {
+    "configs/task2/train.yaml": "af792ffa9ab8f164ef4b5ac928298d3f4c49655c92a91f5053062f212ebe11c4",
+    "configs/task2/data.yaml": "e27c07bca506932a7a118fc07c99a15d1586d1a20b84c775715abc618f4fbc40",
+    "configs/task2/qualitative_rule.yaml": "a0fa3d5697bc5a1f689290b46a821bf5313f0f296c831fc7d2aaedeb029f7ac5",
+    "results/task2/main/train.json": "9c15f3b6370e1f4ac345022626146ad84022f42c0aedd392e07d824709fd0138",
+    "results/task2/main/final/eval.json": "1eeadacd132ad63e2000e87b404b735908df35b0a933274b7b8558e546540677",
+    "results/task2/cache_features.json": "d52926148ca567edacab34f35e45e034c33d85db2e31a9262906e741e53ad0cd",
+    "splits/task2/mismatch_map.json": "3a42bdc6e91030b8778f55e8120bd1ad74b5f4d46c76f0fba719cffc6d317f1c",
+    "splits/task2/vqa_test.json": "900373b2faebd35f7746d1c82162a92daa82a62da7416baa96b532a792da5e8b",
+    "splits/task2/grounding_test.json": "fc9752701210c587ed0fb2dc289135db0874ae784bffa99fe24aae3599e5e058",
+    "results/task2/main/dev/dev_u0000.json": "566e05b71ddf460ccbc3039f5b856abe6c8c415af2ad23d0cbb67e826055a85d",
+    "results/task2/main/dev/dev_u0500.json": "0f334190e157886b83521ba47916b9706ad439c6df9f8d747738875c907db184",
+    "results/task2/main/dev/dev_u1000.json": "5a61e6e22e12f29149da5b650670d29ed36709434dae09c818c423ecef575d63",
+    "results/task2/main/dev/dev_u1500.json": "bbfe5f9968c22f7e332a122bef2b4ee131d59bc9acbad8794d9f54b07358060a",
+    "results/task2/main/dev/dev_u2000.json": "794cf0d939f3c8b478c769f25a0540e27ab328baf0abc9761b72cc542ed54835",
+    "results/task2/main/dev/dev_u2250.json": "58e36549b08f9d60f9ddb79f2a83bd0278e50c50d7e8aca8a99af23b13fc787d",
+    "results/task2/main/dev/dev_u2500.json": "626bdf27c02d45b87d79ff88821b535d2b75a564a6289ad62d41f668a825b8c3",
+    "results/task2/main/dev/dev_u3000.json": "2c19a1f614f6cbdadf60704c80de595f581eefb95b3d1b42000df9d8d77e6d76",
+    "results/task2/main/dev/dev_u3500.json": "269625751f4f80a28fc300668ec6c7cc23efd038062fabc1d50f11c7dc1b89a1",
+    "results/task2/main/dev/dev_u3750.json": "c230fc5d4c6bed606e9638bd9a9b8d340f810e9edef8d4327d1617bdd1744804",
+    "results/task2/main/dev/dev_u4000.json": "ce19150edc4b5ee8bf1d259dd110e2e47cf38520ce7eeb40d1b12ea5a80196cb",
+    "results/task2/main/dev/dev_u4500.json": "d3a6116cd487b49e15bcaaae16aa6ea1362b8d59905b8474e7e06daf3d4598d2",
+    "results/task2/main/final/examples.json": "b8df4648f41d4d9b33d16fb64c6641f465c09da7233868fb29c7b46c3143d81e",
+    "splits/task2/images_val.json": "20edca9cfb30d0815b404bda67d132ae1b57a9b9470036b86a557ec831290034"
+  },
+  "figures": [
+    "figures/task2/learning_curves.pdf",
+    "figures/task2/learning_curves.png",
+    "figures/task2/qualitative_main.pdf",
+    "figures/task2/qualitative_main.png"
+  ]
+}

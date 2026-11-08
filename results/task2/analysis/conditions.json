@@ -1,0 +1,463 @@
+{
+  "run_id": "task2_analysis_conditions",
+  "provenance": {
+    "git": {
+      "commit": "1e2cedb4d43c10de45938a4af85ddce425588a5a",
+      "dirty": false
+    },
+    "hostname": "192.168.1.6",
+    "hardware": {
+      "cpu": "arm",
+      "cpu_count": 8,
+      "platform": "macOS-27.0.1-arm64-arm-64bit",
+      "python": "3.11.18",
+      "gpus": [],
+      "torch": "2.15.0"
+    },
+    "timestamp": "2026-11-08T11:35:01.358559+00:00"
+  },
+  "eval_run_id": "task2_eval_20261107T225758Z",
+  "train_run_id": "task2_train_20261107T211140Z",
+  "vqa_test": {
+    "conditions": {
+      "correct": {
+        "n": 192,
+        "n_pairs": 96,
+        "accuracy": 0.5494791666666666,
+        "exact_match": 0.5104166666666666,
+        "pair_accuracy": 0.21875,
+        "identical_answer_rate": 0.5520833333333334,
+        "empty_rate_normalized": 0.0,
+        "empty_rate_raw": 0.0,
+        "follow_partner_rate": 0.296875,
+        "reference_nll": 1.4785050647975975,
+        "seconds_per_answer": 0.043219383786469244,
+        "by_type": {
+          "yes/no": {
+            "n": 72,
+            "n_pairs": 36,
+            "accuracy": 0.6000000000000001,
+            "exact_match": 0.5416666666666666,
+            "pair_accuracy": 0.16666666666666666,
+            "identical_answer_rate": 0.75,
+            "empty_rate_normalized": 0.0,
+            "empty_rate_raw": 0.0,
+            "follow_partner_rate": 0.4583333333333333,
+            "reference_nll": 0.7290270427345402,
+            "by_construction": {}
+          },
+          "number": {
+            "n": 48,
+            "n_pairs": 24,
+            "accuracy": 0.49374999999999997,
+            "exact_match": 0.4375,
+            "pair_accuracy": 0.25,
+            "identical_answer_rate": 0.375,
+            "empty_rate_normalized": 0.0,
+            "empty_rate_raw": 0.0,
+            "follow_partner_rate": 0.14583333333333334,
+            "reference_nll": 1.6025566281750798,
+            "by_construction": {}
+          },
+          "other": {
+            "n": 72,
+            "n_pairs": 36,
+            "accuracy": 0.5361111111111111,
+            "exact_match": 0.5277777777777778,
+            "pair_accuracy": 0.25,
+            "identical_answer_rate": 0.4722222222222222,
+            "empty_rate_normalized": 0.0,
+            "empty_rate_raw": 0.0,
+            "follow_partner_rate": 0.2361111111111111,
+            "reference_nll": 2.1452820446089995,
+            "by_construction": {}
+          }
+        },
+        "by_construction": {}
+      },
+      "swap": {
+        "n": 192,
+        "n_pairs": 96,
+        "accuracy": 0.340625,
+        "exact_match": 0.296875,
+        "pair_accuracy": 0.03125,
+        "identical_answer_rate": 0.5520833333333334,
+        "empty_rate_normalized": 0.0,
+        "empty_rate_raw": 0.0,
+        "follow_partner_rate": 0.5104166666666666,
+        "reference_nll": 2.3711217628054633,
+        "seconds_per_answer": 0.04160076885937277,
+        "by_type": {
+          "yes/no": {
+            "n": 72,
+            "n_pairs": 36,
+            "accuracy": 0.5249999999999999,
+            "exact_match": 0.4583333333333333,
+            "pair_accuracy": 0.08333333333333333,
+            "identical_answer_rate": 0.75,
+            "empty_rate_normalized": 0.0,
+            "empty_rate_raw": 0.0,
+            "follow_partner_rate": 0.5416666666666666,
+            "reference_nll": 0.9584107192543646,
+            "by_construction": {
+              "identical_answer_rate": "equals the correct-condition identical rate: each swap input is the partner's correct-condition input, so the two swap predictions are the two correct predictions in reversed slots",
+              "follow_partner_rate": "equals the correct-condition exact-match rate: the swap prediction for a slot is the partner's correct-condition prediction, compared with the partner's answer"
+            }
+          },
+          "number": {
+            "n": 48,
+            "n_pairs": 24,
+            "accuracy": 0.18958333333333333,
+            "exact_match": 0.14583333333333334,
+            "pair_accuracy": 0.0,
+            "identical_answer_rate": 0.375,
+            "empty_rate_normalized": 0.0,
+            "empty_rate_raw": 0.0,
+            "follow_partner_rate": 0.4375,
+            "reference_nll": 2.409711741221448,
+            "by_construction": {
+              "identical_answer_rate": "equals the correct-condition identical rate: each swap input is the partner's correct-condition input, so the two swap predictions are the two correct predictions in reversed slots",
+              "follow_partner_rate": "equals the correct-condition exact-match rate: the swap prediction for a slot is the partner's correct-condition prediction, compared with the partner's answer"
+            }
+          },
+          "other": {
+            "n": 72,
+            "n_pairs": 36,
+            "accuracy": 0.2569444444444444,
+            "exact_match": 0.2361111111111111,
+            "pair_accuracy": 0.0,
+            "identical_answer_rate": 0.4722222222222222,
+            "empty_rate_normalized": 0.0,
+            "empty_rate_raw": 0.0,
+            "follow_partner_rate": 0.5277777777777778,
+            "reference_nll": 3.7581061540792384,
+            "by_construction": {
+              "identical_answer_rate": "equals the correct-condition identical rate: each swap input is the partner's correct-condition input, so the two swap predictions are the two correct predictions in reversed slots",
+              "follow_partner_rate": "equals the correct-condition exact-match rate: the swap prediction for a slot is the partner's correct-condition prediction, compared with the partner's answer"
+            }
+          }
+        },
+        "by_construction": {
+          "identical_answer_rate": "equals the correct-condition identical rate: each swap input is the partner's correct-condition input, so the two swap predictions are the two correct predictions in reversed slots",
+          "follow_partner_rate": "equals the correct-condition exact-match rate: the swap prediction for a slot is the partner's correct-condition prediction, compared with the partner's answer"
+        }
+      },
+      "mismatched": {
+        "n": 192,
+        "n_pairs": 96,
+        "accuracy": 0.3411458333333333,
+        "exact_match": 0.3020833333333333,
+        "pair_accuracy": 0.020833333333333332,
+        "identical_answer_rate": 0.75,
+        "empty_rate_normalized": 0.0,
+        "empty_rate_raw": 0.0,
+        "follow_partner_rate": 0.3385416666666667,
+        "reference_nll": 2.143902430087716,
+        "seconds_per_answer": 0.041007777036445724,
+        "by_type": {
+          "yes/no": {
+            "n": 72,
+            "n_pairs": 36,
+            "accuracy": 0.5305555555555556,
+            "exact_match": 0.4722222222222222,
+            "pair_accuracy": 0.0,
+            "identical_answer_rate": 0.9444444444444444,
+            "empty_rate_normalized": 0.0,
+            "empty_rate_raw": 0.0,
+            "follow_partner_rate": 0.5277777777777778,
+            "reference_nll": 0.8978666719307916,
+            "by_construction": {}
+          },
+          "number": {
+            "n": 48,
+            "n_pairs": 24,
+            "accuracy": 0.2583333333333333,
+            "exact_match": 0.20833333333333334,
+            "pair_accuracy": 0.0,
+            "identical_answer_rate": 0.75,
+            "empty_rate_normalized": 0.0,
+            "empty_rate_raw": 0.0,
+            "follow_partner_rate": 0.3125,
+            "reference_nll": 2.177633248269558,
+            "by_construction": {}
+          },
+          "other": {
+            "n": 72,
+            "n_pairs": 36,
+            "accuracy": 0.20694444444444443,
+            "exact_match": 0.19444444444444445,
+            "pair_accuracy": 0.05555555555555555,
+            "identical_answer_rate": 0.5555555555555556,
+            "empty_rate_normalized": 0.0,
+            "empty_rate_raw": 0.0,
+            "follow_partner_rate": 0.16666666666666666,
+            "reference_nll": 3.3674509761234126,
+            "by_construction": {}
+          }
+        },
+        "by_construction": {}
+      },
+      "none": {
+        "n": 192,
+        "n_pairs": 96,
+        "accuracy": 0.022395833333333334,
+        "exact_match": 0.020833333333333332,
+        "pair_accuracy": 0.0,
+        "identical_answer_rate": 1.0,
+        "empty_rate_normalized": 0.0,
+        "empty_rate_raw": 0.0,
+        "follow_partner_rate": 0.020833333333333332,
+        "reference_nll": 6.569271279498935,
+        "seconds_per_answer": 0.1258079140260359,
+        "by_type": {
+          "yes/no": {
+            "n": 72,
+            "n_pairs": 36,
+            "accuracy": 0.0,
+            "exact_match": 0.0,
+            "pair_accuracy": 0.0,
+            "identical_answer_rate": 1.0,
+            "empty_rate_normalized": 0.0,
+            "empty_rate_raw": 0.0,
+            "follow_partner_rate": 0.0,
+            "reference_nll": 5.481323404444589,
+            "by_construction": {
+              "identical_answer_rate": "1: both questions of a pair have the same text and no image, so the inputs are identical",
+              "pair_accuracy": "0: the two canonical answers of a pair differ, so identical predictions cannot match both"
+            }
+          },
+          "number": {
+            "n": 48,
+            "n_pairs": 24,
+            "accuracy": 0.08958333333333333,
+            "exact_match": 0.08333333333333333,
+            "pair_accuracy": 0.0,
+            "identical_answer_rate": 1.0,
+            "empty_rate_normalized": 0.0,
+            "empty_rate_raw": 0.0,
+            "follow_partner_rate": 0.08333333333333333,
+            "reference_nll": 3.6109234963854155,
+            "by_construction": {
+              "identical_answer_rate": "1: both questions of a pair have the same text and no image, so the inputs are identical",
+              "pair_accuracy": "0: the two canonical answers of a pair differ, so identical predictions cannot match both"
+            }
+          },
+          "other": {
+            "n": 72,
+            "n_pairs": 36,
+            "accuracy": 0.0,
+            "exact_match": 0.0,
+            "pair_accuracy": 0.0,
+            "identical_answer_rate": 1.0,
+            "empty_rate_normalized": 0.0,
+            "empty_rate_raw": 0.0,
+            "follow_partner_rate": 0.0,
+            "reference_nll": 9.629451009962294,
+            "by_construction": {
+              "identical_answer_rate": "1: both questions of a pair have the same text and no image, so the inputs are identical",
+              "pair_accuracy": "0: the two canonical answers of a pair differ, so identical predictions cannot match both"
+            }
+          }
+        },
+        "by_construction": {
+          "identical_answer_rate": "1: both questions of a pair have the same text and no image, so the inputs are identical",
+          "pair_accuracy": "0: the two canonical answers of a pair differ, so identical predictions cannot match both"
+        }
+      }
+    },
+    "max_abs_difference_vs_eval_json": 0.0,
+    "by_construction_max_violation": 0.0
+  },
+  "grounding_test": {
+    "conditions": {
+      "correct": {
+        "n": 128,
+        "n_pairs": 64,
+        "accuracy": 0.875,
+        "exact_match": 0.875,
+        "pair_accuracy": 0.796875,
+        "identical_answer_rate": 0.109375,
+        "empty_rate_normalized": 0.0,
+        "empty_rate_raw": 0.0,
+        "follow_partner_rate": 0.0859375,
+        "reference_nll": 0.32953408284174657,
+        "seconds_per_answer": 0.038362968921866525,
+        "by_type": {
+          "presence": {
+            "n": 64,
+            "n_pairs": 32,
+            "accuracy": 0.96875,
+            "exact_match": 0.96875,
+            "pair_accuracy": 0.96875,
+            "identical_answer_rate": 0.0,
+            "empty_rate_normalized": 0.0,
+            "empty_rate_raw": 0.0,
+            "follow_partner_rate": 0.03125,
+            "reference_nll": 0.13481358779063157,
+            "by_construction": {}
+          },
+          "counting": {
+            "n": 64,
+            "n_pairs": 32,
+            "accuracy": 0.78125,
+            "exact_match": 0.78125,
+            "pair_accuracy": 0.625,
+            "identical_answer_rate": 0.21875,
+            "empty_rate_normalized": 0.0,
+            "empty_rate_raw": 0.0,
+            "follow_partner_rate": 0.140625,
+            "reference_nll": 0.5242545778928616,
+            "by_construction": {}
+          }
+        },
+        "by_construction": {}
+      },
+      "swap": {
+        "n": 128,
+        "n_pairs": 64,
+        "accuracy": 0.0859375,
+        "exact_match": 0.0859375,
+        "pair_accuracy": 0.03125,
+        "identical_answer_rate": 0.109375,
+        "empty_rate_normalized": 0.0,
+        "empty_rate_raw": 0.0,
+        "follow_partner_rate": 0.875,
+        "reference_nll": 3.1106620093341917,
+        "seconds_per_answer": 0.0391326868359414,
+        "by_type": {
+          "presence": {
+            "n": 64,
+            "n_pairs": 32,
+            "accuracy": 0.03125,
+            "exact_match": 0.03125,
+            "pair_accuracy": 0.03125,
+            "identical_answer_rate": 0.0,
+            "empty_rate_normalized": 0.0,
+            "empty_rate_raw": 0.0,
+            "follow_partner_rate": 0.96875,
+            "reference_nll": 3.146288193296641,
+            "by_construction": {
+              "identical_answer_rate": "equals the correct-condition identical rate: each swap input is the partner's correct-condition input, so the two swap predictions are the two correct predictions in reversed slots",
+              "follow_partner_rate": "equals the correct-condition exact-match rate: the swap prediction for a slot is the partner's correct-condition prediction, compared with the partner's answer"
+            }
+          },
+          "counting": {
+            "n": 64,
+            "n_pairs": 32,
+            "accuracy": 0.140625,
+            "exact_match": 0.140625,
+            "pair_accuracy": 0.03125,
+            "identical_answer_rate": 0.21875,
+            "empty_rate_normalized": 0.0,
+            "empty_rate_raw": 0.0,
+            "follow_partner_rate": 0.78125,
+            "reference_nll": 3.0750358253717422,
+            "by_construction": {
+              "identical_answer_rate": "equals the correct-condition identical rate: each swap input is the partner's correct-condition input, so the two swap predictions are the two correct predictions in reversed slots",
+              "follow_partner_rate": "equals the correct-condition exact-match rate: the swap prediction for a slot is the partner's correct-condition prediction, compared with the partner's answer"
+            }
+          }
+        },
+        "by_construction": {
+          "identical_answer_rate": "equals the correct-condition identical rate: each swap input is the partner's correct-condition input, so the two swap predictions are the two correct predictions in reversed slots",
+          "follow_partner_rate": "equals the correct-condition exact-match rate: the swap prediction for a slot is the partner's correct-condition prediction, compared with the partner's answer"
+        }
+      },
+      "mismatched": {
+        "n": 128,
+        "n_pairs": 64,
+        "accuracy": 0.46875,
+        "exact_match": 0.46875,
+        "pair_accuracy": 0.125,
+        "identical_answer_rate": 0.671875,
+        "empty_rate_normalized": 0.0,
+        "empty_rate_raw": 0.0,
+        "follow_partner_rate": 0.4453125,
+        "reference_nll": 1.6259696956694825,
+        "seconds_per_answer": 0.04043664517968182,
+        "by_type": {
+          "presence": {
+            "n": 64,
+            "n_pairs": 32,
+            "accuracy": 0.5625,
+            "exact_match": 0.5625,
+            "pair_accuracy": 0.1875,
+            "identical_answer_rate": 0.75,
+            "empty_rate_normalized": 0.0,
+            "empty_rate_raw": 0.0,
+            "follow_partner_rate": 0.4375,
+            "reference_nll": 1.457178958633449,
+            "by_construction": {}
+          },
+          "counting": {
+            "n": 64,
+            "n_pairs": 32,
+            "accuracy": 0.375,
+            "exact_match": 0.375,
+            "pair_accuracy": 0.0625,
+            "identical_answer_rate": 0.59375,
+            "empty_rate_normalized": 0.0,
+            "empty_rate_raw": 0.0,
+            "follow_partner_rate": 0.453125,
+            "reference_nll": 1.794760432705516,
+            "by_construction": {}
+          }
+        },
+        "by_construction": {}
+      },
+      "none": {
+        "n": 128,
+        "n_pairs": 64,
+        "accuracy": 0.046875,
+        "exact_match": 0.046875,
+        "pair_accuracy": 0.0,
+        "identical_answer_rate": 1.0,
+        "empty_rate_normalized": 0.0,
+        "empty_rate_raw": 0.0,
+        "follow_partner_rate": 0.046875,
+        "reference_nll": 3.0289320410229266,
+        "seconds_per_answer": 0.11250439529686673,
+        "by_type": {
+          "presence": {
+            "n": 64,
+            "n_pairs": 32,
+            "accuracy": 0.0,
+            "exact_match": 0.0,
+            "pair_accuracy": 0.0,
+            "identical_answer_rate": 1.0,
+            "empty_rate_normalized": 0.0,
+            "empty_rate_raw": 0.0,
+            "follow_partner_rate": 0.0,
+            "reference_nll": 3.273025833070278,
+            "by_construction": {
+              "identical_answer_rate": "1: both questions of a pair have the same text and no image, so the inputs are identical",
+              "pair_accuracy": "0: the two canonical answers of a pair differ, so identical predictions cannot match both"
+            }
+          },
+          "counting": {
+            "n": 64,
+            "n_pairs": 32,
+            "accuracy": 0.09375,
+            "exact_match": 0.09375,
+            "pair_accuracy": 0.0,
+            "identical_answer_rate": 1.0,
+            "empty_rate_normalized": 0.0,
+            "empty_rate_raw": 0.0,
+            "follow_partner_rate": 0.09375,
+            "reference_nll": 2.784838248975575,
+            "by_construction": {
+              "identical_answer_rate": "1: both questions of a pair have the same text and no image, so the inputs are identical",
+              "pair_accuracy": "0: the two canonical answers of a pair differ, so identical predictions cannot match both"
+            }
+          }
+        },
+        "by_construction": {
+          "identical_answer_rate": "1: both questions of a pair have the same text and no image, so the inputs are identical",
+          "pair_accuracy": "0: the two canonical answers of a pair differ, so identical predictions cannot match both"
+        }
+      }
+    },
+    "max_abs_difference_vs_eval_json": 0.0,
+    "by_construction_max_violation": 0.0
+  }
+}

@@ -1,0 +1,1129 @@
+{
+  "run_id": "task2_analysis_qualitative",
+  "provenance": {
+    "git": {
+      "commit": "1e2cedb4d43c10de45938a4af85ddce425588a5a",
+      "dirty": false
+    },
+    "hostname": "192.168.1.6",
+    "hardware": {
+      "cpu": "arm",
+      "cpu_count": 8,
+      "platform": "macOS-27.0.1-arm64-arm-64bit",
+      "python": "3.11.18",
+      "gpus": [],
+      "torch": "2.15.0"
+    },
+    "timestamp": "2026-11-08T11:35:01.358559+00:00"
+  },
+  "eval_run_id": "task2_eval_20261107T225758Z",
+  "train_run_id": "task2_train_20261107T211140Z",
+  "rule": {
+    "source": "results/task2/main/final/examples.json",
+    "order": "saved test pair order (splits/task2/vqa_test.json, splits/task2/grounding_test.json)",
+    "groups": "per test suite and question type",
+    "normalization": "task2_vlm/vqa_norm.py::normalize",
+    "kinds": {
+      "a": "both predictions correct under the correct images (normalized prediction equals the canonical answer), and under the complementary swap both predictions equal the partner's canonical answer",
+      "b": "identical normalized answers for the two questions under the correct images",
+      "c": "under the complementary swap, a prediction equal to neither canonical answer of the pair"
+    },
+    "pick": "the first pair of each kind in each group (a pair may be picked for more than one kind); none if no pair qualifies",
+    "shown": "shared question, both images, references (canonical and, for VQA, all ten answers), raw and normalized predictions under all four conditions"
+  },
+  "picks": [
+    {
+      "pair_id": "vqa_158333000_185901006",
+      "suite": "vqa_test",
+      "type": "yes/no",
+      "kind": "a",
+      "question": "Is this a blender?",
+      "image_ids": [
+        158333,
+        185901
+      ],
+      "mismatched_image_ids": [
+        359659,
+        342025
+      ],
+      "references": {
+        "canonical": [
+          "yes",
+          "no"
+        ],
+        "answers": [
+          [
+            "yes",
+            "yes",
+            "yes",
+            "yes",
+            "yes",
+            "oranges",
+            "fruit",
+            "yes",
+            "yes",
+            "yes"
+          ],
+          [
+            "no",
+            "no",
+            "no",
+            "no",
+            "no",
+            "no",
+            "no",
+            "no",
+            "no",
+            "no"
+          ]
+        ]
+      },
+      "predictions": {
+        "correct": [
+          {
+            "image_id": 158333,
+            "raw": "yes",
+            "normalized": "yes"
+          },
+          {
+            "image_id": 185901,
+            "raw": "no",
+            "normalized": "no"
+          }
+        ],
+        "swap": [
+          {
+            "image_id": 185901,
+            "raw": "no",
+            "normalized": "no"
+          },
+          {
+            "image_id": 158333,
+            "raw": "yes",
+            "normalized": "yes"
+          }
+        ],
+        "mismatched": [
+          {
+            "image_id": 359659,
+            "raw": "no",
+            "normalized": "no"
+          },
+          {
+            "image_id": 342025,
+            "raw": "no",
+            "normalized": "no"
+          }
+        ],
+        "none": [
+          {
+            "image_id": null,
+            "raw": "No, this is not a blender.",
+            "normalized": "no this is not blender"
+          },
+          {
+            "image_id": null,
+            "raw": "No, this is not a blender.",
+            "normalized": "no this is not blender"
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "vqa_300245003_47775008",
+      "suite": "vqa_test",
+      "type": "yes/no",
+      "kind": "b",
+      "question": "Is there a separate shower and tub?",
+      "image_ids": [
+        300245,
+        47775
+      ],
+      "mismatched_image_ids": [
+        310391,
+        97679
+      ],
+      "references": {
+        "canonical": [
+          "no",
+          "yes"
+        ],
+        "answers": [
+          [
+            "no",
+            "no",
+            "no",
+            "yes",
+            "no",
+            "no",
+            "yes",
+            "no",
+            "no",
+            "no"
+          ],
+          [
+            "yes",
+            "yes",
+            "yes",
+            "yes",
+            "yes",
+            "yes",
+            "yes",
+            "yes",
+            "yes",
+            "yes"
+          ]
+        ]
+      },
+      "predictions": {
+        "correct": [
+          {
+            "image_id": 300245,
+            "raw": "yes",
+            "normalized": "yes"
+          },
+          {
+            "image_id": 47775,
+            "raw": "yes",
+            "normalized": "yes"
+          }
+        ],
+        "swap": [
+          {
+            "image_id": 47775,
+            "raw": "yes",
+            "normalized": "yes"
+          },
+          {
+            "image_id": 300245,
+            "raw": "yes",
+            "normalized": "yes"
+          }
+        ],
+        "mismatched": [
+          {
+            "image_id": 310391,
+            "raw": "no",
+            "normalized": "no"
+          },
+          {
+            "image_id": 97679,
+            "raw": "no",
+            "normalized": "no"
+          }
+        ],
+        "none": [
+          {
+            "image_id": null,
+            "raw": "Yes, there can be a separate shower and tub. Some homes or buildings may",
+            "normalized": "yes there can be separate shower and tub some homes or buildings may"
+          },
+          {
+            "image_id": null,
+            "raw": "Yes, there can be a separate shower and tub. Some homes or buildings may",
+            "normalized": "yes there can be separate shower and tub some homes or buildings may"
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "vqa_493805000_64746006",
+      "suite": "vqa_test",
+      "type": "number",
+      "kind": "a",
+      "question": "How many giraffes?",
+      "image_ids": [
+        493805,
+        64746
+      ],
+      "mismatched_image_ids": [
+        527163,
+        100234
+      ],
+      "references": {
+        "canonical": [
+          "2",
+          "1"
+        ],
+        "answers": [
+          [
+            "2",
+            "2",
+            "2",
+            "2",
+            "2",
+            "2",
+            "2",
+            "2",
+            "2",
+            "2"
+          ],
+          [
+            "1",
+            "1",
+            "1",
+            "1",
+            "1",
+            "1",
+            "1",
+            "1",
+            "1",
+            "1"
+          ]
+        ]
+      },
+      "predictions": {
+        "correct": [
+          {
+            "image_id": 493805,
+            "raw": "2",
+            "normalized": "2"
+          },
+          {
+            "image_id": 64746,
+            "raw": "1",
+            "normalized": "1"
+          }
+        ],
+        "swap": [
+          {
+            "image_id": 64746,
+            "raw": "1",
+            "normalized": "1"
+          },
+          {
+            "image_id": 493805,
+            "raw": "2",
+            "normalized": "2"
+          }
+        ],
+        "mismatched": [
+          {
+            "image_id": 527163,
+            "raw": "0",
+            "normalized": "0"
+          },
+          {
+            "image_id": 100234,
+            "raw": "0",
+            "normalized": "0"
+          }
+        ],
+        "none": [
+          {
+            "image_id": null,
+            "raw": "There are no giraffes.",
+            "normalized": "there are no giraffes"
+          },
+          {
+            "image_id": null,
+            "raw": "There are no giraffes.",
+            "normalized": "there are no giraffes"
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "vqa_233315000_313034014",
+      "suite": "vqa_test",
+      "type": "number",
+      "kind": "b",
+      "question": "How many pictures are hung on the wall?",
+      "image_ids": [
+        233315,
+        313034
+      ],
+      "mismatched_image_ids": [
+        301155,
+        390435
+      ],
+      "references": {
+        "canonical": [
+          "4",
+          "1"
+        ],
+        "answers": [
+          [
+            "4",
+            "4",
+            "4",
+            "4",
+            "4",
+            "4",
+            "4",
+            "4",
+            "4",
+            "4"
+          ],
+          [
+            "1",
+            "2",
+            "1",
+            "1",
+            "1",
+            "1",
+            "1",
+            "1",
+            "1",
+            "2"
+          ]
+        ]
+      },
+      "predictions": {
+        "correct": [
+          {
+            "image_id": 233315,
+            "raw": "1",
+            "normalized": "1"
+          },
+          {
+            "image_id": 313034,
+            "raw": "1",
+            "normalized": "1"
+          }
+        ],
+        "swap": [
+          {
+            "image_id": 313034,
+            "raw": "1",
+            "normalized": "1"
+          },
+          {
+            "image_id": 233315,
+            "raw": "1",
+            "normalized": "1"
+          }
+        ],
+        "mismatched": [
+          {
+            "image_id": 301155,
+            "raw": "1",
+            "normalized": "1"
+          },
+          {
+            "image_id": 390435,
+            "raw": "1",
+            "normalized": "1"
+          }
+        ],
+        "none": [
+          {
+            "image_id": null,
+            "raw": "1",
+            "normalized": "1"
+          },
+          {
+            "image_id": null,
+            "raw": "1",
+            "normalized": "1"
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "vqa_371216000_179699011",
+      "suite": "vqa_test",
+      "type": "number",
+      "kind": "c",
+      "question": "How many bottles are in the picture?",
+      "image_ids": [
+        371216,
+        179699
+      ],
+      "mismatched_image_ids": [
+        262800,
+        383621
+      ],
+      "references": {
+        "canonical": [
+          "2",
+          "1"
+        ],
+        "answers": [
+          [
+            "2",
+            "2",
+            "2",
+            "2",
+            "2",
+            "2",
+            "2",
+            "2",
+            "2",
+            "2"
+          ],
+          [
+            "2",
+            "1",
+            "2",
+            "1",
+            "1",
+            "1",
+            "1",
+            "1",
+            "1",
+            "1"
+          ]
+        ]
+      },
+      "predictions": {
+        "correct": [
+          {
+            "image_id": 371216,
+            "raw": "3",
+            "normalized": "3"
+          },
+          {
+            "image_id": 179699,
+            "raw": "2",
+            "normalized": "2"
+          }
+        ],
+        "swap": [
+          {
+            "image_id": 179699,
+            "raw": "2",
+            "normalized": "2"
+          },
+          {
+            "image_id": 371216,
+            "raw": "3",
+            "normalized": "3"
+          }
+        ],
+        "mismatched": [
+          {
+            "image_id": 262800,
+            "raw": "1",
+            "normalized": "1"
+          },
+          {
+            "image_id": 383621,
+            "raw": "1",
+            "normalized": "1"
+          }
+        ],
+        "none": [
+          {
+            "image_id": null,
+            "raw": "1",
+            "normalized": "1"
+          },
+          {
+            "image_id": null,
+            "raw": "1",
+            "normalized": "1"
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "vqa_126744002_431197014",
+      "suite": "vqa_test",
+      "type": "other",
+      "kind": "a",
+      "question": "What room is this?",
+      "image_ids": [
+        126744,
+        431197
+      ],
+      "mismatched_image_ids": [
+        398666,
+        254931
+      ],
+      "references": {
+        "canonical": [
+          "kitchen",
+          "bathroom"
+        ],
+        "answers": [
+          [
+            "kitchen",
+            "kitchen",
+            "kitchen",
+            "kitchen",
+            "kitchen",
+            "kitchen",
+            "kitchen",
+            "kitchen",
+            "kitchen",
+            "kitchen"
+          ],
+          [
+            "bathroom",
+            "bathroom",
+            "bathroom",
+            "bathroom",
+            "bathroom",
+            "bathroom",
+            "bathroom",
+            "bathroom",
+            "bathroom",
+            "bathroom"
+          ]
+        ]
+      },
+      "predictions": {
+        "correct": [
+          {
+            "image_id": 126744,
+            "raw": "kitchen",
+            "normalized": "kitchen"
+          },
+          {
+            "image_id": 431197,
+            "raw": "bathroom",
+            "normalized": "bathroom"
+          }
+        ],
+        "swap": [
+          {
+            "image_id": 431197,
+            "raw": "bathroom",
+            "normalized": "bathroom"
+          },
+          {
+            "image_id": 126744,
+            "raw": "kitchen",
+            "normalized": "kitchen"
+          }
+        ],
+        "mismatched": [
+          {
+            "image_id": 398666,
+            "raw": "clock",
+            "normalized": "clock"
+          },
+          {
+            "image_id": 254931,
+            "raw": "dining room",
+            "normalized": "dining room"
+          }
+        ],
+        "none": [
+          {
+            "image_id": null,
+            "raw": "I don't have access to the room's details. Could you please provide more",
+            "normalized": "i don't have access to room's details could you please provide more"
+          },
+          {
+            "image_id": null,
+            "raw": "I don't have access to the room's details. Could you please provide more",
+            "normalized": "i don't have access to room's details could you please provide more"
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "vqa_20273000_322285001",
+      "suite": "vqa_test",
+      "type": "other",
+      "kind": "b",
+      "question": "Which Cincinnati neighborhood is this bus going to?",
+      "image_ids": [
+        20273,
+        322285
+      ],
+      "mismatched_image_ids": [
+        126744,
+        431197
+      ],
+      "references": {
+        "canonical": [
+          "mt airy",
+          "hyde park"
+        ],
+        "answers": [
+          [
+            "my airy",
+            "mt airy",
+            "mt airy",
+            "mt airy",
+            "mt airy",
+            "mt airy",
+            "mt airy",
+            "mt airy",
+            "mt airy",
+            "mt airy"
+          ],
+          [
+            "hyde park",
+            "hyde park",
+            "hyde park",
+            "hyde park",
+            "hyde park",
+            "hyde park",
+            "hyde park",
+            "hyde park",
+            "hyde park",
+            "hyde park"
+          ]
+        ]
+      },
+      "predictions": {
+        "correct": [
+          {
+            "image_id": 20273,
+            "raw": "cincinnati",
+            "normalized": "cincinnati"
+          },
+          {
+            "image_id": 322285,
+            "raw": "cincinnati",
+            "normalized": "cincinnati"
+          }
+        ],
+        "swap": [
+          {
+            "image_id": 322285,
+            "raw": "cincinnati",
+            "normalized": "cincinnati"
+          },
+          {
+            "image_id": 20273,
+            "raw": "cincinnati",
+            "normalized": "cincinnati"
+          }
+        ],
+        "mismatched": [
+          {
+            "image_id": 126744,
+            "raw": "cincinnati",
+            "normalized": "cincinnati"
+          },
+          {
+            "image_id": 431197,
+            "raw": "cincinnati",
+            "normalized": "cincinnati"
+          }
+        ],
+        "none": [
+          {
+            "image_id": null,
+            "raw": "The bus is going to the **Cincinnati neighborhood of East Side**.",
+            "normalized": "bus is going to **cincinnati neighborhood of east side**"
+          },
+          {
+            "image_id": null,
+            "raw": "The bus is going to the **Cincinnati neighborhood of East Side**.",
+            "normalized": "bus is going to **cincinnati neighborhood of east side**"
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "vqa_20273000_322285001",
+      "suite": "vqa_test",
+      "type": "other",
+      "kind": "c",
+      "question": "Which Cincinnati neighborhood is this bus going to?",
+      "image_ids": [
+        20273,
+        322285
+      ],
+      "mismatched_image_ids": [
+        126744,
+        431197
+      ],
+      "references": {
+        "canonical": [
+          "mt airy",
+          "hyde park"
+        ],
+        "answers": [
+          [
+            "my airy",
+            "mt airy",
+            "mt airy",
+            "mt airy",
+            "mt airy",
+            "mt airy",
+            "mt airy",
+            "mt airy",
+            "mt airy",
+            "mt airy"
+          ],
+          [
+            "hyde park",
+            "hyde park",
+            "hyde park",
+            "hyde park",
+            "hyde park",
+            "hyde park",
+            "hyde park",
+            "hyde park",
+            "hyde park",
+            "hyde park"
+          ]
+        ]
+      },
+      "predictions": {
+        "correct": [
+          {
+            "image_id": 20273,
+            "raw": "cincinnati",
+            "normalized": "cincinnati"
+          },
+          {
+            "image_id": 322285,
+            "raw": "cincinnati",
+            "normalized": "cincinnati"
+          }
+        ],
+        "swap": [
+          {
+            "image_id": 322285,
+            "raw": "cincinnati",
+            "normalized": "cincinnati"
+          },
+          {
+            "image_id": 20273,
+            "raw": "cincinnati",
+            "normalized": "cincinnati"
+          }
+        ],
+        "mismatched": [
+          {
+            "image_id": 126744,
+            "raw": "cincinnati",
+            "normalized": "cincinnati"
+          },
+          {
+            "image_id": 431197,
+            "raw": "cincinnati",
+            "normalized": "cincinnati"
+          }
+        ],
+        "none": [
+          {
+            "image_id": null,
+            "raw": "The bus is going to the **Cincinnati neighborhood of East Side**.",
+            "normalized": "bus is going to **cincinnati neighborhood of east side**"
+          },
+          {
+            "image_id": null,
+            "raw": "The bus is going to the **Cincinnati neighborhood of East Side**.",
+            "normalized": "bus is going to **cincinnati neighborhood of east side**"
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "grd_presence_6_467092_126638",
+      "suite": "grounding_test",
+      "type": "presence",
+      "kind": "a",
+      "question": "Does this image contain a bus?",
+      "image_ids": [
+        467092,
+        126638
+      ],
+      "mismatched_image_ids": [
+        359128,
+        563574
+      ],
+      "references": {
+        "canonical": [
+          "yes",
+          "no"
+        ],
+        "counts": [
+          1,
+          0
+        ]
+      },
+      "predictions": {
+        "correct": [
+          {
+            "image_id": 467092,
+            "raw": "yes",
+            "normalized": "yes"
+          },
+          {
+            "image_id": 126638,
+            "raw": "no",
+            "normalized": "no"
+          }
+        ],
+        "swap": [
+          {
+            "image_id": 126638,
+            "raw": "no",
+            "normalized": "no"
+          },
+          {
+            "image_id": 467092,
+            "raw": "yes",
+            "normalized": "yes"
+          }
+        ],
+        "mismatched": [
+          {
+            "image_id": 359128,
+            "raw": "no",
+            "normalized": "no"
+          },
+          {
+            "image_id": 563574,
+            "raw": "no",
+            "normalized": "no"
+          }
+        ],
+        "none": [
+          {
+            "image_id": null,
+            "raw": "No, the image does not contain a bus.",
+            "normalized": "no image does not contain bus"
+          },
+          {
+            "image_id": null,
+            "raw": "No, the image does not contain a bus.",
+            "normalized": "no image does not contain bus"
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "grd_counting_18_22874_44856",
+      "suite": "grounding_test",
+      "type": "counting",
+      "kind": "a",
+      "question": "How many dogs can you see?",
+      "image_ids": [
+        22874,
+        44856
+      ],
+      "mismatched_image_ids": [
+        367452,
+        285683
+      ],
+      "references": {
+        "canonical": [
+          "1",
+          "2"
+        ],
+        "counts": [
+          1,
+          2
+        ]
+      },
+      "predictions": {
+        "correct": [
+          {
+            "image_id": 22874,
+            "raw": "1",
+            "normalized": "1"
+          },
+          {
+            "image_id": 44856,
+            "raw": "2",
+            "normalized": "2"
+          }
+        ],
+        "swap": [
+          {
+            "image_id": 44856,
+            "raw": "2",
+            "normalized": "2"
+          },
+          {
+            "image_id": 22874,
+            "raw": "1",
+            "normalized": "1"
+          }
+        ],
+        "mismatched": [
+          {
+            "image_id": 367452,
+            "raw": "1",
+            "normalized": "1"
+          },
+          {
+            "image_id": 285683,
+            "raw": "0",
+            "normalized": "0"
+          }
+        ],
+        "none": [
+          {
+            "image_id": null,
+            "raw": "I cannot see any dogs.",
+            "normalized": "i cannot see any dogs"
+          },
+          {
+            "image_id": null,
+            "raw": "I cannot see any dogs.",
+            "normalized": "i cannot see any dogs"
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "grd_counting_81_458663_449945",
+      "suite": "grounding_test",
+      "type": "counting",
+      "kind": "b",
+      "question": "How many sinks can you see?",
+      "image_ids": [
+        458663,
+        449945
+      ],
+      "mismatched_image_ids": [
+        475613,
+        194790
+      ],
+      "references": {
+        "canonical": [
+          "1",
+          "2"
+        ],
+        "counts": [
+          1,
+          2
+        ]
+      },
+      "predictions": {
+        "correct": [
+          {
+            "image_id": 458663,
+            "raw": "1",
+            "normalized": "1"
+          },
+          {
+            "image_id": 449945,
+            "raw": "1",
+            "normalized": "1"
+          }
+        ],
+        "swap": [
+          {
+            "image_id": 449945,
+            "raw": "1",
+            "normalized": "1"
+          },
+          {
+            "image_id": 458663,
+            "raw": "1",
+            "normalized": "1"
+          }
+        ],
+        "mismatched": [
+          {
+            "image_id": 475613,
+            "raw": "1",
+            "normalized": "1"
+          },
+          {
+            "image_id": 194790,
+            "raw": "1",
+            "normalized": "1"
+          }
+        ],
+        "none": [
+          {
+            "image_id": null,
+            "raw": "1",
+            "normalized": "1"
+          },
+          {
+            "image_id": null,
+            "raw": "1",
+            "normalized": "1"
+          }
+        ]
+      }
+    },
+    {
+      "pair_id": "grd_counting_1_462845_121519",
+      "suite": "grounding_test",
+      "type": "counting",
+      "kind": "c",
+      "question": "How many people can you see?",
+      "image_ids": [
+        462845,
+        121519
+      ],
+      "mismatched_image_ids": [
+        47131,
+        387431
+      ],
+      "references": {
+        "canonical": [
+          "2",
+          "1"
+        ],
+        "counts": [
+          2,
+          1
+        ]
+      },
+      "predictions": {
+        "correct": [
+          {
+            "image_id": 462845,
+            "raw": "3",
+            "normalized": "3"
+          },
+          {
+            "image_id": 121519,
+            "raw": "1",
+            "normalized": "1"
+          }
+        ],
+        "swap": [
+          {
+            "image_id": 121519,
+            "raw": "1",
+            "normalized": "1"
+          },
+          {
+            "image_id": 462845,
+            "raw": "3",
+            "normalized": "3"
+          }
+        ],
+        "mismatched": [
+          {
+            "image_id": 47131,
+            "raw": "4",
+            "normalized": "4"
+          },
+          {
+            "image_id": 387431,
+            "raw": "2",
+            "normalized": "2"
+          }
+        ],
+        "none": [
+          {
+            "image_id": null,
+            "raw": "I cannot see people, but I can see the world around me.",
+            "normalized": "i cannot see people but i can see world around me"
+          },
+          {
+            "image_id": null,
+            "raw": "I cannot see people, but I can see the world around me.",
+            "normalized": "i cannot see people but i can see world around me"
+          }
+        ]
+      }
+    }
+  ],
+  "groups_without_pick": [
+    {
+      "suite": "vqa_test",
+      "type": "yes/no",
+      "kind": "c"
+    },
+    {
+      "suite": "grounding_test",
+      "type": "presence",
+      "kind": "b"
+    },
+    {
+      "suite": "grounding_test",
+      "type": "presence",
+      "kind": "c"
+    }
+  ]
+}

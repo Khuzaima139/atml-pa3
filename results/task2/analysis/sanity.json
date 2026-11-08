@@ -1,0 +1,516 @@
+{
+  "run_id": "task2_analysis_sanity",
+  "provenance": {
+    "git": {
+      "commit": "1e2cedb4d43c10de45938a4af85ddce425588a5a",
+      "dirty": false
+    },
+    "hostname": "192.168.1.6",
+    "hardware": {
+      "cpu": "arm",
+      "cpu_count": 8,
+      "platform": "macOS-27.0.1-arm64-arm-64bit",
+      "python": "3.11.18",
+      "gpus": [],
+      "torch": "2.15.0"
+    },
+    "timestamp": "2026-11-08T11:35:01.358559+00:00"
+  },
+  "eval_run_id": "task2_eval_20261107T225758Z",
+  "train_run_id": "task2_train_20261107T211140Z",
+  "swap_equals_partner": {
+    "vqa_test": {
+      "n": 192,
+      "mismatches": 0,
+      "examples": []
+    },
+    "grounding_test": {
+      "n": 128,
+      "mismatches": 0,
+      "examples": []
+    }
+  },
+  "outputs": {
+    "vqa_test": {
+      "correct": {
+        "n": 192,
+        "distinct_raw": 50,
+        "top": [
+          {
+            "raw": "no",
+            "count": 41
+          },
+          {
+            "raw": "yes",
+            "count": 31
+          },
+          {
+            "raw": "1",
+            "count": 21
+          },
+          {
+            "raw": "white",
+            "count": 14
+          },
+          {
+            "raw": "2",
+            "count": 11
+          },
+          {
+            "raw": "red",
+            "count": 7
+          },
+          {
+            "raw": "3",
+            "count": 6
+          },
+          {
+            "raw": "up",
+            "count": 3
+          },
+          {
+            "raw": "black",
+            "count": 3
+          },
+          {
+            "raw": "123",
+            "count": 2
+          }
+        ],
+        "mean_generated_tokens": 2.2135416666666665,
+        "mean_content_tokens": 1.2135416666666667,
+        "hit_cap": 0,
+        "cap": 16
+      },
+      "swap": {
+        "n": 192,
+        "distinct_raw": 50,
+        "top": [
+          {
+            "raw": "no",
+            "count": 41
+          },
+          {
+            "raw": "yes",
+            "count": 31
+          },
+          {
+            "raw": "1",
+            "count": 21
+          },
+          {
+            "raw": "white",
+            "count": 14
+          },
+          {
+            "raw": "2",
+            "count": 11
+          },
+          {
+            "raw": "red",
+            "count": 7
+          },
+          {
+            "raw": "3",
+            "count": 6
+          },
+          {
+            "raw": "up",
+            "count": 3
+          },
+          {
+            "raw": "black",
+            "count": 3
+          },
+          {
+            "raw": "123",
+            "count": 2
+          }
+        ],
+        "mean_generated_tokens": 2.2135416666666665,
+        "mean_content_tokens": 1.2135416666666667,
+        "hit_cap": 0,
+        "cap": 16
+      },
+      "mismatched": {
+        "n": 192,
+        "distinct_raw": 43,
+        "top": [
+          {
+            "raw": "no",
+            "count": 60
+          },
+          {
+            "raw": "1",
+            "count": 30
+          },
+          {
+            "raw": "yes",
+            "count": 12
+          },
+          {
+            "raw": "white",
+            "count": 12
+          },
+          {
+            "raw": "0",
+            "count": 11
+          },
+          {
+            "raw": "red",
+            "count": 5
+          },
+          {
+            "raw": "black",
+            "count": 5
+          },
+          {
+            "raw": "green",
+            "count": 4
+          },
+          {
+            "raw": "dog",
+            "count": 3
+          },
+          {
+            "raw": "older",
+            "count": 3
+          }
+        ],
+        "mean_generated_tokens": 2.1666666666666665,
+        "mean_content_tokens": 1.1666666666666667,
+        "hit_cap": 0,
+        "cap": 16
+      },
+      "none": {
+        "n": 192,
+        "distinct_raw": 89,
+        "top": [
+          {
+            "raw": "1",
+            "count": 10
+          },
+          {
+            "raw": "There are no glasses.",
+            "count": 4
+          },
+          {
+            "raw": "I don't have access to the room's details. Could you please provide more",
+            "count": 4
+          },
+          {
+            "raw": "The animal is a **lion**.",
+            "count": 4
+          },
+          {
+            "raw": "Yes, there can be a separate shower and tub. Some homes or buildings may",
+            "count": 2
+          },
+          {
+            "raw": "No, it was not just cleaned.",
+            "count": 2
+          },
+          {
+            "raw": "No, the players shown do not have possession of the ball.",
+            "count": 2
+          },
+          {
+            "raw": "No, the batter did not hit the ball.",
+            "count": 2
+          },
+          {
+            "raw": "No, it is not cloudy.",
+            "count": 2
+          },
+          {
+            "raw": "No, this is not a color picture.",
+            "count": 2
+          }
+        ],
+        "mean_generated_tokens": 11.166666666666666,
+        "mean_content_tokens": 10.4375,
+        "hit_cap": 52,
+        "cap": 16
+      }
+    },
+    "grounding_test": {
+      "correct": {
+        "n": 128,
+        "distinct_raw": 6,
+        "top": [
+          {
+            "raw": "1",
+            "count": 38
+          },
+          {
+            "raw": "yes",
+            "count": 32
+          },
+          {
+            "raw": "no",
+            "count": 32
+          },
+          {
+            "raw": "2",
+            "count": 21
+          },
+          {
+            "raw": "3",
+            "count": 3
+          },
+          {
+            "raw": "4",
+            "count": 2
+          }
+        ],
+        "mean_generated_tokens": 2.0,
+        "mean_content_tokens": 1.0,
+        "hit_cap": 0,
+        "cap": 16
+      },
+      "swap": {
+        "n": 128,
+        "distinct_raw": 6,
+        "top": [
+          {
+            "raw": "1",
+            "count": 38
+          },
+          {
+            "raw": "no",
+            "count": 32
+          },
+          {
+            "raw": "yes",
+            "count": 32
+          },
+          {
+            "raw": "2",
+            "count": 21
+          },
+          {
+            "raw": "3",
+            "count": 3
+          },
+          {
+            "raw": "4",
+            "count": 2
+          }
+        ],
+        "mean_generated_tokens": 2.0,
+        "mean_content_tokens": 1.0,
+        "hit_cap": 0,
+        "cap": 16
+      },
+      "mismatched": {
+        "n": 128,
+        "distinct_raw": 7,
+        "top": [
+          {
+            "raw": "no",
+            "count": 50
+          },
+          {
+            "raw": "1",
+            "count": 44
+          },
+          {
+            "raw": "yes",
+            "count": 14
+          },
+          {
+            "raw": "2",
+            "count": 10
+          },
+          {
+            "raw": "0",
+            "count": 4
+          },
+          {
+            "raw": "4",
+            "count": 4
+          },
+          {
+            "raw": "3",
+            "count": 2
+          }
+        ],
+        "mean_generated_tokens": 2.0,
+        "mean_content_tokens": 1.0,
+        "hit_cap": 0,
+        "cap": 16
+      },
+      "none": {
+        "n": 128,
+        "distinct_raw": 33,
+        "top": [
+          {
+            "raw": "I cannot see people, but I can see the world around me.",
+            "count": 20
+          },
+          {
+            "raw": "Yes, the image contains a person.",
+            "count": 14
+          },
+          {
+            "raw": "1",
+            "count": 12
+          },
+          {
+            "raw": "No, the image does not contain a cup.",
+            "count": 6
+          },
+          {
+            "raw": "It depends on the location and time of observation. In some urban areas, you",
+            "count": 6
+          },
+          {
+            "raw": "No, the image does not contain a chair.",
+            "count": 4
+          },
+          {
+            "raw": "No, the image does not contain a backpack.",
+            "count": 4
+          },
+          {
+            "raw": "No, the image does not contain a train.",
+            "count": 4
+          },
+          {
+            "raw": "No, the image does not contain a laptop.",
+            "count": 4
+          },
+          {
+            "raw": "There are no toilets visible in the sky.",
+            "count": 4
+          }
+        ],
+        "mean_generated_tokens": 10.40625,
+        "mean_content_tokens": 9.5,
+        "hit_cap": 12,
+        "cap": 16
+      }
+    }
+  },
+  "mismatched": {
+    "rule_recomputed": true,
+    "suites": {
+      "vqa_test": {
+        "n": 192,
+        "rule_ok": true,
+        "mismatches": 0,
+        "examples": []
+      },
+      "grounding_test": {
+        "n": 128,
+        "rule_ok": true,
+        "mismatches": 0,
+        "examples": []
+      }
+    }
+  },
+  "recompute": {
+    "vqa_test": {
+      "n_pairs": 96,
+      "recomputed": {
+        "correct_accuracy": 0.5494791666666666,
+        "correct_pair_accuracy": 0.21875,
+        "swap_accuracy": 0.340625,
+        "advantage_over_swap": {
+          "estimate": 0.20885416666666667,
+          "ci": [
+            0.11406250000000001,
+            0.30261718750000005
+          ]
+        }
+      },
+      "eval_json": {
+        "correct_accuracy": 0.5494791666666666,
+        "correct_pair_accuracy": 0.21875,
+        "swap_accuracy": 0.340625,
+        "advantage_over_swap": {
+          "estimate": 0.20885416666666667,
+          "ci": [
+            0.11406250000000001,
+            0.30261718750000005
+          ]
+        }
+      },
+      "max_abs_difference": 0.0
+    },
+    "grounding_test": {
+      "n_pairs": 64,
+      "recomputed": {
+        "correct_accuracy": 0.875,
+        "correct_pair_accuracy": 0.796875,
+        "swap_accuracy": 0.0859375,
+        "advantage_over_swap": {
+          "estimate": 0.7890625,
+          "ci": [
+            0.6640625,
+            0.8984375
+          ]
+        }
+      },
+      "eval_json": {
+        "correct_accuracy": 0.875,
+        "correct_pair_accuracy": 0.796875,
+        "swap_accuracy": 0.0859375,
+        "advantage_over_swap": {
+          "estimate": 0.7890625,
+          "ci": [
+            0.6640625,
+            0.8984375
+          ]
+        }
+      },
+      "max_abs_difference": 0.0
+    }
+  },
+  "noimage_dev_nll": {
+    "stage1_updates": [
+      0,
+      500,
+      1000,
+      1500,
+      2000,
+      2250
+    ],
+    "vqa_dev": {
+      "n": 64,
+      "max_abs_change_in_stage1": 0.0,
+      "constant": true,
+      "mean_none_nll": [
+        11.474564149975777,
+        11.474564149975777,
+        11.474564149975777,
+        11.474564149975777,
+        11.474564149975777,
+        11.474564149975777
+      ],
+      "first_after_stage1": {
+        "update": 2500,
+        "max_abs_change": 4.72924280166626,
+        "mean_none_nll": 9.27659048885107
+      }
+    },
+    "grounding_dev": {
+      "n": 48,
+      "max_abs_change_in_stage1": 0.0,
+      "constant": true,
+      "mean_none_nll": [
+        10.95090221365293,
+        10.95090221365293,
+        10.95090221365293,
+        10.95090221365293,
+        10.95090221365293,
+        10.95090221365293
+      ],
+      "first_after_stage1": {
+        "update": 2500,
+        "max_abs_change": 5.330141544342041,
+        "mean_none_nll": 6.985339790582657
+      }
+    }
+  }
+}
