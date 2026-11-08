@@ -347,11 +347,11 @@ def _axes(ax, title=None, ylabel=None):
         ax.set_ylabel(ylabel, fontsize=8, color=INK_2)
 
 
-def _save(fig, folder, stem):
+def _save(fig, folder, stem, dpi=200):
     os.makedirs(folder, exist_ok=True)
     fig.savefig(os.path.join(folder, f"{stem}.pdf"), facecolor=SURFACE, metadata={"CreationDate": None, "Creator": None,
                                                                                     "Producer": None})
-    fig.savefig(os.path.join(folder, f"{stem}.png"), dpi=200, facecolor=SURFACE, metadata={"Software": None})
+    fig.savefig(os.path.join(folder, f"{stem}.png"), dpi=dpi, facecolor=SURFACE, metadata={"Software": None})
     plt.close(fig)
 
 
@@ -666,7 +666,7 @@ def figure_qualitative(picks, paths, folder, kinds=FIGURE_KINDS):
                                f"correct image: {c['raw']!r}\n"
                                f"swap (sees image {2 - s}): {w['raw']!r}",
                     fontsize=7.5, va="top", color=INK, transform=tx.transAxes)
-    _save(fig, folder, "qualitative_main")
+    _save(fig, folder, "qualitative_main", dpi=110)
 
 
 # ---------------------------------------------------------------- driver
