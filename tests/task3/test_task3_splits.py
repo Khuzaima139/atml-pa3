@@ -64,3 +64,17 @@ def test_preview_check_detects_difference():
     _, c = _content()
     with pytest.raises(AssertionError):
         splits.check_preview("math", c, prev)  # synthetic IDs are not the real MATH IDs
+
+
+@pytest.mark.parametrize("ds,n_live", [("math", 50), ("mathvista", None)])
+def test_committed_split_files_reproduce(ds, n_live):
+    path = os.path.join(REPO_ROOT, "splits", "task3", f"{ds}_split.json")
+    if not os.path.exists(path):
+        pytest.skip("split file not written yet")
+    c = splits.load_split(path)  # checks the stored sha256
+    assert len(c["sorted_ids"]) == 1000 and c["sorted_ids"] == sorted(c["sorted_ids"])
+    sp = splits.make_split(c["sorted_ids"], 6304, 200, 800, n_live, 10, 32)
+    assert splits.split_content(ds, sp, 6304, 200, 800, n_live, 10, 32) == c
+    prev = os.path.join(REPO_ROOT, "scratch/task3/splits_preview.json")
+    if os.path.exists(prev):
+        splits.check_preview(ds, c, prev)
