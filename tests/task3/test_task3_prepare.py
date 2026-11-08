@@ -15,7 +15,7 @@ from task3_ttc.splits import load_split
 BASE_COLS = ["sample_id", "rollout_id", "split", "T", "capped", "L", "K", "extracted", "normalized", "group_id",
              "na_reason", "correct"]
 JSON_KEYS = ["run_id", "status", "dataset", "config_path", "config", "run_info", "scorer_version", "inputs",
-             "outputs", "columns", "counts", "checks", "runtime_s"]
+             "outputs", "columns", "replaced", "counts", "checks", "runtime_s"]
 COUNT_KEYS = ["rollouts", "questions", "rows_by_split", "questions_by_split", "live_rows", "n_tokens", "capped",
               "capped_flag_vs_length_disagreements", "groups_per_question_excl_no_answer",
               "groups_per_question_incl_no_answer", "distinct_strings_per_question", "no_answer_rollouts",
@@ -23,8 +23,8 @@ COUNT_KEYS = ["rollouts", "questions", "rows_by_split", "questions_by_split", "l
               "gold_failures"]
 
 
-def _run(cfg_path, ds):
-    return subprocess.run([sys.executable, "-m", "task3_ttc.prepare", "--dataset", ds, "--config", cfg_path],
+def _run(cfg_path, ds, *extra):
+    return subprocess.run([sys.executable, "-m", "task3_ttc.prepare", "--dataset", ds, "--config", cfg_path, *extra],
                           cwd=REPO_ROOT, capture_output=True, text=True)
 
 
@@ -101,6 +101,14 @@ def test_prepare_cli_end_to_end(synth_cfg, ds):
     p2 = _run(cfg_path, ds)
     assert p2.returncode != 0 and "refusing to overwrite" in p2.stderr
     assert json.load(open(json_path))["run_id"] == out["run_id"]
+    assert out["replaced"] is None
+
+    # --replace overwrites and records what it replaced
+    p3 = _run(cfg_path, ds, "--replace")
+    assert p3.returncode == 0, p3.stderr
+    new = json.load(open(json_path))
+    assert new["run_id"] != out["run_id"] and new["replaced"]["run_id"] == out["run_id"]
+    assert pd.read_csv(csv_path).shape == df.shape
 
 
 def test_capped_column_matches_flag(synth_cfg):

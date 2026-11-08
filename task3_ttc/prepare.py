@@ -1,8 +1,8 @@
 """Task 3 Step 1 preparation (manual L593-606, L630-631): join, split, answer groups, correctness labels.
 
-Run: python -m task3_ttc.prepare --dataset {math,mathvista} [--config configs/task3/offline.yaml]
+Run: python -m task3_ttc.prepare --dataset {math,mathvista} [--config configs/task3/offline.yaml] [--replace]
 
-Writes (never overwrites; exits with an error if an output exists):
+Writes (never overwrites unless --replace is given; otherwise exits with an error if an output exists):
     results/task3/rollouts/<dataset>_rollouts.csv   one row per rollout (columns in COLUMNS)
     results/task3/prepare_<dataset>.json            config, provenance, scorer_version, runtimes, counts, checks
 and, if absent, splits/task3/<dataset>_split.json (if present it must equal the recomputed split), plus the
@@ -10,6 +10,7 @@ gitignored token cache cached/task3/<dataset>_tokens.npz.
 """
 import argparse
 import datetime
+import json
 import os
 import sys
 import time
@@ -55,12 +56,20 @@ def output_paths(cfg, dataset):
             os.path.join(resolve(cfg["paths"]["cache_dir"]), f"{dataset}_tokens.npz"))
 
 
-def run(cfg, dataset, config_path):
+def run(cfg, dataset, config_path, replace=False):
     t0 = time.time()
     csv_path, json_path, cache_path = output_paths(cfg, dataset)
     existing = [p for p in (csv_path, json_path) if os.path.exists(p)]
+    if existing and not replace:
+        raise FileExistsError(f"refusing to overwrite existing results: {existing} (pass --replace)")
+    replaced = None
     if existing:
-        raise FileExistsError(f"refusing to overwrite existing results: {existing}")
+        replaced = {"files": [os.path.relpath(p, resolve(".")) for p in existing]}
+        if os.path.exists(json_path):
+            with open(json_path) as f:
+                old = json.load(f)
+            replaced.update({"run_id": old.get("run_id"), "scorer_version_id": old.get("scorer_version", {}).get("id"),
+                             "commit": old.get("run_info", {}).get("git", {}).get("commit")})
     run_id = f"task3_prepare_{dataset}_{datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%SZ')}"
 
     # scorer identity first: library versions are checked before any work
@@ -147,10 +156,12 @@ def run(cfg, dataset, config_path):
                     "split_status": split_status,
                     "token_cache": os.path.relpath(cache_path, resolve(".")), "token_cache_meta": cache_meta},
         "columns": {k: v for k, v in COLUMNS.items() if k in df.columns},
-        "counts": counts, "checks": checks,
+        "replaced": replaced, "counts": counts, "checks": checks,
         "runtime_s": {"load_join_cache_split": round(t_load - t0, 2), "group_grade": round(t_score - t_load, 2),
                       "checks": round(t_checks - t_score, 2), "total": round(time.time() - t0, 2)},
     }
+    if replaced:
+        os.remove(json_path)   # explicit --replace: write_result refuses a different run_id otherwise
     write_result(json_path, out)
     return out, csv_path, json_path
 
@@ -179,10 +190,11 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--dataset", required=True, choices=["math", "mathvista"])
     ap.add_argument("--config", default="configs/task3/offline.yaml")
+    ap.add_argument("--replace", action="store_true", help="overwrite existing outputs of this dataset")
     a = ap.parse_args(argv)
     cfg = load_config(a.config)
     try:
-        out, csv_path, json_path = run(cfg, a.dataset, a.config)
+        out, csv_path, json_path = run(cfg, a.dataset, a.config, replace=a.replace)
     except FileExistsError as e:
         print(f"ERROR: {e}", file=sys.stderr)
         sys.exit(2)

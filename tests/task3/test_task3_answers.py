@@ -147,14 +147,17 @@ class _FakeScorer:
     def equal(self, g, t, phase):
         return g == t or (g, t) in self.rel
 
+    def equal_sym(self, a, b, phase):
+        return self.equal(a, b, phase) or self.equal(b, a, phase)
+
     def same(self, rep, new):
-        return self.equal(rep, new, "grouping")
+        return self.equal_sym(rep, new, "grouping")
 
     def parses(self, s):
         return True
 
     def grade(self, gold_key, s, phase="grading"):
-        return self.equal(gold_key, s, phase)
+        return self.equal_sym(gold_key, s, phase)
 
 
 def test_transitivity_check_detects_violations():
@@ -167,10 +170,42 @@ def test_transitivity_check_detects_violations():
                "grades": [sc.grade("b", r) for r in reps]}}
     a = answers.check_transitivity(q, sc)
     assert not a["passed"] and a["questions_affected"] == 1
-    assert a["asymmetric_pairs"] == 1 and a["non_transitive_triples"] >= 2 and a["block_mismatch_pairs"] > 0
+    assert a["raw_asymmetric_pairs"] == 1 and a["non_transitive_triples"] >= 2 and a["block_mismatch_pairs"] == 1
     b = answers.check_grading_consistency(q, sc)
     # gold b: group 0 rep a graded True; member b True (ok); group 1 rep c graded True; member d False -> mismatch
     assert not b["passed"] and b["mismatched_strings"] == 1 and b["examples"][0]["member"] == "d"
+
+
+def test_asymmetric_pair_passes_check_a_under_symmetric_rule():
+    sc = _FakeScorer({("c", "d")})       # verify(c, d) True, verify(d, c) False
+    keys = ["d", "c", "e"]
+    gids, reps, distinct = group_keys(keys, sc.same)
+    assert gids == [0, 0, 1]             # c joins rep d although only verify(c, d) holds
+    q = {"q": {"keys": keys, "gids": gids, "reps": reps, "distinct": distinct, "gold_key": "d",
+               "grades": [sc.grade("d", r) for r in reps]}}
+    a = answers.check_transitivity(q, sc)
+    assert a["passed"] and a["raw_asymmetric_pairs"] == 1 and a["block_mismatch_pairs"] == 0
+    assert answers.check_grading_consistency(q, sc)["passed"]
+
+
+def test_math_symmetric_interval_vs_inequality(ms):
+    """test:2563: math-verify accepts only one direction; the symmetric rule groups and grades both together."""
+    a, b = "[-4, 0]", "-4 \\leq k \\leq 0"
+    assert ms.equal(a, b, "t") != ms.equal(b, a, "t")     # raw verify is asymmetric here
+    assert ms.equal_sym(a, b, "t") and ms.equal_sym(b, a, "t")
+    for keys in ([a, b, "3"], [b, a, "3"]):
+        gids, reps, _ = group_keys(keys, ms.same)
+        assert gids == [0, 0, 1]
+    r = score_dataset(["q"] * 3, [0, 1, 2], [b, a, "3"], {"q": a}, ms)
+    assert list(r["correct"]) == [True, True, False]
+    r = score_dataset(["q"] * 2, [0, 1], [a, "3"], {"q": b}, ms)
+    assert list(r["correct"]) == [True, False]
+    assert answers.check_transitivity(r["questions"], ms)["passed"]
+
+
+def test_scorer_version_records_symmetric_rule():
+    v = answers.scorer_version(load_config())
+    assert v["math_equivalence"].startswith("symmetric")
 
 
 def test_checks_pass_on_consistent_math(ms):

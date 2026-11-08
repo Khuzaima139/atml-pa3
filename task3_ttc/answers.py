@@ -4,9 +4,13 @@ Decisions fixed in the Task 3 plan (prompt b1):
 
 MATH (math-verify 0.9.0)
     Every extracted answer and every gold string s is wrapped as "\\boxed{" + s.strip() + "}" before parse().
-    Grouping: verify(gold=group representative, target=candidate); grading: verify(gold=gold, target=group
-    representative). A math-verify timeout counts as not equal and is counted. A non-empty string that parses
-    to nothing only groups with identical stripped strings and is graded wrong; such strings are counted.
+    Equivalence is symmetric (prompt b2): a and b are equal if verify(a, b) or verify(b, a) is True
+    (math-verify's interval conversion is asymmetric, e.g. "[-4, 0]" vs "-4 \\leq k \\leq 0").
+    Grouping: a candidate joins the first earlier group whose representative it equals in either direction;
+    grading: a group is correct if gold and its representative are equal in either direction; check (b) uses
+    the same rule. A math-verify timeout counts as not equal (in that direction) and is counted. A non-empty
+    string that parses to nothing only groups with identical stripped strings and is graded wrong; such strings
+    are counted.
 
 MathVista (official normalization of lupantech/MathVista, evaluation/calculate_score.py at commit 5f6b4dec,
 normalize_extracted_answer without --ignore_empty_extractions), changed only where the manual requires
@@ -39,6 +43,7 @@ NO_ANSWER = -1
 REASON_EXTRACTION = "extraction"
 REASON_NORMALIZATION = "normalization"
 MAX_EXAMPLES = 10
+MATH_EQUIVALENCE = "symmetric: equal if verify(a, b) or verify(b, a) (grouping, grading, check b)"
 
 
 # --------------------------------------------------------------------------------------------- MATH
@@ -122,11 +127,15 @@ class MathScorer:
             self._eq[k] = r
         return self._eq[k]
 
+    def equal_sym(self, a, b, phase):
+        """Symmetric equivalence: verify(a, b) or verify(b, a)."""
+        return self.equal(a, b, phase) or self.equal(b, a, phase)
+
     def same(self, rep, new):
-        return self.equal(rep, new, "grouping")
+        return self.equal_sym(rep, new, "grouping")
 
     def grade(self, gold_key, s, phase="grading"):
-        return gold_key is not None and self.equal(gold_key, s, phase)
+        return gold_key is not None and self.equal_sym(gold_key, s, phase)
 
 
 # ---------------------------------------------------------------------------------------- MathVista
@@ -211,6 +220,9 @@ class MathVistaScorer:
     def parses(self, s):
         return True
 
+    def equal_sym(self, a, b, phase=None):
+        return a == b
+
     def same(self, rep, new):
         return rep == new
 
@@ -290,47 +302,55 @@ def score_dataset(sample_id, rollout_id, extracted, gold, scorer, metadata=None)
 # ---------------------------------------------------------------------------------------------- checks
 
 def check_transitivity(questions, scorer):
-    """(a) For every question, the pairwise verify matrix over its distinct strings (both directions) must equal
-    the block structure of the greedy groups. Also counts asymmetric pairs, non-transitive ordered triples
-    (M[a,b] and M[b,c] but not M[a,c]) and non-reflexive parseable strings."""
+    """(a) For every question, the pairwise matrix of the symmetric equivalence (verify in either direction) over
+    its distinct strings must equal the block structure of the greedy groups, and must be transitive (no ordered
+    triple with S[a,b] and S[b,c] but not S[a,c]). Parseable strings must equal themselves. Pairs where the raw
+    directional verify disagrees (verify(a,b) != verify(b,a)) are counted for information only: the symmetric rule
+    resolves them."""
     tot = Counter()
-    affected, examples = [], []
+    affected, examples, asym_examples = [], [], []
     for sid, q in questions.items():
         S = q["distinct"]
         d = len(S)
         if d == 0:
             continue
         gid = {k: g for k, g in zip(q["keys"], q["gids"]) if k is not None}
-        M = np.zeros((d, d), dtype=bool)
+        D = np.zeros((d, d), dtype=bool)
         for i in range(d):
             for j in range(d):
                 if i != j:
-                    M[i, j] = scorer.equal(S[i], S[j], "check_a")
+                    D[i, j] = scorer.equal(S[i], S[j], "check_a")
+        M = D | D.T
         nonrefl = [s for s in S if scorer.parses(s) and not scorer.equal(s, s, "check_a")]
         G = np.array([gid[s] for s in S])
         B = G[:, None] == G[None, :]
         off = ~np.eye(d, dtype=bool)
-        block = int((M != B)[off].sum())
-        asym = int(np.triu(M != M.T, 1).sum())
-        Mi = M.astype(np.int64)
+        block = int(np.triu(M != B, 1).sum())
+        asym = int(np.triu(D != D.T, 1).sum())
+        Mi = (M & off).astype(np.int64)
         P = Mi @ Mi
         nontrans = int((P * (~M & off)).sum())
-        c = {"pairs_checked": d * (d - 1), "block_mismatch_pairs": block, "asymmetric_pairs": asym,
-             "non_transitive_triples": nontrans, "non_reflexive_strings": len(nonrefl)}
+        c = {"pairs_checked": d * (d - 1) // 2, "block_mismatch_pairs": block, "non_transitive_triples": nontrans,
+             "non_reflexive_strings": len(nonrefl), "raw_asymmetric_pairs": asym}
         tot.update(c)
-        if block or asym or nontrans or nonrefl:
+        if asym and len(asym_examples) < MAX_EXAMPLES:
+            asym_examples.append({"sample_id": sid, "pairs (a, b, verify(a,b), verify(b,a), group a, group b)": [
+                (S[i], S[j], bool(D[i, j]), bool(D[j, i]), int(G[i]), int(G[j]))
+                for i in range(d) for j in range(i + 1, d) if D[i, j] != D[j, i]][:5]})
+        if block or nontrans or nonrefl:
             affected.append(sid)
             if len(examples) < MAX_EXAMPLES:
                 ex = {"sample_id": sid, **{k: v for k, v in c.items() if k != "pairs_checked"}}
-                bad = [(S[i], S[j], bool(M[i, j]), bool(M[j, i]), int(G[i]), int(G[j]))
-                       for i in range(d) for j in range(i + 1, d) if M[i, j] != B[i, j] or M[j, i] != B[j, i]]
-                ex["pairs (a, b, verify(a,b), verify(b,a), group a, group b)"] = bad[:5]
+                ex["pairs (a, b, equal_sym, group a, group b)"] = [
+                    (S[i], S[j], bool(M[i, j]), int(G[i]), int(G[j]))
+                    for i in range(d) for j in range(i + 1, d) if M[i, j] != B[i, j]][:5]
                 ex["non_reflexive"] = nonrefl[:5]
                 examples.append(ex)
-    return {**{k: int(tot[k]) for k in ("pairs_checked", "block_mismatch_pairs", "asymmetric_pairs",
-                                         "non_transitive_triples", "non_reflexive_strings")},
+    return {"relation": "symmetric: verify(a, b) or verify(b, a)",
+            **{k: int(tot[k]) for k in ("pairs_checked", "block_mismatch_pairs", "non_transitive_triples",
+                                         "non_reflexive_strings", "raw_asymmetric_pairs")},
             "questions_affected": len(affected), "affected_ids": affected[:MAX_EXAMPLES], "examples": examples,
-            "passed": not affected}
+            "raw_asymmetric_examples": asym_examples, "passed": not affected}
 
 
 def check_grading_consistency(questions, scorer):
@@ -397,6 +417,7 @@ def scorer_version(cfg, testmini_path=None):
     if bad:
         raise RuntimeError(f"installed scorer libraries differ from the config (installed, expected): {bad}")
     v = {"answers_py_sha256": sha256_file(os.path.abspath(__file__)), "libraries": libs,
+         "math_equivalence": MATH_EQUIVALENCE,
          "math_verify": sc["math_verify"], "mathvista": {"repo": sc["mathvista"]["repo"],
                                                         "commit": sc["mathvista"]["commit"]}}
     if testmini_path is not None:
