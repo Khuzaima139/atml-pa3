@@ -1,0 +1,2445 @@
+{
+  "run_id": "task2_train_20261107T211140Z",
+  "update": 1500,
+  "summary": {
+    "update": 1500,
+    "stage": 1,
+    "caption_loss": 2.4991877172142267,
+    "vqa_dev": {
+      "nll": {
+        "correct": 7.212314702570438,
+        "complementary": 7.547965532168746,
+        "none": 11.474564149975777
+      },
+      "dnll": 0.3356508295983076,
+      "by_type": {
+        "number": {
+          "n": 16,
+          "nll": {
+            "correct": 4.431125372648239,
+            "complementary": 4.571199797093868,
+            "none": 8.957597315311432
+          },
+          "dnll": 0.14007442444562912
+        },
+        "other": {
+          "n": 24,
+          "nll": {
+            "correct": 8.020366628964743,
+            "complementary": 8.857697049776712,
+            "none": 14.28059466679891
+          },
+          "dnll": 0.8373304208119711
+        },
+        "yes/no": {
+          "n": 24,
+          "nll": {
+            "correct": 8.258388996124268,
+            "complementary": 8.222744504610697,
+            "none": 10.346511522928873
+          },
+          "dnll": -0.03564449151357015
+        }
+      }
+    },
+    "grounding_dev": {
+      "nll": {
+        "correct": 6.678922827045123,
+        "complementary": 6.864469721913338,
+        "none": 10.95090221365293
+      },
+      "dnll": 0.18554689486821493,
+      "by_type": {
+        "counting": {
+          "n": 24,
+          "nll": {
+            "correct": 5.531557271877925,
+            "complementary": 5.533835937579473,
+            "none": 10.498663008213043
+          },
+          "dnll": 0.0022786657015482583
+        },
+        "presence": {
+          "n": 24,
+          "nll": {
+            "correct": 7.826288382212321,
+            "complementary": 8.195103506247202,
+            "none": 11.403141419092814
+          },
+          "dnll": 0.3688151240348816
+        }
+      }
+    },
+    "time_s": 7.938454567000008
+  },
+  "examples": [
+    {
+      "set": "captions_dev",
+      "image_id": 291664,
+      "loss": 2.203312635421753,
+      "n_tokens": 14
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 243482,
+      "loss": 1.2304188013076782,
+      "n_tokens": 12
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 444817,
+      "loss": 1.9939284324645996,
+      "n_tokens": 11
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 230615,
+      "loss": 3.114814043045044,
+      "n_tokens": 9
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 176906,
+      "loss": 2.478618860244751,
+      "n_tokens": 11
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 567494,
+      "loss": 3.5440731048583984,
+      "n_tokens": 10
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 341363,
+      "loss": 2.920093536376953,
+      "n_tokens": 12
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 455981,
+      "loss": 2.12113356590271,
+      "n_tokens": 11
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 505371,
+      "loss": 3.86631441116333,
+      "n_tokens": 9
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 209782,
+      "loss": 1.6175174713134766,
+      "n_tokens": 14
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 5816,
+      "loss": 2.0019686222076416,
+      "n_tokens": 11
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 515126,
+      "loss": 1.1866775751113892,
+      "n_tokens": 11
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 309452,
+      "loss": 1.2503681182861328,
+      "n_tokens": 13
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 448923,
+      "loss": 3.042584180831909,
+      "n_tokens": 16
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 478906,
+      "loss": 1.9005928039550781,
+      "n_tokens": 11
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 468169,
+      "loss": 1.4581726789474487,
+      "n_tokens": 12
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 569452,
+      "loss": 2.411379337310791,
+      "n_tokens": 18
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 536321,
+      "loss": 2.2290847301483154,
+      "n_tokens": 15
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 178084,
+      "loss": 3.3510682582855225,
+      "n_tokens": 11
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 85556,
+      "loss": 3.4522347450256348,
+      "n_tokens": 10
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 576513,
+      "loss": 2.9480233192443848,
+      "n_tokens": 13
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 534935,
+      "loss": 0.7442171573638916,
+      "n_tokens": 12
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 249453,
+      "loss": 4.784058570861816,
+      "n_tokens": 11
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 371677,
+      "loss": 2.055284023284912,
+      "n_tokens": 19
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 304347,
+      "loss": 1.5298157930374146,
+      "n_tokens": 14
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 536375,
+      "loss": 3.581578016281128,
+      "n_tokens": 11
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 324419,
+      "loss": 1.8986490964889526,
+      "n_tokens": 13
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 308101,
+      "loss": 1.4076342582702637,
+      "n_tokens": 12
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 96493,
+      "loss": 3.8150277137756348,
+      "n_tokens": 10
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 4395,
+      "loss": 1.3750529289245605,
+      "n_tokens": 11
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 323925,
+      "loss": 2.392096519470215,
+      "n_tokens": 10
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 162280,
+      "loss": 2.375877857208252,
+      "n_tokens": 10
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 487385,
+      "loss": 3.1556646823883057,
+      "n_tokens": 16
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 476872,
+      "loss": 2.458820104598999,
+      "n_tokens": 14
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 547866,
+      "loss": 3.1844875812530518,
+      "n_tokens": 15
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 331455,
+      "loss": 1.273746371269226,
+      "n_tokens": 10
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 384661,
+      "loss": 2.7780749797821045,
+      "n_tokens": 12
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 488154,
+      "loss": 1.9282455444335938,
+      "n_tokens": 12
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 383397,
+      "loss": 1.5415501594543457,
+      "n_tokens": 15
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 388157,
+      "loss": 2.8942010402679443,
+      "n_tokens": 11
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 139637,
+      "loss": 1.2300504446029663,
+      "n_tokens": 13
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 370055,
+      "loss": 1.2049412727355957,
+      "n_tokens": 12
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 324040,
+      "loss": 1.4991527795791626,
+      "n_tokens": 14
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 39956,
+      "loss": 4.493898391723633,
+      "n_tokens": 11
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 378809,
+      "loss": 3.0665228366851807,
+      "n_tokens": 13
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 519573,
+      "loss": 1.5338221788406372,
+      "n_tokens": 11
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 425388,
+      "loss": 2.117666244506836,
+      "n_tokens": 17
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 542374,
+      "loss": 3.0092368125915527,
+      "n_tokens": 16
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 229001,
+      "loss": 2.1685895919799805,
+      "n_tokens": 11
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 291941,
+      "loss": 3.0571274757385254,
+      "n_tokens": 11
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 364757,
+      "loss": 4.328640937805176,
+      "n_tokens": 10
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 75600,
+      "loss": 4.237972736358643,
+      "n_tokens": 13
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 566096,
+      "loss": 1.709520936012268,
+      "n_tokens": 14
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 178795,
+      "loss": 3.2890923023223877,
+      "n_tokens": 11
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 381482,
+      "loss": 2.4393868446350098,
+      "n_tokens": 14
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 31106,
+      "loss": 2.9464550018310547,
+      "n_tokens": 25
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 519605,
+      "loss": 3.6021735668182373,
+      "n_tokens": 16
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 386194,
+      "loss": 2.7103331089019775,
+      "n_tokens": 12
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 278899,
+      "loss": 2.424787998199463,
+      "n_tokens": 10
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 323959,
+      "loss": 3.206874132156372,
+      "n_tokens": 19
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 394033,
+      "loss": 3.6141836643218994,
+      "n_tokens": 14
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 215579,
+      "loss": 3.0605077743530273,
+      "n_tokens": 11
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 335539,
+      "loss": 2.90472412109375,
+      "n_tokens": 11
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 153570,
+      "loss": 2.410412311553955,
+      "n_tokens": 13
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 533201,
+      "loss": 2.6765148639678955,
+      "n_tokens": 12
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 545796,
+      "loss": 2.6999876499176025,
+      "n_tokens": 9
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 189828,
+      "loss": 2.633741617202759,
+      "n_tokens": 13
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 389429,
+      "loss": 1.9015916585922241,
+      "n_tokens": 16
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 27009,
+      "loss": 2.582885265350342,
+      "n_tokens": 18
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 298547,
+      "loss": 1.8116705417633057,
+      "n_tokens": 13
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 285751,
+      "loss": 2.1180601119995117,
+      "n_tokens": 12
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 375450,
+      "loss": 2.636352300643921,
+      "n_tokens": 13
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 210804,
+      "loss": 1.8980028629302979,
+      "n_tokens": 14
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 460183,
+      "loss": 2.5400335788726807,
+      "n_tokens": 12
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 237326,
+      "loss": 3.296557903289795,
+      "n_tokens": 13
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 69340,
+      "loss": 3.018627882003784,
+      "n_tokens": 19
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 402000,
+      "loss": 1.4551745653152466,
+      "n_tokens": 13
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 222635,
+      "loss": 3.086250066757202,
+      "n_tokens": 11
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 180521,
+      "loss": 2.2546701431274414,
+      "n_tokens": 12
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 86840,
+      "loss": 2.695485830307007,
+      "n_tokens": 11
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 514173,
+      "loss": 2.5317509174346924,
+      "n_tokens": 13
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 252748,
+      "loss": 3.0226573944091797,
+      "n_tokens": 14
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 544538,
+      "loss": 2.174664258956909,
+      "n_tokens": 12
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 80131,
+      "loss": 1.2254371643066406,
+      "n_tokens": 13
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 503081,
+      "loss": 2.9736826419830322,
+      "n_tokens": 17
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 504256,
+      "loss": 2.609771728515625,
+      "n_tokens": 14
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 262006,
+      "loss": 1.8494956493377686,
+      "n_tokens": 11
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 7088,
+      "loss": 0.833430826663971,
+      "n_tokens": 11
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 224610,
+      "loss": 2.793565034866333,
+      "n_tokens": 10
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 220106,
+      "loss": 2.3061513900756836,
+      "n_tokens": 18
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 106244,
+      "loss": 3.4009580612182617,
+      "n_tokens": 11
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 360876,
+      "loss": 1.6474798917770386,
+      "n_tokens": 11
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 240495,
+      "loss": 3.18440318107605,
+      "n_tokens": 19
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 240158,
+      "loss": 1.8107411861419678,
+      "n_tokens": 13
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 426253,
+      "loss": 3.1402242183685303,
+      "n_tokens": 10
+    },
+    {
+      "set": "captions_dev",
+      "image_id": 339703,
+      "loss": 3.3494653701782227,
+      "n_tokens": 11
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_497928004_97561000",
+      "slot": 0,
+      "type": "yes/no",
+      "target": "yes",
+      "image_correct": 497928,
+      "image_complementary": 97561,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 6.619940757751465,
+        "complementary": 6.348246097564697,
+        "none": 8.931282997131348
+      },
+      "dnll": -0.2716946601867676
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_497928004_97561000",
+      "slot": 1,
+      "type": "yes/no",
+      "target": "no",
+      "image_correct": 97561,
+      "image_complementary": 497928,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 7.777933597564697,
+        "complementary": 7.299628257751465,
+        "none": 11.040657997131348
+      },
+      "dnll": -0.4783053398132324
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_521956001_560323002",
+      "slot": 0,
+      "type": "yes/no",
+      "target": "yes",
+      "image_correct": 521956,
+      "image_complementary": 560323,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 9.825204849243164,
+        "complementary": 10.057909965515137,
+        "none": 10.600495338439941
+      },
+      "dnll": 0.23270511627197266
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_521956001_560323002",
+      "slot": 1,
+      "type": "yes/no",
+      "target": "no",
+      "image_correct": 560323,
+      "image_complementary": 521956,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 11.194628715515137,
+        "complementary": 9.895517349243164,
+        "none": 10.686432838439941
+      },
+      "dnll": -1.2991113662719727
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_34139002_405648004",
+      "slot": 0,
+      "type": "yes/no",
+      "target": "yes",
+      "image_correct": 34139,
+      "image_complementary": 405648,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 7.634068489074707,
+        "complementary": 6.820397853851318,
+        "none": 11.14791488647461
+      },
+      "dnll": -0.8136706352233887
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_34139002_405648004",
+      "slot": 1,
+      "type": "yes/no",
+      "target": "no",
+      "image_correct": 405648,
+      "image_complementary": 34139,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 8.211023330688477,
+        "complementary": 8.274693489074707,
+        "none": 12.42916488647461
+      },
+      "dnll": 0.06367015838623047
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_36082003_564283006",
+      "slot": 0,
+      "type": "yes/no",
+      "target": "yes",
+      "image_correct": 36082,
+      "image_complementary": 564283,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 7.6630778312683105,
+        "complementary": 7.982072353363037,
+        "none": 9.28731632232666
+      },
+      "dnll": 0.31899452209472656
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_36082003_564283006",
+      "slot": 1,
+      "type": "yes/no",
+      "target": "no",
+      "image_correct": 564283,
+      "image_complementary": 36082,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 7.607072353363037,
+        "complementary": 7.4912028312683105,
+        "none": 9.78731632232666
+      },
+      "dnll": -0.11586952209472656
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_330449002_559837002",
+      "slot": 0,
+      "type": "yes/no",
+      "target": "yes",
+      "image_correct": 330449,
+      "image_complementary": 559837,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 9.122276306152344,
+        "complementary": 8.207151412963867,
+        "none": 8.145034790039062
+      },
+      "dnll": -0.9151248931884766
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_330449002_559837002",
+      "slot": 1,
+      "type": "yes/no",
+      "target": "no",
+      "image_correct": 559837,
+      "image_complementary": 330449,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 8.777463912963867,
+        "complementary": 9.700401306152344,
+        "none": 11.863784790039062
+      },
+      "dnll": 0.9229373931884766
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_269784001_322864000",
+      "slot": 0,
+      "type": "yes/no",
+      "target": "yes",
+      "image_correct": 269784,
+      "image_complementary": 322864,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 7.054916858673096,
+        "complementary": 7.886914253234863,
+        "none": 8.406498908996582
+      },
+      "dnll": 0.8319973945617676
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_269784001_322864000",
+      "slot": 1,
+      "type": "yes/no",
+      "target": "no",
+      "image_correct": 322864,
+      "image_complementary": 269784,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 8.222851753234863,
+        "complementary": 7.789291858673096,
+        "none": 10.843998908996582
+      },
+      "dnll": -0.4335598945617676
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_278295001_480133025",
+      "slot": 0,
+      "type": "yes/no",
+      "target": "yes",
+      "image_correct": 278295,
+      "image_complementary": 480133,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 9.126953125,
+        "complementary": 8.133519172668457,
+        "none": 9.921015739440918
+      },
+      "dnll": -0.993433952331543
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_278295001_480133025",
+      "slot": 1,
+      "type": "yes/no",
+      "target": "no",
+      "image_correct": 480133,
+      "image_complementary": 278295,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 8.531956672668457,
+        "complementary": 8.962890625,
+        "none": 11.046015739440918
+      },
+      "dnll": 0.43093395233154297
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_374669000_478250003",
+      "slot": 0,
+      "type": "yes/no",
+      "target": "yes",
+      "image_correct": 374669,
+      "image_complementary": 478250,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 9.233135223388672,
+        "complementary": 9.178802490234375,
+        "none": 9.85810661315918
+      },
+      "dnll": -0.054332733154296875
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_374669000_478250003",
+      "slot": 1,
+      "type": "yes/no",
+      "target": "no",
+      "image_correct": 478250,
+      "image_complementary": 374669,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 8.444427490234375,
+        "complementary": 8.584697723388672,
+        "none": 9.87373161315918
+      },
+      "dnll": 0.14027023315429688
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_256481000_543497004",
+      "slot": 0,
+      "type": "yes/no",
+      "target": "yes",
+      "image_correct": 256481,
+      "image_complementary": 543497,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 7.956542491912842,
+        "complementary": 8.213180541992188,
+        "none": 11.691252708435059
+      },
+      "dnll": 0.2566380500793457
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_256481000_543497004",
+      "slot": 1,
+      "type": "yes/no",
+      "target": "no",
+      "image_correct": 543497,
+      "image_complementary": 256481,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 9.213180541992188,
+        "complementary": 8.80810546875,
+        "none": 9.175627708435059
+      },
+      "dnll": -0.4050750732421875
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_142949002_389316005",
+      "slot": 0,
+      "type": "yes/no",
+      "target": "yes",
+      "image_correct": 142949,
+      "image_complementary": 389316,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 8.138221740722656,
+        "complementary": 9.478511810302734,
+        "none": 8.346597671508789
+      },
+      "dnll": 1.3402900695800781
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_142949002_389316005",
+      "slot": 1,
+      "type": "yes/no",
+      "target": "no",
+      "image_correct": 389316,
+      "image_complementary": 142949,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 7.470698833465576,
+        "complementary": 7.2241597175598145,
+        "none": 12.932535171508789
+      },
+      "dnll": -0.24653911590576172
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_185160004_457131002",
+      "slot": 0,
+      "type": "yes/no",
+      "target": "no",
+      "image_correct": 185160,
+      "image_complementary": 457131,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 7.153839111328125,
+        "complementary": 7.995039939880371,
+        "none": 11.952373504638672
+      },
+      "dnll": 0.8412008285522461
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_185160004_457131002",
+      "slot": 1,
+      "type": "yes/no",
+      "target": "yes",
+      "image_correct": 457131,
+      "image_complementary": 185160,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 8.995039939880371,
+        "complementary": 8.481964111328125,
+        "none": 10.475811004638672
+      },
+      "dnll": -0.5130758285522461
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_573395001_12927001",
+      "slot": 0,
+      "type": "yes/no",
+      "target": "yes",
+      "image_correct": 573395,
+      "image_complementary": 12927,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 7.095098972320557,
+        "complementary": 6.8895955085754395,
+        "none": 10.475717544555664
+      },
+      "dnll": -0.2055034637451172
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_573395001_12927001",
+      "slot": 1,
+      "type": "yes/no",
+      "target": "no",
+      "image_correct": 12927,
+      "image_complementary": 573395,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 7.1317830085754395,
+        "complementary": 7.641973972320557,
+        "none": 9.397592544555664
+      },
+      "dnll": 0.5101909637451172
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_109939003_225177015",
+      "slot": 0,
+      "type": "number",
+      "target": "38",
+      "image_correct": 109939,
+      "image_complementary": 225177,
+      "n_target_tokens": 2,
+      "nll": {
+        "correct": 5.460766792297363,
+        "complementary": 4.989113807678223,
+        "none": 10.345239639282227
+      },
+      "dnll": -0.4716529846191406
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_109939003_225177015",
+      "slot": 1,
+      "type": "number",
+      "target": "22",
+      "image_correct": 225177,
+      "image_complementary": 109939,
+      "n_target_tokens": 2,
+      "nll": {
+        "correct": 3.6368837356567383,
+        "complementary": 4.318552494049072,
+        "none": 8.941828727722168
+      },
+      "dnll": 0.681668758392334
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_488476001_440434007",
+      "slot": 0,
+      "type": "number",
+      "target": "17",
+      "image_correct": 488476,
+      "image_complementary": 440434,
+      "n_target_tokens": 2,
+      "nll": {
+        "correct": 3.1314051151275635,
+        "complementary": 3.9163126945495605,
+        "none": 6.301200866699219
+      },
+      "dnll": 0.7849075794219971
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_488476001_440434007",
+      "slot": 1,
+      "type": "number",
+      "target": "3",
+      "image_correct": 440434,
+      "image_complementary": 488476,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 4.1390509605407715,
+        "complementary": 4.874922752380371,
+        "none": 10.259332656860352
+      },
+      "dnll": 0.7358717918395996
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_184446001_546171008",
+      "slot": 0,
+      "type": "number",
+      "target": "6",
+      "image_correct": 184446,
+      "image_complementary": 546171,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 6.138515949249268,
+        "complementary": 7.205938339233398,
+        "none": 11.8052339553833
+      },
+      "dnll": 1.0674223899841309
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_184446001_546171008",
+      "slot": 1,
+      "type": "number",
+      "target": "2",
+      "image_correct": 546171,
+      "image_complementary": 184446,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 5.854375839233398,
+        "complementary": 4.411953449249268,
+        "none": 9.2427339553833
+      },
+      "dnll": -1.4424223899841309
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_92167002_183114002",
+      "slot": 0,
+      "type": "number",
+      "target": "1",
+      "image_correct": 92167,
+      "image_complementary": 183114,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 3.978839874267578,
+        "complementary": 5.9737420082092285,
+        "none": 7.866277694702148
+      },
+      "dnll": 1.9949021339416504
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_92167002_183114002",
+      "slot": 1,
+      "type": "number",
+      "target": "2",
+      "image_correct": 183114,
+      "image_complementary": 92167,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 7.5518670082092285,
+        "complementary": 5.767902374267578,
+        "none": 8.256902694702148
+      },
+      "dnll": -1.7839646339416504
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_419544001_10056009",
+      "slot": 0,
+      "type": "number",
+      "target": "1",
+      "image_correct": 419544,
+      "image_complementary": 10056,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 1.88387131690979,
+        "complementary": 1.7749228477478027,
+        "none": 9.392539978027344
+      },
+      "dnll": -0.1089484691619873
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_419544001_10056009",
+      "slot": 1,
+      "type": "number",
+      "target": "2",
+      "image_correct": 10056,
+      "image_complementary": 419544,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 3.8061728477478027,
+        "complementary": 3.96980881690979,
+        "none": 11.095664978027344
+      },
+      "dnll": 0.1636359691619873
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_137412001_321118008",
+      "slot": 0,
+      "type": "number",
+      "target": "2",
+      "image_correct": 137412,
+      "image_complementary": 321118,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 4.182812690734863,
+        "complementary": 7.889204025268555,
+        "none": 9.136284828186035
+      },
+      "dnll": 3.7063913345336914
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_137412001_321118008",
+      "slot": 1,
+      "type": "number",
+      "target": "1",
+      "image_correct": 321118,
+      "image_complementary": 137412,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 5.170454025268555,
+        "complementary": 1.7218750715255737,
+        "none": 7.909722328186035
+      },
+      "dnll": -3.448578953742981
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_397322001_571585018",
+      "slot": 0,
+      "type": "number",
+      "target": "10",
+      "image_correct": 397322,
+      "image_complementary": 571585,
+      "n_target_tokens": 2,
+      "nll": {
+        "correct": 2.5942935943603516,
+        "complementary": 2.6450393199920654,
+        "none": 6.749748229980469
+      },
+      "dnll": 0.05074572563171387
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_397322001_571585018",
+      "slot": 1,
+      "type": "number",
+      "target": "0",
+      "image_correct": 571585,
+      "image_complementary": 397322,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 6.777329921722412,
+        "complementary": 7.041667461395264,
+        "none": 12.789802551269531
+      },
+      "dnll": 0.26433753967285156
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_711002_344621000",
+      "slot": 0,
+      "type": "number",
+      "target": "2",
+      "image_correct": 711,
+      "image_complementary": 344621,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 4.088054656982422,
+        "complementary": 4.128311634063721,
+        "none": 6.7238969802856445
+      },
+      "dnll": 0.04025697708129883
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_711002_344621000",
+      "slot": 1,
+      "type": "number",
+      "target": "1",
+      "image_correct": 344621,
+      "image_complementary": 711,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 2.5033116340637207,
+        "complementary": 2.509929656982422,
+        "none": 6.5051469802856445
+      },
+      "dnll": 0.006618022918701172
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_32932013_279265001",
+      "slot": 0,
+      "type": "other",
+      "target": "women",
+      "image_correct": 32932,
+      "image_complementary": 279265,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 8.968177795410156,
+        "complementary": 9.706604957580566,
+        "none": 15.082791328430176
+      },
+      "dnll": 0.7384271621704102
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_32932013_279265001",
+      "slot": 1,
+      "type": "other",
+      "target": "men",
+      "image_correct": 279265,
+      "image_complementary": 32932,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 8.269104957580566,
+        "complementary": 7.866615295410156,
+        "none": 17.94607162475586
+      },
+      "dnll": -0.40248966217041016
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_388215002_362563013",
+      "slot": 0,
+      "type": "other",
+      "target": "tennis",
+      "image_correct": 388215,
+      "image_complementary": 362563,
+      "n_target_tokens": 2,
+      "nll": {
+        "correct": 8.058019638061523,
+        "complementary": 8.786736488342285,
+        "none": 11.383718490600586
+      },
+      "dnll": 0.7287168502807617
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_388215002_362563013",
+      "slot": 1,
+      "type": "other",
+      "target": "baseball",
+      "image_correct": 362563,
+      "image_complementary": 388215,
+      "n_target_tokens": 2,
+      "nll": {
+        "correct": 6.6852922439575195,
+        "complementary": 6.419753074645996,
+        "none": 10.171825408935547
+      },
+      "dnll": -0.26553916931152344
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_202339001_521689009",
+      "slot": 0,
+      "type": "other",
+      "target": "red",
+      "image_correct": 202339,
+      "image_complementary": 521689,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 6.956737518310547,
+        "complementary": 7.172237396240234,
+        "none": 20.626203536987305
+      },
+      "dnll": 0.2154998779296875
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_202339001_521689009",
+      "slot": 1,
+      "type": "other",
+      "target": "black",
+      "image_correct": 521689,
+      "image_complementary": 202339,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 8.031612396240234,
+        "complementary": 8.214550018310547,
+        "none": 18.294172286987305
+      },
+      "dnll": 0.1829376220703125
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_412440002_531092006",
+      "slot": 0,
+      "type": "other",
+      "target": "pizza",
+      "image_correct": 412440,
+      "image_complementary": 531092,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 8.145927429199219,
+        "complementary": 10.926916122436523,
+        "none": 16.585107803344727
+      },
+      "dnll": 2.7809886932373047
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_412440002_531092006",
+      "slot": 1,
+      "type": "other",
+      "target": "sandwich",
+      "image_correct": 531092,
+      "image_complementary": 412440,
+      "n_target_tokens": 2,
+      "nll": {
+        "correct": 5.745954990386963,
+        "complementary": 6.500616550445557,
+        "none": 10.414011001586914
+      },
+      "dnll": 0.7546615600585938
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_150212000_535604015",
+      "slot": 0,
+      "type": "other",
+      "target": "snowboard",
+      "image_correct": 150212,
+      "image_complementary": 535604,
+      "n_target_tokens": 2,
+      "nll": {
+        "correct": 4.094931602478027,
+        "complementary": 10.864574432373047,
+        "none": 12.802658081054688
+      },
+      "dnll": 6.7696428298950195
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_150212000_535604015",
+      "slot": 1,
+      "type": "other",
+      "target": "lake",
+      "image_correct": 535604,
+      "image_complementary": 150212,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 17.931699752807617,
+        "complementary": 16.815555572509766,
+        "none": 23.480148315429688
+      },
+      "dnll": -1.1161441802978516
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_428263000_281782000",
+      "slot": 0,
+      "type": "other",
+      "target": "frisbee",
+      "image_correct": 428263,
+      "image_complementary": 281782,
+      "n_target_tokens": 3,
+      "nll": {
+        "correct": 4.006558418273926,
+        "complementary": 6.185319900512695,
+        "none": 9.469374656677246
+      },
+      "dnll": 2.1787614822387695
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_428263000_281782000",
+      "slot": 1,
+      "type": "other",
+      "target": "kite",
+      "image_correct": 281782,
+      "image_complementary": 428263,
+      "n_target_tokens": 2,
+      "nll": {
+        "correct": 5.969561576843262,
+        "complementary": 6.15847110748291,
+        "none": 13.763509750366211
+      },
+      "dnll": 0.18890953063964844
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_60010017_262895007",
+      "slot": 0,
+      "type": "other",
+      "target": "vest",
+      "image_correct": 60010,
+      "image_complementary": 262895,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 10.809408187866211,
+        "complementary": 12.10567569732666,
+        "none": 18.4106388092041
+      },
+      "dnll": 1.2962675094604492
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_60010017_262895007",
+      "slot": 1,
+      "type": "other",
+      "target": "jacket",
+      "image_correct": 262895,
+      "image_complementary": 60010,
+      "n_target_tokens": 2,
+      "nll": {
+        "correct": 7.446758270263672,
+        "complementary": 6.254871368408203,
+        "none": 11.18287467956543
+      },
+      "dnll": -1.1918869018554688
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_368528002_226588000",
+      "slot": 0,
+      "type": "other",
+      "target": "man",
+      "image_correct": 368528,
+      "image_complementary": 226588,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 11.804112434387207,
+        "complementary": 14.6110258102417,
+        "none": 22.718997955322266
+      },
+      "dnll": 2.806913375854492
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_368528002_226588000",
+      "slot": 1,
+      "type": "other",
+      "target": "woman",
+      "image_correct": 226588,
+      "image_complementary": 368528,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 14.9059476852417,
+        "complementary": 14.214268684387207,
+        "none": 20.769535064697266
+      },
+      "dnll": -0.6916790008544922
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_461860001_123545000",
+      "slot": 0,
+      "type": "other",
+      "target": "asian",
+      "image_correct": 461860,
+      "image_complementary": 123545,
+      "n_target_tokens": 2,
+      "nll": {
+        "correct": 8.370255470275879,
+        "complementary": 8.456303596496582,
+        "none": 10.68277359008789
+      },
+      "dnll": 0.08604812622070312
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_461860001_123545000",
+      "slot": 1,
+      "type": "other",
+      "target": "white",
+      "image_correct": 123545,
+      "image_complementary": 461860,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 10.556436538696289,
+        "complementary": 10.909308433532715,
+        "none": 21.150217056274414
+      },
+      "dnll": 0.3528718948364258
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_552352003_375341003",
+      "slot": 0,
+      "type": "other",
+      "target": "cheesecake",
+      "image_correct": 552352,
+      "image_complementary": 375341,
+      "n_target_tokens": 3,
+      "nll": {
+        "correct": 5.9829840660095215,
+        "complementary": 7.24060583114624,
+        "none": 7.334822177886963
+      },
+      "dnll": 1.2576217651367188
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_552352003_375341003",
+      "slot": 1,
+      "type": "other",
+      "target": "hot dog",
+      "image_correct": 375341,
+      "image_complementary": 552352,
+      "n_target_tokens": 2,
+      "nll": {
+        "correct": 6.107489585876465,
+        "complementary": 7.891558647155762,
+        "none": 10.491719245910645
+      },
+      "dnll": 1.7840690612792969
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_347688000_570781011",
+      "slot": 0,
+      "type": "other",
+      "target": "tennis",
+      "image_correct": 347688,
+      "image_complementary": 570781,
+      "n_target_tokens": 2,
+      "nll": {
+        "correct": 6.424284934997559,
+        "complementary": 7.470807075500488,
+        "none": 11.3824462890625
+      },
+      "dnll": 1.0465221405029297
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_347688000_570781011",
+      "slot": 1,
+      "type": "other",
+      "target": "frisbee",
+      "image_correct": 570781,
+      "image_complementary": 347688,
+      "n_target_tokens": 3,
+      "nll": {
+        "correct": 5.1428141593933105,
+        "complementary": 5.4436774253845215,
+        "none": 7.901843547821045
+      },
+      "dnll": 0.30086326599121094
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_441701000_468997014",
+      "slot": 0,
+      "type": "other",
+      "target": "tennis",
+      "image_correct": 441701,
+      "image_complementary": 468997,
+      "n_target_tokens": 2,
+      "nll": {
+        "correct": 6.741112232208252,
+        "complementary": 7.049336910247803,
+        "none": 11.516551971435547
+      },
+      "dnll": 0.3082246780395508
+    },
+    {
+      "set": "vqa_dev",
+      "pair_id": "vqa_441701000_468997014",
+      "slot": 1,
+      "type": "other",
+      "target": "baseball",
+      "image_correct": 468997,
+      "image_complementary": 441701,
+      "n_target_tokens": 2,
+      "nll": {
+        "correct": 5.333617210388184,
+        "complementary": 5.319338798522949,
+        "none": 9.172259330749512
+      },
+      "dnll": -0.014278411865234375
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_presence_3_221094_481567",
+      "slot": 0,
+      "type": "presence",
+      "target": "yes",
+      "image_correct": 221094,
+      "image_complementary": 481567,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 6.955550670623779,
+        "complementary": 7.989897727966309,
+        "none": 11.529715538024902
+      },
+      "dnll": 1.0343470573425293
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_presence_3_221094_481567",
+      "slot": 1,
+      "type": "presence",
+      "target": "no",
+      "image_correct": 481567,
+      "image_complementary": 221094,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 7.200835227966309,
+        "complementary": 6.619613170623779,
+        "none": 10.615653038024902
+      },
+      "dnll": -0.5812220573425293
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_presence_56_466015_581226",
+      "slot": 0,
+      "type": "presence",
+      "target": "yes",
+      "image_correct": 466015,
+      "image_complementary": 581226,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 8.113347053527832,
+        "complementary": 8.770255088806152,
+        "none": 11.87797737121582
+      },
+      "dnll": 0.6569080352783203
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_presence_56_466015_581226",
+      "slot": 1,
+      "type": "presence",
+      "target": "no",
+      "image_correct": 581226,
+      "image_complementary": 466015,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 8.426505088806152,
+        "complementary": 6.878972053527832,
+        "none": 10.62797737121582
+      },
+      "dnll": -1.5475330352783203
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_presence_67_387369_562084",
+      "slot": 0,
+      "type": "presence",
+      "target": "yes",
+      "image_correct": 387369,
+      "image_complementary": 562084,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 9.202591896057129,
+        "complementary": 8.683514595031738,
+        "none": 12.44651985168457
+      },
+      "dnll": -0.5190773010253906
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_presence_67_387369_562084",
+      "slot": 1,
+      "type": "presence",
+      "target": "no",
+      "image_correct": 562084,
+      "image_complementary": 387369,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 6.628827095031738,
+        "complementary": 6.874467372894287,
+        "none": 10.82933235168457
+      },
+      "dnll": 0.24564027786254883
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_presence_72_257370_397613",
+      "slot": 0,
+      "type": "presence",
+      "target": "yes",
+      "image_correct": 257370,
+      "image_complementary": 397613,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 8.023144721984863,
+        "complementary": 8.500685691833496,
+        "none": 13.48888874053955
+      },
+      "dnll": 0.4775409698486328
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_presence_72_257370_397613",
+      "slot": 1,
+      "type": "presence",
+      "target": "no",
+      "image_correct": 397613,
+      "image_complementary": 257370,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 7.703811168670654,
+        "complementary": 7.577832221984863,
+        "none": 10.31701374053955
+      },
+      "dnll": -0.12597894668579102
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_presence_25_248810_522194",
+      "slot": 0,
+      "type": "presence",
+      "target": "yes",
+      "image_correct": 248810,
+      "image_complementary": 522194,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 10.117985725402832,
+        "complementary": 8.371503829956055,
+        "none": 13.683982849121094
+      },
+      "dnll": -1.7464818954467773
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_presence_25_248810_522194",
+      "slot": 1,
+      "type": "presence",
+      "target": "no",
+      "image_correct": 522194,
+      "image_complementary": 248810,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 7.934003829956055,
+        "complementary": 7.711735725402832,
+        "none": 10.512107849121094
+      },
+      "dnll": -0.22226810455322266
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_presence_1_458175_177468",
+      "slot": 0,
+      "type": "presence",
+      "target": "yes",
+      "image_correct": 458175,
+      "image_complementary": 177468,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 8.025470733642578,
+        "complementary": 9.755343437194824,
+        "none": 10.512721061706543
+      },
+      "dnll": 1.729872703552246
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_presence_1_458175_177468",
+      "slot": 1,
+      "type": "presence",
+      "target": "no",
+      "image_correct": 177468,
+      "image_complementary": 458175,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 7.630343437194824,
+        "complementary": 7.689533233642578,
+        "none": 10.887721061706543
+      },
+      "dnll": 0.059189796447753906
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_presence_3_83214_313240",
+      "slot": 0,
+      "type": "presence",
+      "target": "yes",
+      "image_correct": 83214,
+      "image_complementary": 313240,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 7.995647430419922,
+        "complementary": 8.34951400756836,
+        "none": 11.529715538024902
+      },
+      "dnll": 0.3538665771484375
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_presence_3_83214_313240",
+      "slot": 1,
+      "type": "presence",
+      "target": "no",
+      "image_correct": 313240,
+      "image_complementary": 83214,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 6.497951030731201,
+        "complementary": 8.120647430419922,
+        "none": 10.615653038024902
+      },
+      "dnll": 1.6226963996887207
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_presence_65_431995_262161",
+      "slot": 0,
+      "type": "presence",
+      "target": "yes",
+      "image_correct": 431995,
+      "image_complementary": 262161,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 7.195963382720947,
+        "complementary": 8.644225120544434,
+        "none": 13.416790962219238
+      },
+      "dnll": 1.4482617378234863
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_presence_65_431995_262161",
+      "slot": 1,
+      "type": "presence",
+      "target": "no",
+      "image_correct": 262161,
+      "image_complementary": 431995,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 7.159850120544434,
+        "complementary": 6.680338382720947,
+        "none": 10.838665962219238
+      },
+      "dnll": -0.47951173782348633
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_presence_1_445019_129544",
+      "slot": 0,
+      "type": "presence",
+      "target": "yes",
+      "image_correct": 445019,
+      "image_complementary": 129544,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 9.613112449645996,
+        "complementary": 8.227219581604004,
+        "none": 10.522747993469238
+      },
+      "dnll": -1.3858928680419922
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_presence_1_445019_129544",
+      "slot": 1,
+      "type": "presence",
+      "target": "no",
+      "image_correct": 129544,
+      "image_complementary": 445019,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 6.930344104766846,
+        "complementary": 9.347487449645996,
+        "none": 10.897747993469238
+      },
+      "dnll": 2.4171433448791504
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_presence_62_71023_87414",
+      "slot": 0,
+      "type": "presence",
+      "target": "yes",
+      "image_correct": 71023,
+      "image_complementary": 87414,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 7.164544105529785,
+        "complementary": 9.887547492980957,
+        "none": 11.95654296875
+      },
+      "dnll": 2.723003387451172
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_presence_62_71023_87414",
+      "slot": 1,
+      "type": "presence",
+      "target": "no",
+      "image_correct": 87414,
+      "image_complementary": 71023,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 7.520359992980957,
+        "complementary": 6.531731605529785,
+        "none": 10.73779296875
+      },
+      "dnll": -0.9886283874511719
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_presence_59_375915_138601",
+      "slot": 0,
+      "type": "presence",
+      "target": "yes",
+      "image_correct": 375915,
+      "image_complementary": 138601,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 9.385171890258789,
+        "complementary": 9.855001449584961,
+        "none": 12.780484199523926
+      },
+      "dnll": 0.4698295593261719
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_presence_59_375915_138601",
+      "slot": 1,
+      "type": "presence",
+      "target": "no",
+      "image_correct": 138601,
+      "image_complementary": 375915,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 7.612814426422119,
+        "complementary": 8.236734390258789,
+        "none": 10.561734199523926
+      },
+      "dnll": 0.6239199638366699
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_presence_17_520389_243495",
+      "slot": 0,
+      "type": "presence",
+      "target": "yes",
+      "image_correct": 520389,
+      "image_complementary": 243495,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 7.771254062652588,
+        "complementary": 8.794929504394531,
+        "none": 11.743953704833984
+      },
+      "dnll": 1.0236754417419434
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_presence_17_520389_243495",
+      "slot": 1,
+      "type": "presence",
+      "target": "no",
+      "image_correct": 243495,
+      "image_complementary": 520389,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 7.021491527557373,
+        "complementary": 8.58375358581543,
+        "none": 10.743953704833984
+      },
+      "dnll": 1.5622620582580566
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_counting_3_520043_555648",
+      "slot": 0,
+      "type": "counting",
+      "target": "2",
+      "image_correct": 520043,
+      "image_complementary": 555648,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 5.0176191329956055,
+        "complementary": 5.5926642417907715,
+        "none": 11.670104026794434
+      },
+      "dnll": 0.575045108795166
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_counting_3_520043_555648",
+      "slot": 1,
+      "type": "counting",
+      "target": "4",
+      "image_correct": 555648,
+      "image_complementary": 520043,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 6.0770392417907715,
+        "complementary": 5.6816816329956055,
+        "none": 11.466979026794434
+      },
+      "dnll": -0.395357608795166
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_counting_43_141492_251580",
+      "slot": 0,
+      "type": "counting",
+      "target": "1",
+      "image_correct": 141492,
+      "image_complementary": 251580,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 5.962961673736572,
+        "complementary": 4.119906902313232,
+        "none": 9.235433578491211
+      },
+      "dnll": -1.8430547714233398
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_counting_43_141492_251580",
+      "slot": 1,
+      "type": "counting",
+      "target": "2",
+      "image_correct": 251580,
+      "image_complementary": 141492,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 6.713656902313232,
+        "complementary": 7.869211673736572,
+        "none": 10.376058578491211
+      },
+      "dnll": 1.1555547714233398
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_counting_65_184401_517399",
+      "slot": 0,
+      "type": "counting",
+      "target": "1",
+      "image_correct": 184401,
+      "image_complementary": 517399,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 3.6971435546875,
+        "complementary": 3.562143087387085,
+        "none": 8.669130325317383
+      },
+      "dnll": -0.13500046730041504
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_counting_65_184401_517399",
+      "slot": 1,
+      "type": "counting",
+      "target": "2",
+      "image_correct": 517399,
+      "image_complementary": 184401,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 5.984018325805664,
+        "complementary": 5.9862060546875,
+        "none": 10.231630325317383
+      },
+      "dnll": 0.0021877288818359375
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_counting_1_314154_476233",
+      "slot": 0,
+      "type": "counting",
+      "target": "1",
+      "image_correct": 314154,
+      "image_complementary": 476233,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 3.0061936378479004,
+        "complementary": 3.62333345413208,
+        "none": 9.821277618408203
+      },
+      "dnll": 0.6171398162841797
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_counting_1_314154_476233",
+      "slot": 1,
+      "type": "counting",
+      "target": "4",
+      "image_correct": 476233,
+      "image_complementary": 314154,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 5.72489595413208,
+        "complementary": 5.4436936378479,
+        "none": 11.782215118408203
+      },
+      "dnll": -0.2812023162841797
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_counting_11_118715_516540",
+      "slot": 0,
+      "type": "counting",
+      "target": "1",
+      "image_correct": 118715,
+      "image_complementary": 516540,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 3.9166438579559326,
+        "complementary": 4.7618255615234375,
+        "none": 11.012066841125488
+      },
+      "dnll": 0.8451817035675049
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_counting_11_118715_516540",
+      "slot": 1,
+      "type": "counting",
+      "target": "2",
+      "image_correct": 516540,
+      "image_complementary": 118715,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 6.9805755615234375,
+        "complementary": 6.666644096374512,
+        "none": 12.605816841125488
+      },
+      "dnll": -0.3139314651489258
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_counting_1_159044_325568",
+      "slot": 0,
+      "type": "counting",
+      "target": "1",
+      "image_correct": 159044,
+      "image_complementary": 325568,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 3.8451552391052246,
+        "complementary": 8.176496505737305,
+        "none": 9.821277618408203
+      },
+      "dnll": 4.33134126663208
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_counting_1_159044_325568",
+      "slot": 1,
+      "type": "counting",
+      "target": "3",
+      "image_correct": 325568,
+      "image_complementary": 159044,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 10.449934005737305,
+        "complementary": 5.509217739105225,
+        "none": 11.688465118408203
+      },
+      "dnll": -4.94071626663208
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_counting_33_484681_80517",
+      "slot": 0,
+      "type": "counting",
+      "target": "1",
+      "image_correct": 484681,
+      "image_complementary": 80517,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 1.856860637664795,
+        "complementary": 2.127166748046875,
+        "none": 9.1172513961792
+      },
+      "dnll": 0.2703061103820801
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_counting_33_484681_80517",
+      "slot": 1,
+      "type": "counting",
+      "target": "2",
+      "image_correct": 80517,
+      "image_complementary": 484681,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 5.049041748046875,
+        "complementary": 4.770923137664795,
+        "none": 9.9141263961792
+      },
+      "dnll": -0.2781186103820801
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_counting_22_247179_102912",
+      "slot": 0,
+      "type": "counting",
+      "target": "3",
+      "image_correct": 247179,
+      "image_complementary": 102912,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 5.478347301483154,
+        "complementary": 9.007317543029785,
+        "none": 12.93342399597168
+      },
+      "dnll": 3.528970241546631
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_counting_22_247179_102912",
+      "slot": 1,
+      "type": "counting",
+      "target": "2",
+      "image_correct": 102912,
+      "image_complementary": 247179,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 8.007317543029785,
+        "complementary": 4.986159801483154,
+        "none": 11.54279899597168
+      },
+      "dnll": -3.021157741546631
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_counting_40_217593_22403",
+      "slot": 0,
+      "type": "counting",
+      "target": "1",
+      "image_correct": 217593,
+      "image_complementary": 22403,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 2.964108943939209,
+        "complementary": 2.720623016357422,
+        "none": 8.50954818725586
+      },
+      "dnll": -0.2434859275817871
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_counting_40_217593_22403",
+      "slot": 1,
+      "type": "counting",
+      "target": "2",
+      "image_correct": 22403,
+      "image_complementary": 217593,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 4.228435516357422,
+        "complementary": 4.667233943939209,
+        "none": 10.05642318725586
+      },
+      "dnll": 0.4387984275817871
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_counting_1_56983_11291",
+      "slot": 0,
+      "type": "counting",
+      "target": "1",
+      "image_correct": 56983,
+      "image_complementary": 11291,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 8.039087295532227,
+        "complementary": 3.969472885131836,
+        "none": 9.821277618408203
+      },
+      "dnll": -4.069614410400391
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_counting_1_56983_11291",
+      "slot": 1,
+      "type": "counting",
+      "target": "2",
+      "image_correct": 11291,
+      "image_complementary": 56983,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 6.094472885131836,
+        "complementary": 10.000024795532227,
+        "none": 11.368152618408203
+      },
+      "dnll": 3.9055519104003906
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_counting_49_527575_321035",
+      "slot": 0,
+      "type": "counting",
+      "target": "2",
+      "image_correct": 527575,
+      "image_complementary": 321035,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 8.38412857055664,
+        "complementary": 7.132630825042725,
+        "none": 8.430660247802734
+      },
+      "dnll": -1.251497745513916
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_counting_49_527575_321035",
+      "slot": 1,
+      "type": "counting",
+      "target": "1",
+      "image_correct": 321035,
+      "image_complementary": 527575,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 3.6013808250427246,
+        "complementary": 5.118504047393799,
+        "none": 6.985347270965576
+      },
+      "dnll": 1.5171232223510742
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_counting_7_18771_394635",
+      "slot": 0,
+      "type": "counting",
+      "target": "1",
+      "image_correct": 18771,
+      "image_complementary": 394635,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 4.677519798278809,
+        "complementary": 4.524273872375488,
+        "none": 11.4425048828125
+      },
+      "dnll": -0.1532459259033203
+    },
+    {
+      "set": "grounding_dev",
+      "pair_id": "grd_counting_7_18771_394635",
+      "slot": 1,
+      "type": "counting",
+      "target": "2",
+      "image_correct": 394635,
+      "image_complementary": 18771,
+      "n_target_tokens": 1,
+      "nll": {
+        "correct": 7.000836372375488,
+        "complementary": 6.794707298278809,
+        "none": 13.4659423828125
+      },
+      "dnll": -0.2061290740966797
+    }
+  ]
+}

@@ -1,0 +1,201 @@
+{
+  "run_id": "cache_features_20261107T210228Z",
+  "status": "done",
+  "config": {
+    "model": {
+      "name": "google/siglip-base-patch16-224",
+      "revision": "7fd15f0689c79d79e38b1c2e2e2370a7bf2761ed"
+    },
+    "processor": {
+      "use_fast": false,
+      "expected_class": "SiglipImageProcessorPil"
+    },
+    "compute_dtype": "float32",
+    "store_dtype": "float16",
+    "tokens": 196,
+    "dim": 768,
+    "batch_size": 64,
+    "shard_size": 1000,
+    "image_tables": {
+      "train": "splits/task2/images_train.json",
+      "val": "splits/task2/images_val.json"
+    },
+    "images_dir": "data/task2/images",
+    "out_dir": "cached/task2/siglip",
+    "result": "results/task2/cache_features.json",
+    "download": {
+      "workers": 32,
+      "retries": 5,
+      "timeout_s": 30,
+      "report_after": 500
+    }
+  },
+  "provenance": {
+    "git": {
+      "commit": "85079fdd94600fb9a0d81af54ac3790c300f7a23",
+      "dirty": false
+    },
+    "hostname": "7d87133e5d57",
+    "hardware": {
+      "cpu": "x86_64",
+      "cpu_count": 4,
+      "platform": "Linux-6.18.55+-x86_64-with-glibc2.39",
+      "python": "3.13.16",
+      "gpus": [
+        {
+          "index": 0,
+          "name": "Tesla T4",
+          "total_memory_gb": 14.56
+        }
+      ],
+      "torch": "2.11.0+cu130",
+      "cuda": "13.0"
+    },
+    "timestamp": "2026-11-07T21:02:28.875465+00:00"
+  },
+  "versions": {
+    "torch": "2.11.0+cu130",
+    "transformers": "5.21.0",
+    "Pillow": "13.0.0",
+    "numpy": "2.1.3",
+    "safetensors": "0.8.0",
+    "torchvision": "0.26.0+cu130"
+  },
+  "device": "cuda",
+  "splits": [
+    "train",
+    "val"
+  ],
+  "tables": {
+    "train": {
+      "path": "splits/task2/images_train.json",
+      "sha256": "56e92724d9d1f9eba5747f4a1eaaea2cd60ddf54eee7e08ae365bb6b1897354b"
+    },
+    "val": {
+      "path": "splits/task2/images_val.json",
+      "sha256": "20edca9cfb30d0815b404bda67d132ae1b57a9b9470036b86a557ec831290034"
+    }
+  },
+  "batch_size": 64,
+  "compute_dtype": "float32",
+  "store_dtype": "float16",
+  "download": {
+    "train": {
+      "split": "train2014",
+      "images": 8759,
+      "already_present": 0,
+      "downloaded": 8759,
+      "attempts": 8759,
+      "seconds": 146.2186074256897,
+      "progress": {
+        "images": 500,
+        "seconds": 9.404558897018433,
+        "images_per_s": 53.1657045774382,
+        "pending_total": 9287,
+        "projected_total_s": 174.68027695322036
+      }
+    },
+    "val": {
+      "split": "val2014",
+      "images": 528,
+      "already_present": 0,
+      "downloaded": 528,
+      "attempts": 528,
+      "seconds": 9.120962142944336,
+      "progress": null
+    }
+  },
+  "download_s": 155.45934462547302,
+  "image_counts": {
+    "train": 8759,
+    "val": 528
+  },
+  "processor_class": "SiglipImageProcessorPil",
+  "processor": {
+    "do_normalize": true,
+    "do_rescale": true,
+    "do_resize": true,
+    "image_processor_type": "SiglipImageProcessor",
+    "resample": 3,
+    "rescale_factor": 0.00392156862745098,
+    "do_convert_rgb": true
+  },
+  "encoder_parameters": 92884224,
+  "load_s": 8.782596588134766,
+  "features": {
+    "train": {
+      "n_images": 8759,
+      "n_shards": 9,
+      "token_l2_norm_mean": 62.1775301162536,
+      "max_abs": 69.46703338623047,
+      "index": "train_index.json",
+      "shards": [
+        {
+          "file": "train_000.safetensors",
+          "n": 1000,
+          "sha256": "eb69ea14b872bb8d23dd3963626fb90d22ce1f5712b6517af65dce7703fe190d"
+        },
+        {
+          "file": "train_001.safetensors",
+          "n": 1000,
+          "sha256": "0eb5b0c33a8a0b17bacc2996dd14e6f19d88a111040510d65da2dee68b870199"
+        },
+        {
+          "file": "train_002.safetensors",
+          "n": 1000,
+          "sha256": "cc40bd2e37c1246123b50b63cf449cfa7dba3aa09d1abc997915044cb8f70b99"
+        },
+        {
+          "file": "train_003.safetensors",
+          "n": 1000,
+          "sha256": "50383ffc34f771d79e087dd66f84dec8529c35f69e788ef1c11793fac0d51bfb"
+        },
+        {
+          "file": "train_004.safetensors",
+          "n": 1000,
+          "sha256": "10306f096dd02d310ac75a9eb68276c86dffe455ec1adbfaeb7794ecb0445d98"
+        },
+        {
+          "file": "train_005.safetensors",
+          "n": 1000,
+          "sha256": "05802dd451630df288d33aae1c2521d2244ece48789165b115db1ad1292a4a15"
+        },
+        {
+          "file": "train_006.safetensors",
+          "n": 1000,
+          "sha256": "1ef7181f1f6749b6615d416a981f4b229a551534390603029f8117c8ffc071c0"
+        },
+        {
+          "file": "train_007.safetensors",
+          "n": 1000,
+          "sha256": "d5057f3c3407729c86795388076a0ceee546fcfd664474f3257a4d83dbaad5ef"
+        },
+        {
+          "file": "train_008.safetensors",
+          "n": 759,
+          "sha256": "86820fd78febedf7af698ba08a91ef7b97d0a85b1058cae9fcbc030b7f8eaded"
+        }
+      ]
+    },
+    "val": {
+      "n_images": 528,
+      "n_shards": 1,
+      "token_l2_norm_mean": 62.26077797063428,
+      "max_abs": 58.70009231567383,
+      "index": "val_index.json",
+      "shards": [
+        {
+          "file": "val_000.safetensors",
+          "n": 528,
+          "sha256": "9c1bb1c3352b379ddcbfd4ced150518656cd70b4b215c36c10000315fd07661c"
+        }
+      ]
+    }
+  },
+  "encode_s": 220.81646823883057,
+  "peak_gpu_allocated_bytes": 884161536,
+  "peak_gpu_reserved_bytes": 1075838976,
+  "gpu_allocated_after_free_bytes": 9568256,
+  "out_dir": "/kaggle/working/features",
+  "wall_s": 385.29017758369446
+}
