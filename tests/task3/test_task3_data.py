@@ -4,7 +4,7 @@ import pytest
 import pyarrow.parquet as pq
 
 import task3_synth as synth
-from task3.data import DataError, dataset_files, load_config, load_rollouts, load_token_cache, write_token_cache
+from task3_ttc.data import DataError, dataset_files, load_config, load_rollouts, load_token_cache, write_token_cache
 
 
 def _load(tmp_path, ds, mutate=None):

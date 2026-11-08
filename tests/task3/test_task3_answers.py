@@ -3,10 +3,10 @@ import copy
 
 import pytest
 
-from task3 import answers
-from task3.answers import (NO_ANSWER, MathScorer, MathVistaScorer, group_keys, levenshtein, mathvista_normalize,
+from task3_ttc import answers
+from task3_ttc.answers import (NO_ANSWER, MathScorer, MathVistaScorer, group_keys, levenshtein, mathvista_normalize,
                            score_dataset)
-from task3.data import load_config
+from task3_ttc.data import load_config
 
 
 @pytest.fixture(scope="module")

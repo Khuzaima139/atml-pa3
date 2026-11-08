@@ -7,7 +7,7 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 import yaml
 
-from task3.data import load_config
+from task3_ttc.data import load_config
 
 N_ROLLOUTS = 4
 CAP = 8

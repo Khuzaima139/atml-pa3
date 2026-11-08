@@ -7,7 +7,7 @@ Per dataset:
             rng.permutation(n_rollouts) drawn n_orders times -> (n_questions, n_orders, n_rollouts).
 The split file's sha256 is taken over the canonical JSON (common.hashing.canonical_json) of every other key.
 
-Run: python -m task3.splits --dataset {math,mathvista}   (reads the sample_ids from the generations file)
+Run: python -m task3_ttc.splits --dataset {math,mathvista}   (reads the sample_ids from the generations file)
 """
 import argparse
 import json
@@ -17,7 +17,7 @@ import numpy as np
 import pyarrow.parquet as pq
 
 from common.hashing import sha256_json
-from task3.data import dataset_files, load_config, resolve
+from task3_ttc.data import dataset_files, load_config, resolve
 
 GENERATOR = ("split: np.random.default_rng({seed}).permutation(sorted sample_ids as strings), first {n_dev} dev, "
              "remaining {n_eval} eval{live}; orders: separate np.random.default_rng({seed}), for each question in "

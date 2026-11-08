@@ -7,8 +7,8 @@ import pytest
 
 from common.hashing import sha256_json
 from common.runinfo import REPO_ROOT
-from task3 import splits
-from task3.data import load_config
+from task3_ttc import splits
+from task3_ttc.data import load_config
 
 IDS = [f"test:{i}" for i in range(1000)]
 

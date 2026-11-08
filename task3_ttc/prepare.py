@@ -1,6 +1,6 @@
 """Task 3 Step 1 preparation (manual L593-606, L630-631): join, split, answer groups, correctness labels.
 
-Run: python -m task3.prepare --dataset {math,mathvista} [--config configs/task3/offline.yaml]
+Run: python -m task3_ttc.prepare --dataset {math,mathvista} [--config configs/task3/offline.yaml]
 
 Writes (never overwrites; exits with an error if an output exists):
     results/task3/rollouts/<dataset>_rollouts.csv   one row per rollout (columns in COLUMNS)
@@ -20,9 +20,9 @@ import pandas as pd
 from common.hashing import sha256_file
 from common.results import write_result
 from common.runinfo import run_info
-from task3 import answers
-from task3.data import load_config, load_rollouts, resolve, write_token_cache
-from task3.splits import ensure_split
+from task3_ttc import answers
+from task3_ttc.data import load_config, load_rollouts, resolve, write_token_cache
+from task3_ttc.splits import ensure_split
 
 COLUMNS = {
     "sample_id": "question ID (string)",

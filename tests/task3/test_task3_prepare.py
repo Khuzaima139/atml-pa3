@@ -1,4 +1,4 @@
-"""End-to-end CLI run of task3.prepare on tiny synthetic data."""
+"""End-to-end CLI run of task3_ttc.prepare on tiny synthetic data."""
 import json
 import os
 import subprocess
@@ -10,7 +10,7 @@ import pytest
 
 import task3_synth as synth
 from common.runinfo import REPO_ROOT
-from task3.splits import load_split
+from task3_ttc.splits import load_split
 
 BASE_COLS = ["sample_id", "rollout_id", "split", "T", "capped", "L", "K", "extracted", "normalized", "group_id",
              "na_reason", "correct"]
@@ -24,7 +24,7 @@ COUNT_KEYS = ["rollouts", "questions", "rows_by_split", "questions_by_split", "l
 
 
 def _run(cfg_path, ds):
-    return subprocess.run([sys.executable, "-m", "task3.prepare", "--dataset", ds, "--config", cfg_path],
+    return subprocess.run([sys.executable, "-m", "task3_ttc.prepare", "--dataset", ds, "--config", cfg_path],
                           cwd=REPO_ROOT, capture_output=True, text=True)
 
 
