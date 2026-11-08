@@ -1,0 +1,142 @@
+{
+  "run_id": "task3_offline_math_20261108T133139Z",
+  "dataset": "math",
+  "unit": "question (eval split), accuracy averaged over orders first",
+  "method": "paired percentile bootstrap",
+  "resamples": 1000,
+  "seed": 6304,
+  "ci": 0.95,
+  "n_questions": 800,
+  "comparisons": [
+    {
+      "a": "FirstAns",
+      "N_a": 8,
+      "b": "SC",
+      "N_b": 8,
+      "mean_pp": -7.4375,
+      "ci_low_pp": -8.513437499999998,
+      "ci_high_pp": -6.337187500000001,
+      "ci_excludes_zero": true
+    },
+    {
+      "a": "Highest-L",
+      "N_a": 8,
+      "b": "SC",
+      "N_b": 8,
+      "mean_pp": -4.250000000000001,
+      "ci_low_pp": -5.5628125,
+      "ci_high_pp": -2.9621875000000006,
+      "ci_excludes_zero": true
+    },
+    {
+      "a": "Highest-K",
+      "N_a": 8,
+      "b": "SC",
+      "N_b": 8,
+      "mean_pp": -1.6500000000000004,
+      "ci_low_pp": -2.875,
+      "ci_high_pp": -0.47500000000000014,
+      "ci_excludes_zero": true
+    },
+    {
+      "a": "RWC-K",
+      "N_a": 8,
+      "b": "SC",
+      "N_b": 8,
+      "mean_pp": 1.0749999999999997,
+      "ci_low_pp": 0.5125,
+      "ci_high_pp": 1.6753124999999998,
+      "ci_excludes_zero": true
+    },
+    {
+      "a": "Shortest",
+      "N_a": 8,
+      "b": "SC",
+      "N_b": 8,
+      "mean_pp": -7.225,
+      "ci_low_pp": -8.750312499999998,
+      "ci_high_pp": -5.7125,
+      "ci_excludes_zero": true
+    },
+    {
+      "a": "RWC-K",
+      "N_a": 8,
+      "b": "Highest-K",
+      "N_b": 8,
+      "mean_pp": 2.725,
+      "ci_low_pp": 1.8746875000000003,
+      "ci_high_pp": 3.7253125,
+      "ci_excludes_zero": true
+    },
+    {
+      "a": "FirstAns",
+      "N_a": 32,
+      "b": "SC",
+      "N_b": 32,
+      "mean_pp": -9.4375,
+      "ci_low_pp": -11.0125,
+      "ci_high_pp": -7.9750000000000005,
+      "ci_excludes_zero": true
+    },
+    {
+      "a": "Highest-L",
+      "N_a": 32,
+      "b": "SC",
+      "N_b": 32,
+      "mean_pp": -9.7875,
+      "ci_low_pp": -12.3875,
+      "ci_high_pp": -7.399062500000002,
+      "ci_excludes_zero": true
+    },
+    {
+      "a": "Highest-K",
+      "N_a": 32,
+      "b": "SC",
+      "N_b": 32,
+      "mean_pp": -3.1625,
+      "ci_low_pp": -5.512812499999999,
+      "ci_high_pp": -0.8250000000000001,
+      "ci_excludes_zero": true
+    },
+    {
+      "a": "RWC-K",
+      "N_a": 32,
+      "b": "SC",
+      "N_b": 32,
+      "mean_pp": 1.7624999999999997,
+      "ci_low_pp": 0.6868750000000006,
+      "ci_high_pp": 2.9124999999999996,
+      "ci_excludes_zero": true
+    },
+    {
+      "a": "Shortest",
+      "N_a": 32,
+      "b": "SC",
+      "N_b": 32,
+      "mean_pp": -11.4125,
+      "ci_low_pp": -14.125312499999998,
+      "ci_high_pp": -8.985625000000002,
+      "ci_excludes_zero": true
+    },
+    {
+      "a": "RWC-K",
+      "N_a": 32,
+      "b": "Highest-K",
+      "N_b": 32,
+      "mean_pp": 4.925,
+      "ci_low_pp": 2.799375,
+      "ci_high_pp": 7.175,
+      "ci_excludes_zero": true
+    },
+    {
+      "a": "SC",
+      "N_a": 32,
+      "b": "FirstAns",
+      "N_b": 32,
+      "mean_pp": 9.4375,
+      "ci_low_pp": 7.9750000000000005,
+      "ci_high_pp": 11.0125,
+      "ci_excludes_zero": true
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "run_id": "task3_offline_mathvista_20261108T133121Z",
+  "dataset": "mathvista",
+  "split": "eval",
+  "N": 32,
+  "n_questions": 800,
+  "quartile_k": 8,
+  "mixed_questions": 634,
+  "quartile_difference": {
+    "L": {
+      "mean_all_questions": 0.0159375,
+      "mean_mixed_questions": 0.020110410094637224
+    },
+    "K": {
+      "mean_all_questions": 0.03484375,
+      "mean_mixed_questions": 0.04396687697160883
+    },
+    "V": {
+      "mean_all_questions": 0.0378125,
+      "mean_mixed_questions": 0.04771293375394322
+    },
+    "Z": {
+      "mean_all_questions": 0.07390625,
+      "mean_mixed_questions": 0.09325709779179811
+    },
+    "Ztok": {
+      "mean_all_questions": 0.0721875,
+      "mean_mixed_questions": 0.09108832807570978
+    },
+    "length (top = shortest)": {
+      "mean_all_questions": 0.04002690972222222,
+      "mean_mixed_questions": 0.050507141605327724
+    }
+  },
+  "spearman_T_vs_score": {
+    "L": {
+      "mean": 0.3289814558958108,
+      "questions_defined": 795,
+      "questions_undefined": 5
+    },
+    "K": {
+      "mean": 0.34933335845066327,
+      "questions_defined": 795,
+      "questions_undefined": 5
+    },
+    "V": {
+      "mean": -0.6857520445845515,
+      "questions_defined": 795,
+      "questions_undefined": 5
+    },
+    "Z": {
+      "mean": -0.2750367811900654,
+      "questions_defined": 795,
+      "questions_undefined": 5
+    },
+    "Ztok": {
+      "mean": -0.3218025706715197,
+      "questions_defined": 795,
+      "questions_undefined": 5
+    }
+  },
+  "rollout_pearson": {
+    "rollouts": 25600,
+    "rollouts_with_T_lt_2": 0,
+    "confidence_vision (c_t, v_t)": {
+      "rollouts_skipped": 0,
+      "questions": 800,
+      "questions_undefined": 0,
+      "mean": -0.20934390581237877,
+      "median": -0.21048683229023718,
+      "share_positive": 0.1075,
+      "share_negative": 0.8925
+    },
+    "vision_position (v_t, t)": {
+      "rollouts_skipped": 0,
+      "questions": 800,
+      "questions_undefined": 0,
+      "mean": -0.5593897698264189,
+      "median": -0.5779788418064519,
+      "share_positive": 0.00875,
+      "share_negative": 0.99125
+    },
+    "confidence_position (c_t, t)": {
+      "rollouts_skipped": 0,
+      "questions": 800,
+      "questions_undefined": 0,
+      "mean": 0.11324976044300646,
+      "median": 0.1081586858638459,
+      "share_positive": 0.80875,
+      "share_negative": 0.19125
+    }
+  },
+  "Z_vs_Ztok_top": {
+    "N": 32,
+    "share_top_rollout_differs": 0.33,
+    "share_selected_group_differs": 0.1175,
+    "note": "Highest-Z vs Highest-Ztok selections at N = 32, averaged over orders then eval questions (order matters only through ties)"
+  },
+  "covariance_identity": {
+    "rollouts": 32000,
+    "max_abs_difference": 1.868654459034197e-09,
+    "tolerance": 1e-06,
+    "passed": true
+  }
+}

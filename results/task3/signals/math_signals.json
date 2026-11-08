@@ -1,0 +1,35 @@
+{
+  "run_id": "task3_offline_math_20261108T133139Z",
+  "dataset": "math",
+  "split": "eval",
+  "N": 32,
+  "n_questions": 800,
+  "quartile_k": 8,
+  "mixed_questions": 469,
+  "quartile_difference": {
+    "L": {
+      "mean_all_questions": 0.07828125,
+      "mean_mixed_questions": 0.13352878464818763
+    },
+    "K": {
+      "mean_all_questions": 0.11984375,
+      "mean_mixed_questions": 0.20442430703624734
+    },
+    "length (top = shortest)": {
+      "mean_all_questions": 0.04571614583333333,
+      "mean_mixed_questions": 0.07798063255152807
+    }
+  },
+  "spearman_T_vs_score": {
+    "L": {
+      "mean": 0.22450990220048075,
+      "questions_defined": 800,
+      "questions_undefined": 0
+    },
+    "K": {
+      "mean": -0.16109595817293734,
+      "questions_defined": 800,
+      "questions_undefined": 0
+    }
+  }
+}
