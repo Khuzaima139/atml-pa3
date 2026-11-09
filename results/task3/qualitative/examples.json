@@ -1,0 +1,335 @@
+{
+  "run_id": "task3_qualitative_20261109T112317Z",
+  "run_info": {
+    "git": {
+      "commit": "ded34e919b8f205a7d3604c55bdf1341f914c96c",
+      "dirty": false
+    },
+    "hostname": "192.168.1.6",
+    "hardware": {
+      "cpu": "arm",
+      "cpu_count": 8,
+      "platform": "macOS-27.0.1-arm64-arm-64bit",
+      "python": "3.11.18",
+      "gpus": [],
+      "torch": "2.15.0"
+    },
+    "timestamp": "2026-11-09T11:23:17.175112+00:00"
+  },
+  "rules": "Task 3 qualitative examples, rules fixed in advance (manual L748-750, L777-779; prompt b3 item C).\n\nRun: python -m task3_ttc.qualitative   -> results/task3/qualitative/examples.json\n\nRules (eval questions in split-file order; a rule that finds no question records \"none\"):\n    selection_disagreement  per dataset, the first question where SC and RWC-K select different groups at N = 32,\n                            order 0 (committed engine selections), and exactly one of them is correct. Saved: question\n                            text, gold, every answer group with its vote count and RWC-K weight W(a) over the 32\n                            rollouts, both picks, and the last 40 words of the top-ranked rollout (highest K, ties\n                            -> earliest in order 0) of each picked group.\n    premature_stop          per dataset, the first question where the dev-selected agreement policy stops before 32\n                            at order 0 with a wrong answer while fixed-32 SC (same order) is correct. Saved: stop n,\n                            votes among the first n, votes at 32, returned and SC answers, gold.\n    trajectories            the F6 question and rollout IDs (results/task3/figdata/mathvista_figdata.json).\nInputs are committed result files; question text, gold strings and rollout text come from the supplied\ngenerations.parquet.\n",
+  "inputs": {
+    "math": {
+      "split": "splits/task3/math_split.json",
+      "rollouts": "results/task3/rollouts/math_rollouts.csv",
+      "selections": "results/task3/offline/math_selections.npz",
+      "adaptive_eval": "results/task3/adaptive/math_eval.json",
+      "adaptive_trace": "results/task3/adaptive/math_eval_trace.npz"
+    },
+    "mathvista": {
+      "split": "splits/task3/mathvista_split.json",
+      "rollouts": "results/task3/rollouts/mathvista_rollouts.csv",
+      "selections": "results/task3/offline/mathvista_selections.npz",
+      "adaptive_eval": "results/task3/adaptive/mathvista_eval.json",
+      "adaptive_trace": "results/task3/adaptive/mathvista_eval_trace.npz"
+    },
+    "figdata": "results/task3/figdata/mathvista_figdata.json"
+  },
+  "selection_disagreement": {
+    "math": {
+      "sample_id": "test:2460",
+      "order": 0,
+      "N": 32,
+      "question_text": "At a competition with $N$ players, the number of players given elite status is equal to $2^{1+\\lfloor \\log_{2} (N-1) \\rfloor}-N$. Suppose that $19$ players are given elite status. What is the sum of the two smallest possible values of $N$?",
+      "gold_answer": "154",
+      "groups": [
+        {
+          "group_id": 1,
+          "answer": "58",
+          "votes": 11,
+          "correct": false,
+          "rwc_K_weight": 5.806451612903225
+        },
+        {
+          "group_id": 0,
+          "answer": "154",
+          "votes": 11,
+          "correct": true,
+          "rwc_K_weight": 6.806451612903226
+        },
+        {
+          "group_id": -1,
+          "answer": "NO_ANSWER",
+          "votes": 3,
+          "correct": false,
+          "rwc_K_weight": 0.6451612903225806
+        },
+        {
+          "group_id": 5,
+          "answer": "50",
+          "votes": 1,
+          "correct": false,
+          "rwc_K_weight": 0.16129032258064516
+        },
+        {
+          "group_id": 8,
+          "answer": "346",
+          "votes": 1,
+          "correct": false,
+          "rwc_K_weight": 0.45161290322580644
+        },
+        {
+          "group_id": 7,
+          "answer": "90",
+          "votes": 1,
+          "correct": false,
+          "rwc_K_weight": 0.7096774193548387
+        },
+        {
+          "group_id": 6,
+          "answer": "13",
+          "votes": 1,
+          "correct": false,
+          "rwc_K_weight": 0.3870967741935484
+        },
+        {
+          "group_id": 4,
+          "answer": "80",
+          "votes": 1,
+          "correct": false,
+          "rwc_K_weight": 0.25806451612903225
+        },
+        {
+          "group_id": 3,
+          "answer": "98",
+          "votes": 1,
+          "correct": false,
+          "rwc_K_weight": 0.0967741935483871
+        },
+        {
+          "group_id": 2,
+          "answer": "45",
+          "votes": 1,
+          "correct": false,
+          "rwc_K_weight": 0.6774193548387096
+        }
+      ],
+      "picks": {
+        "SC": {
+          "group_id": 1,
+          "answer": "58",
+          "correct": false,
+          "top_ranked_rollout": 24,
+          "top_ranked_K": 29.377421255096387,
+          "top_ranked_last_40_words": "smallest possible values of \\( N \\) are 13 and 45. The sum of these two values is: \\[ 13 + 45 = 58. \\] Thus, the sum of the two smallest possible values of \\( N \\) is \\(\\boxed{58}\\)."
+        },
+        "RWC-K": {
+          "group_id": 0,
+          "answer": "154",
+          "correct": true,
+          "top_ranked_rollout": 23,
+          "top_ranked_K": 28.4028935055587,
+          "top_ranked_last_40_words": "\\( N = 109 \\). Thus, the two smallest possible values of \\( N \\) are 45 and 109. The sum of these values is: \\[ 45 + 109 = 154. \\] Therefore, the final answer is: \\[ \\boxed{154}. \\]"
+        }
+      }
+    },
+    "mathvista": {
+      "sample_id": "643",
+      "order": 0,
+      "N": 32,
+      "question_text": "As shown in the figure, CD is the diameter of \u2299O, chord DE \u2225 OA, if the degree of \u2220D is 50.0, then the degree of \u2220C is ()\nA. 25\u00b0\nB. 30\u00b0\nC. 40\u00b0\nD. 50\u00b0",
+      "gold_answer": "A",
+      "groups": [
+        {
+          "group_id": 1,
+          "answer": "C",
+          "votes": 11,
+          "correct": false,
+          "rwc_K_weight": 4.419354838709677
+        },
+        {
+          "group_id": 2,
+          "answer": "A",
+          "votes": 10,
+          "correct": true,
+          "rwc_K_weight": 5.806451612903226
+        },
+        {
+          "group_id": -1,
+          "answer": "NO_ANSWER",
+          "votes": 8,
+          "correct": false,
+          "rwc_K_weight": 4.96774193548387
+        },
+        {
+          "group_id": 0,
+          "answer": "D",
+          "votes": 3,
+          "correct": false,
+          "rwc_K_weight": 0.8064516129032258
+        }
+      ],
+      "picks": {
+        "SC": {
+          "group_id": 1,
+          "answer": "C",
+          "correct": false,
+          "top_ranked_rollout": 31,
+          "top_ranked_K": 21.424235478966636,
+          "top_ranked_last_40_words": "50^\\circ \\) - Therefore, \\( \\angle C = 180^\\circ - \\angle CAD - \\angle A = 180^\\circ - 90^\\circ - 50^\\circ = 40^\\circ \\). So, the measure of \\( \\angle C \\) is \\( 40^\\circ \\). The answer is \\(\\boxed{40^\\circ}\\)."
+        },
+        "RWC-K": {
+          "group_id": 2,
+          "answer": "A",
+          "correct": true,
+          "top_ranked_rollout": 5,
+          "top_ranked_K": 21.259349255395637,
+          "top_ranked_last_40_words": "measure of an inscribed angle is half the measure of the central angle subtending the same arc. - Therefore, \\(\\angle C = \\frac{1}{2} \\times \\angle AOD = \\frac{1}{2} \\times 50^\\circ = 25^\\circ\\). So, the degree of \\(\\angle C\\) is \\(\\boxed{25^\\circ}\\)."
+        }
+      }
+    }
+  },
+  "premature_stop": {
+    "math": {
+      "sample_id": "test:1803",
+      "order": 0,
+      "policy": "agreement(tau=0.625)",
+      "stop_n": 8,
+      "question_text": "In right triangle $XYZ$, shown below, what is $\\sin{X}$?\n\n[asy]\ndraw((0,0)--(10,0)--(3.6,4.8)--cycle,black+linewidth(1));\ndraw(rightanglemark((0,0),(3.6,4.8),(10,0),20),black+linewidth(1));\nlabel(\"X\",(10,0),E);\nlabel(\"Y\",(3.6,4.8),N);\nlabel(\"Z\",(0,0),W);\nlabel(\"10\",(0,0)--(10,0),S);\nlabel(\"8\",(10,0)--(3.6,4.8),NE);\n[/asy]",
+      "gold_answer": "\\frac35",
+      "returned": {
+        "group_id": 0,
+        "answer": "\\frac{4}{5}",
+        "correct": false
+      },
+      "fixed_sc_32": {
+        "group_id": 1,
+        "answer": "\\frac{3}{5}",
+        "correct": true
+      },
+      "votes_at_stop": [
+        {
+          "group_id": 0,
+          "answer": "\\frac{4}{5}",
+          "votes": 6,
+          "correct": false
+        },
+        {
+          "group_id": 1,
+          "answer": "\\frac{3}{5}",
+          "votes": 2,
+          "correct": true
+        }
+      ],
+      "votes_at_32": [
+        {
+          "group_id": 1,
+          "answer": "\\frac{3}{5}",
+          "votes": 16,
+          "correct": true
+        },
+        {
+          "group_id": 0,
+          "answer": "\\frac{4}{5}",
+          "votes": 15,
+          "correct": false
+        },
+        {
+          "group_id": 2,
+          "answer": "\\frac{5}{4}",
+          "votes": 1,
+          "correct": false
+        }
+      ]
+    },
+    "mathvista": {
+      "sample_id": "434",
+      "order": 0,
+      "policy": "agreement(tau=0.5)",
+      "stop_n": 4,
+      "question_text": "In the figure above, side AC of triangle ABC is on line l. What is x in terms of k?\nA. 60-k\nB. k\nC. 60+k\nD. 120-k\nE. 120-2*k",
+      "gold_answer": "A",
+      "returned": {
+        "group_id": 0,
+        "answer": "C",
+        "correct": false
+      },
+      "fixed_sc_32": {
+        "group_id": 1,
+        "answer": "A",
+        "correct": true
+      },
+      "votes_at_stop": [
+        {
+          "group_id": 0,
+          "answer": "C",
+          "votes": 2,
+          "correct": false
+        },
+        {
+          "group_id": -1,
+          "answer": "NO_ANSWER",
+          "votes": 1,
+          "correct": false
+        },
+        {
+          "group_id": 1,
+          "answer": "A",
+          "votes": 1,
+          "correct": true
+        }
+      ],
+      "votes_at_32": [
+        {
+          "group_id": 1,
+          "answer": "A",
+          "votes": 17,
+          "correct": true
+        },
+        {
+          "group_id": 0,
+          "answer": "C",
+          "votes": 7,
+          "correct": false
+        },
+        {
+          "group_id": 2,
+          "answer": "B",
+          "votes": 4,
+          "correct": false
+        },
+        {
+          "group_id": -1,
+          "answer": "NO_ANSWER",
+          "votes": 2,
+          "correct": false
+        },
+        {
+          "group_id": 4,
+          "answer": "E",
+          "votes": 1,
+          "correct": false
+        },
+        {
+          "group_id": 3,
+          "answer": "D",
+          "votes": 1,
+          "correct": false
+        }
+      ]
+    }
+  },
+  "trajectories": {
+    "rule": "first MathVista eval question in split order with the same / different Highest-Z and Highest-Ztok rollout at N = 32, order 0 (committed selections)",
+    "figure": "figures/task3/F6_mathvista_trajectories.pdf",
+    "same": {
+      "sample_id": "425",
+      "top_Z_rollout": 14,
+      "top_Ztok_rollout": 14
+    },
+    "differ": {
+      "sample_id": "99",
+      "top_Z_rollout": 1,
+      "top_Ztok_rollout": 30
+    }
+  }
+}
