@@ -1,0 +1,478 @@
+{
+  "run_id": "task3_adaptive_eval_mathvista_20261109T111756Z",
+  "dataset": "mathvista",
+  "split": "eval",
+  "n_questions": 800,
+  "n_orders": 10,
+  "config_path": "configs/task3/offline.yaml",
+  "run_info": {
+    "git": {
+      "commit": "95ae87a41ab3866acf6bf131d1fb5e99799d5ead",
+      "dirty": false
+    },
+    "hostname": "192.168.1.6",
+    "hardware": {
+      "cpu": "arm",
+      "cpu_count": 8,
+      "platform": "macOS-27.0.1-arm64-arm-64bit",
+      "python": "3.11.18",
+      "gpus": [],
+      "torch": "2.15.0"
+    },
+    "timestamp": "2026-11-09T11:17:51.544480+00:00"
+  },
+  "scorer_version": {
+    "answers_py_sha256": "cdcd43a572d7b57a2f3d750e012f2567ea764d66bf92501bf7c8a1ac0d8b96a3",
+    "libraries": {
+      "math-verify": "0.9.0",
+      "latex2sympy2_extended": "1.11.0",
+      "sympy": "1.14.0",
+      "antlr4-python3-runtime": "4.13.2"
+    },
+    "math_equivalence": "symmetric: equal if verify(a, b) or verify(b, a) (grouping, grading, check b)",
+    "math_verify": {
+      "wrap": "\\boxed{...}",
+      "parse_timeout_s": 5,
+      "verify_timeout_s": 5
+    },
+    "mathvista": {
+      "repo": "lupantech/MathVista",
+      "commit": "5f6b4deca69ecd1b8a1a4f338cee085e50524e4b",
+      "testmini_sha256": "ab0148dca9d401c31cc47f29b3826eec28a76ff155a1c0878d81e8daf0413480"
+    },
+    "id": "1fac30ddd0981fb05724e7892f27d9b4fbff3da31db7e2a7b33da86ccc3dcea8"
+  },
+  "inputs": {
+    "rollouts_csv": "results/task3/rollouts/mathvista_rollouts.csv",
+    "rollouts_csv_sha256": "5f337a06f0589153bd703b604dfcc496eaf82dde2e70f024d947290f19f397fc",
+    "prepare_json": "results/task3/prepare_mathvista.json",
+    "prepare_run_id": "task3_prepare_mathvista_20261108T132130Z",
+    "split_file": "splits/task3/mathvista_split.json",
+    "split_sha256": "cce53c643cf58ab73fa540acaa01f549885fd3a738e97a6fd4f5575d21880adf",
+    "token_cache": "cached/task3/mathvista_tokens.npz",
+    "token_cache_inputs_sha256": "98ccbe457326936f54d0384df2d528773e357257e9c28d92619f9e344afaec2a",
+    "max_abs_V_csv_minus_mean_v_float32": 6.891074877390935e-09
+  },
+  "selected_file": {
+    "path": "results/task3/adaptive/mathvista_selected.json",
+    "commit": "95ae87a41ab3866acf6bf131d1fb5e99799d5ead",
+    "sha256": "8e84d23e3853e1c84f9fb997a433ba741f627e2cc6f0dad5e13820efe106c024",
+    "run_id": "task3_adaptive_select_mathvista_20261109T111730Z"
+  },
+  "score": "Z",
+  "check_points": [
+    4,
+    8,
+    16
+  ],
+  "max_rollouts": 32,
+  "rules": "Task 3 Step 5: adaptive sampling on the supplied pools (manual L720-742, L753-757; prompt b3 item A).\n\nFor question q and saved order o, rollouts orders[q][o] are revealed one at a time. The controller checks after\nn in check_points (4, 8, 16) revealed candidates; if it never stops it consumes all R = 32.\n    Agreement(tau)        SC votes on the first n (NO_ANSWER = group -1 votes like any group); stop if the top\n                          count is unique, its group is not NO_ANSWER and count >= tau * n - 1e-9.\n    Quality(tau, gamma)   the agreement condition, plus: the RWC winner on the first n equals the SC leader, and\n                          the RWC margin >= gamma - 1e-9. Score K (MATH) or VisConf Z (MathVista); VisConf\n                          calibration (Q05/Q95 of the token kl_u_p of the n revealed rollouts), scores and average\n                          ranks use the revealed rollouts only.\n                          margin = (largest group weight - second largest) / total weight, groups including\n                          NO_ANSWER; second = 0 when only one group exists.\n    Fallback              always consumes R rollouts.\nOn a stop the controller returns the SC answer of the revealed set (the unique leader); otherwise SC over all R\nwith the engine's tie rule (selection.self_consistency). Cost = sum of T over the revealed rollouts;\nrollouts used = n. SC, RWC and VisConf are the engine's functions (task3_ttc.selection).\n\nSelection (dev questions only): for every setting, accuracy (mean over orders, then questions), mean cost and\nmean rollouts. Per family, the eligible settings have dev accuracy >= fixed-R SC dev accuracy - 1.0 pp (1e-12\nfloat tolerance); the fallback is always eligible. Choose the lowest mean cost; ties -> higher accuracy, then\nsmaller tau, then smaller gamma.\n\nRun:\n    python -m task3_ttc.adaptive select   --dataset {math,mathvista}\n    python -m task3_ttc.adaptive evaluate --dataset {math,mathvista}   (needs <dataset>_selected.json committed)\n",
+  "policies": {
+    "agreement": {
+      "name": "agreement(tau=0.5)",
+      "policy": {
+        "family": "agreement",
+        "tau": 0.5,
+        "gamma": null
+      },
+      "accuracy": 0.612625,
+      "mean_cost": 3290.3146250000004,
+      "mean_rollouts": 9.890999999999998,
+      "stop_distribution": {
+        "4": 0.7134999999999999,
+        "8": 0.075125,
+        "16": 0.020499999999999997,
+        "32": 0.190875
+      },
+      "sc_accuracy_interpolated_at_mean_cost": {
+        "value": 0.6033760792738426,
+        "method": "linear interpolation of fixed-N SC accuracy over fixed-N SC mean cost (eval, N in budgets); interpolation, not a measured budget",
+        "inside_cost_range": true
+      },
+      "incorrect_early_stops": {
+        "count": 1735,
+        "n_question_orders": 8000,
+        "share_of_all_question_orders": 0.216875,
+        "early_stops": 6473,
+        "share_of_early_stops": 0.26803645913795765,
+        "recoverable_by_fixed_sc": 312,
+        "note": "stop < R and wrong; recoverable = fixed-R SC correct on the same (question, order)"
+      },
+      "retrospective_bins": {
+        "full_pool_correct_fraction": [
+          {
+            "bin": "[0]",
+            "n_questions": 84,
+            "mean_stop_n": 23.176190476190477,
+            "early_stop_share": 0.32261904761904764,
+            "accuracy": 0.0
+          },
+          {
+            "bin": "(0,.25]",
+            "n_questions": 156,
+            "mean_stop_n": 16.102564102564102,
+            "early_stop_share": 0.5826923076923077,
+            "accuracy": 0.07628205128205127
+          },
+          {
+            "bin": "(.25,.5]",
+            "n_questions": 136,
+            "mean_stop_n": 10.782352941176471,
+            "early_stop_share": 0.7955882352941177,
+            "accuracy": 0.49411764705882355
+          },
+          {
+            "bin": "(.5,.75]",
+            "n_questions": 132,
+            "mean_stop_n": 5.927272727272728,
+            "early_stop_share": 0.9780303030303032,
+            "accuracy": 0.9022727272727272
+          },
+          {
+            "bin": "(.75,1)",
+            "n_questions": 210,
+            "mean_stop_n": 4.177142857142857,
+            "early_stop_share": 1.0,
+            "accuracy": 0.9995238095238096
+          },
+          {
+            "bin": "[1]",
+            "n_questions": 82,
+            "mean_stop_n": 4.0,
+            "early_stop_share": 1.0,
+            "accuracy": 1.0
+          }
+        ],
+        "full_pool_sc_leader_share": [
+          {
+            "bin": "[0,.25)",
+            "n_questions": 24,
+            "mean_stop_n": 24.899999999999995,
+            "early_stop_share": 0.2541666666666667,
+            "accuracy": 0.1125
+          },
+          {
+            "bin": "[.25,.5)",
+            "n_questions": 154,
+            "mean_stop_n": 13.303896103896106,
+            "early_stop_share": 0.6896103896103897,
+            "accuracy": 0.33766233766233766
+          },
+          {
+            "bin": "[.5,.75)",
+            "n_questions": 247,
+            "mean_stop_n": 10.663967611336032,
+            "early_stop_share": 0.8024291497975709,
+            "accuracy": 0.502834008097166
+          },
+          {
+            "bin": "[.75,1)",
+            "n_questions": 280,
+            "mean_stop_n": 7.144285714285715,
+            "early_stop_share": 0.8957142857142858,
+            "accuracy": 0.8185714285714285
+          },
+          {
+            "bin": "[1]",
+            "n_questions": 95,
+            "mean_stop_n": 6.652631578947369,
+            "early_stop_share": 0.9052631578947369,
+            "accuracy": 0.8631578947368421
+          }
+        ]
+      }
+    },
+    "quality": {
+      "name": "quality(tau=0.5,gamma=0.0)",
+      "policy": {
+        "family": "quality",
+        "tau": 0.5,
+        "gamma": 0.0
+      },
+      "accuracy": 0.615625,
+      "mean_cost": 3613.0415000000003,
+      "mean_rollouts": 10.93,
+      "stop_distribution": {
+        "4": 0.654,
+        "8": 0.09574999999999999,
+        "16": 0.02875,
+        "32": 0.22149999999999997
+      },
+      "sc_accuracy_interpolated_at_mean_cost": {
+        "value": 0.6048220267576577,
+        "method": "linear interpolation of fixed-N SC accuracy over fixed-N SC mean cost (eval, N in budgets); interpolation, not a measured budget",
+        "inside_cost_range": true
+      },
+      "incorrect_early_stops": {
+        "count": 1547,
+        "n_question_orders": 8000,
+        "share_of_all_question_orders": 0.193375,
+        "early_stops": 6228,
+        "share_of_early_stops": 0.24839434810533076,
+        "recoverable_by_fixed_sc": 252,
+        "note": "stop < R and wrong; recoverable = fixed-R SC correct on the same (question, order)"
+      },
+      "retrospective_bins": {
+        "full_pool_correct_fraction": [
+          {
+            "bin": "[0]",
+            "n_questions": 84,
+            "mean_stop_n": 23.919047619047618,
+            "early_stop_share": 0.2976190476190476,
+            "accuracy": 0.0
+          },
+          {
+            "bin": "(0,.25]",
+            "n_questions": 156,
+            "mean_stop_n": 18.010256410256414,
+            "early_stop_share": 0.5224358974358975,
+            "accuracy": 0.0641025641025641
+          },
+          {
+            "bin": "(.25,.5]",
+            "n_questions": 136,
+            "mean_stop_n": 13.005882352941178,
+            "early_stop_share": 0.723529411764706,
+            "accuracy": 0.5044117647058823
+          },
+          {
+            "bin": "(.5,.75]",
+            "n_questions": 132,
+            "mean_stop_n": 7.0,
+            "early_stop_share": 0.9545454545454546,
+            "accuracy": 0.9242424242424242
+          },
+          {
+            "bin": "(.75,1)",
+            "n_questions": 210,
+            "mean_stop_n": 4.306666666666667,
+            "early_stop_share": 0.9995238095238096,
+            "accuracy": 0.9995238095238096
+          },
+          {
+            "bin": "[1]",
+            "n_questions": 82,
+            "mean_stop_n": 4.0,
+            "early_stop_share": 1.0,
+            "accuracy": 1.0
+          }
+        ],
+        "full_pool_sc_leader_share": [
+          {
+            "bin": "[0,.25)",
+            "n_questions": 24,
+            "mean_stop_n": 27.25,
+            "early_stop_share": 0.1708333333333333,
+            "accuracy": 0.11666666666666668
+          },
+          {
+            "bin": "[.25,.5)",
+            "n_questions": 154,
+            "mean_stop_n": 16.135064935064936,
+            "early_stop_share": 0.5974025974025974,
+            "accuracy": 0.34350649350649354
+          },
+          {
+            "bin": "[.5,.75)",
+            "n_questions": 247,
+            "mean_stop_n": 11.846153846153847,
+            "early_stop_share": 0.7708502024291498,
+            "accuracy": 0.5093117408906882
+          },
+          {
+            "bin": "[.75,1)",
+            "n_questions": 280,
+            "mean_stop_n": 7.3114285714285705,
+            "early_stop_share": 0.8939285714285715,
+            "accuracy": 0.8178571428571428
+          },
+          {
+            "bin": "[1]",
+            "n_questions": 95,
+            "mean_stop_n": 6.652631578947369,
+            "early_stop_share": 0.9052631578947369,
+            "accuracy": 0.8631578947368421
+          }
+        ]
+      }
+    },
+    "fallback": {
+      "name": "fallback",
+      "policy": {
+        "family": "fallback",
+        "tau": null,
+        "gamma": null
+      },
+      "accuracy": 0.61675,
+      "mean_cost": 8897.7575,
+      "mean_rollouts": 32.0,
+      "stop_distribution": {
+        "4": 0.0,
+        "8": 0.0,
+        "16": 0.0,
+        "32": 1.0
+      },
+      "sc_accuracy_interpolated_at_mean_cost": {
+        "value": 0.61675,
+        "method": "linear interpolation of fixed-N SC accuracy over fixed-N SC mean cost (eval, N in budgets); interpolation, not a measured budget",
+        "inside_cost_range": true
+      },
+      "incorrect_early_stops": {
+        "count": 0,
+        "n_question_orders": 8000,
+        "share_of_all_question_orders": 0.0,
+        "early_stops": 0,
+        "share_of_early_stops": null,
+        "recoverable_by_fixed_sc": 0,
+        "note": "stop < R and wrong; recoverable = fixed-R SC correct on the same (question, order)"
+      },
+      "retrospective_bins": {
+        "full_pool_correct_fraction": [
+          {
+            "bin": "[0]",
+            "n_questions": 84,
+            "mean_stop_n": 32.0,
+            "early_stop_share": 0.0,
+            "accuracy": 0.0
+          },
+          {
+            "bin": "(0,.25]",
+            "n_questions": 156,
+            "mean_stop_n": 32.0,
+            "early_stop_share": 0.0,
+            "accuracy": 0.017948717948717947
+          },
+          {
+            "bin": "(.25,.5]",
+            "n_questions": 136,
+            "mean_stop_n": 32.0,
+            "early_stop_share": 0.0,
+            "accuracy": 0.48970588235294116
+          },
+          {
+            "bin": "(.5,.75]",
+            "n_questions": 132,
+            "mean_stop_n": 32.0,
+            "early_stop_share": 0.0,
+            "accuracy": 1.0
+          },
+          {
+            "bin": "(.75,1)",
+            "n_questions": 210,
+            "mean_stop_n": 32.0,
+            "early_stop_share": 0.0,
+            "accuracy": 1.0
+          },
+          {
+            "bin": "[1]",
+            "n_questions": 82,
+            "mean_stop_n": 32.0,
+            "early_stop_share": 0.0,
+            "accuracy": 1.0
+          }
+        ],
+        "full_pool_sc_leader_share": [
+          {
+            "bin": "[0,.25)",
+            "n_questions": 24,
+            "mean_stop_n": 32.0,
+            "early_stop_share": 0.0,
+            "accuracy": 0.11666666666666665
+          },
+          {
+            "bin": "[.25,.5)",
+            "n_questions": 154,
+            "mean_stop_n": 32.0,
+            "early_stop_share": 0.0,
+            "accuracy": 0.337012987012987
+          },
+          {
+            "bin": "[.5,.75)",
+            "n_questions": 247,
+            "mean_stop_n": 32.0,
+            "early_stop_share": 0.0,
+            "accuracy": 0.517004048582996
+          },
+          {
+            "bin": "[.75,1)",
+            "n_questions": 280,
+            "mean_stop_n": 32.0,
+            "early_stop_share": 0.0,
+            "accuracy": 0.8178571428571428
+          },
+          {
+            "bin": "[1]",
+            "n_questions": 95,
+            "mean_stop_n": 32.0,
+            "early_stop_share": 0.0,
+            "accuracy": 0.8631578947368421
+          }
+        ]
+      }
+    }
+  },
+  "fixed_sc": {
+    "1": {
+      "accuracy": 0.536,
+      "cost": 277.796375
+    },
+    "2": {
+      "accuracy": 0.536,
+      "cost": 551.250125
+    },
+    "4": {
+      "accuracy": 0.5775,
+      "cost": 1111.591625
+    },
+    "8": {
+      "accuracy": 0.598625,
+      "cost": 2229.902
+    },
+    "16": {
+      "accuracy": 0.608625,
+      "cost": 4461.8425
+    },
+    "32": {
+      "accuracy": 0.61675,
+      "cost": 8897.7575
+    }
+  },
+  "bootstrap": {
+    "unit": "eval question, accuracy averaged over orders first",
+    "method": "paired percentile bootstrap",
+    "resamples": 1000,
+    "seed": 6304,
+    "ci": 0.95,
+    "comparisons": [
+      {
+        "a": "agreement",
+        "b": "SC@32",
+        "mean_pp": -0.41249999999999987,
+        "ci_low_pp": -1.4374999999999996,
+        "ci_high_pp": 0.7253125,
+        "ci_excludes_zero": false
+      },
+      {
+        "a": "quality",
+        "b": "SC@32",
+        "mean_pp": -0.11249999999999982,
+        "ci_low_pp": -0.9999999999999999,
+        "ci_high_pp": 0.8500000000000001,
+        "ci_excludes_zero": false
+      },
+      {
+        "a": "quality",
+        "b": "agreement",
+        "mean_pp": 0.29999999999999993,
+        "ci_low_pp": -0.025000000000000053,
+        "ci_high_pp": 0.5999999999999999,
+        "ci_excludes_zero": false
+      }
+    ]
+  },
+  "trace": {
+    "path": "results/task3/adaptive/mathvista_eval_trace.npz",
+    "sha256": "69faa051030944c42667ddcfaa461f4c8e8e53202bce8cd3d8f4c92cf085f748"
+  },
+  "runtime_s": 5.98
+}
