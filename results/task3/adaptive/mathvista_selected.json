@@ -1,0 +1,158 @@
+{
+  "run_id": "task3_adaptive_select_mathvista_20261109T111730Z",
+  "dataset": "mathvista",
+  "split": "dev",
+  "n_questions": 200,
+  "n_orders": 10,
+  "config_path": "configs/task3/offline.yaml",
+  "adaptive_config": {
+    "check_points": [
+      4,
+      8,
+      16
+    ],
+    "tau": [
+      0.5,
+      0.625,
+      0.75,
+      0.875,
+      1.0
+    ],
+    "gamma": [
+      0.0,
+      0.1,
+      0.25,
+      0.5
+    ],
+    "accuracy_slack_pp": 1.0
+  },
+  "score": "Z",
+  "check_points": [
+    4,
+    8,
+    16
+  ],
+  "max_rollouts": 32,
+  "run_info": {
+    "git": {
+      "commit": "f8ba99ca594047c940a183216e377b59416cb7dc",
+      "dirty": false
+    },
+    "hostname": "192.168.1.6",
+    "hardware": {
+      "cpu": "arm",
+      "cpu_count": 8,
+      "platform": "macOS-27.0.1-arm64-arm-64bit",
+      "python": "3.11.18",
+      "gpus": [],
+      "torch": "2.15.0"
+    },
+    "timestamp": "2026-11-09T11:17:29.443000+00:00"
+  },
+  "scorer_version": {
+    "answers_py_sha256": "cdcd43a572d7b57a2f3d750e012f2567ea764d66bf92501bf7c8a1ac0d8b96a3",
+    "libraries": {
+      "math-verify": "0.9.0",
+      "latex2sympy2_extended": "1.11.0",
+      "sympy": "1.14.0",
+      "antlr4-python3-runtime": "4.13.2"
+    },
+    "math_equivalence": "symmetric: equal if verify(a, b) or verify(b, a) (grouping, grading, check b)",
+    "math_verify": {
+      "wrap": "\\boxed{...}",
+      "parse_timeout_s": 5,
+      "verify_timeout_s": 5
+    },
+    "mathvista": {
+      "repo": "lupantech/MathVista",
+      "commit": "5f6b4deca69ecd1b8a1a4f338cee085e50524e4b",
+      "testmini_sha256": "ab0148dca9d401c31cc47f29b3826eec28a76ff155a1c0878d81e8daf0413480"
+    },
+    "id": "1fac30ddd0981fb05724e7892f27d9b4fbff3da31db7e2a7b33da86ccc3dcea8"
+  },
+  "inputs": {
+    "rollouts_csv": "results/task3/rollouts/mathvista_rollouts.csv",
+    "rollouts_csv_sha256": "5f337a06f0589153bd703b604dfcc496eaf82dde2e70f024d947290f19f397fc",
+    "prepare_json": "results/task3/prepare_mathvista.json",
+    "prepare_run_id": "task3_prepare_mathvista_20261108T132130Z",
+    "split_file": "splits/task3/mathvista_split.json",
+    "split_sha256": "cce53c643cf58ab73fa540acaa01f549885fd3a738e97a6fd4f5575d21880adf",
+    "token_cache": "cached/task3/mathvista_tokens.npz",
+    "token_cache_inputs_sha256": "98ccbe457326936f54d0384df2d528773e357257e9c28d92619f9e344afaec2a",
+    "max_abs_V_csv_minus_mean_v_float32": 6.891074877390935e-09
+  },
+  "rules": "Task 3 Step 5: adaptive sampling on the supplied pools (manual L720-742, L753-757; prompt b3 item A).\n\nFor question q and saved order o, rollouts orders[q][o] are revealed one at a time. The controller checks after\nn in check_points (4, 8, 16) revealed candidates; if it never stops it consumes all R = 32.\n    Agreement(tau)        SC votes on the first n (NO_ANSWER = group -1 votes like any group); stop if the top\n                          count is unique, its group is not NO_ANSWER and count >= tau * n - 1e-9.\n    Quality(tau, gamma)   the agreement condition, plus: the RWC winner on the first n equals the SC leader, and\n                          the RWC margin >= gamma - 1e-9. Score K (MATH) or VisConf Z (MathVista); VisConf\n                          calibration (Q05/Q95 of the token kl_u_p of the n revealed rollouts), scores and average\n                          ranks use the revealed rollouts only.\n                          margin = (largest group weight - second largest) / total weight, groups including\n                          NO_ANSWER; second = 0 when only one group exists.\n    Fallback              always consumes R rollouts.\nOn a stop the controller returns the SC answer of the revealed set (the unique leader); otherwise SC over all R\nwith the engine's tie rule (selection.self_consistency). Cost = sum of T over the revealed rollouts;\nrollouts used = n. SC, RWC and VisConf are the engine's functions (task3_ttc.selection).\n\nSelection (dev questions only): for every setting, accuracy (mean over orders, then questions), mean cost and\nmean rollouts. Per family, the eligible settings have dev accuracy >= fixed-R SC dev accuracy - 1.0 pp (1e-12\nfloat tolerance); the fallback is always eligible. Choose the lowest mean cost; ties -> higher accuracy, then\nsmaller tau, then smaller gamma.\n\nRun:\n    python -m task3_ttc.adaptive select   --dataset {math,mathvista}\n    python -m task3_ttc.adaptive evaluate --dataset {math,mathvista}   (needs <dataset>_selected.json committed)\n",
+  "fixed_sc_dev": {
+    "N": 32,
+    "accuracy": 0.6425,
+    "cost": 9217.485
+  },
+  "accuracy_threshold": 0.6325,
+  "selected": {
+    "agreement": {
+      "name": "agreement(tau=0.5)",
+      "policy": {
+        "family": "agreement",
+        "tau": 0.5,
+        "gamma": null
+      },
+      "accuracy": 0.636,
+      "mean_cost": 3807.4829999999997,
+      "mean_rollouts": 9.71,
+      "stop_distribution": {
+        "4": 0.7275,
+        "8": 0.066,
+        "16": 0.021,
+        "32": 0.1855
+      },
+      "eligible": [
+        "agreement(tau=0.5)",
+        "agreement(tau=0.625)",
+        "agreement(tau=0.75)",
+        "agreement(tau=0.875)",
+        "agreement(tau=1.0)",
+        "fallback"
+      ]
+    },
+    "quality": {
+      "name": "quality(tau=0.5,gamma=0.0)",
+      "policy": {
+        "family": "quality",
+        "tau": 0.5,
+        "gamma": 0.0
+      },
+      "accuracy": 0.6395000000000001,
+      "mean_cost": 4199.0595,
+      "mean_rollouts": 10.946,
+      "stop_distribution": {
+        "4": 0.6585,
+        "8": 0.09,
+        "16": 0.0285,
+        "32": 0.22299999999999998
+      },
+      "eligible": [
+        "quality(tau=0.5,gamma=0.0)",
+        "quality(tau=0.5,gamma=0.1)",
+        "quality(tau=0.5,gamma=0.25)",
+        "quality(tau=0.5,gamma=0.5)",
+        "quality(tau=0.625,gamma=0.0)",
+        "quality(tau=0.625,gamma=0.1)",
+        "quality(tau=0.625,gamma=0.25)",
+        "quality(tau=0.625,gamma=0.5)",
+        "quality(tau=0.75,gamma=0.0)",
+        "quality(tau=0.75,gamma=0.1)",
+        "quality(tau=0.75,gamma=0.25)",
+        "quality(tau=0.75,gamma=0.5)",
+        "quality(tau=0.875,gamma=0.0)",
+        "quality(tau=0.875,gamma=0.1)",
+        "quality(tau=0.875,gamma=0.25)",
+        "quality(tau=0.875,gamma=0.5)",
+        "quality(tau=1.0,gamma=0.0)",
+        "quality(tau=1.0,gamma=0.1)",
+        "quality(tau=1.0,gamma=0.25)",
+        "quality(tau=1.0,gamma=0.5)",
+        "fallback"
+      ]
+    }
+  }
+}
