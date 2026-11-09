@@ -1,0 +1,140 @@
+{
+  "run_id": "task3_live_examples_20261109T114736Z",
+  "run_info": {
+    "git": {
+      "commit": "4b8be4cc7d0f9936a933c77100ba62b6964710e6",
+      "dirty": false
+    },
+    "hostname": "192.168.1.6",
+    "hardware": {
+      "cpu": "arm",
+      "cpu_count": 8,
+      "platform": "macOS-27.0.1-arm64-arm-64bit",
+      "python": "3.11.18",
+      "gpus": [],
+      "torch": "2.15.0"
+    },
+    "timestamp": "2026-11-09T11:47:36.084275+00:00"
+  },
+  "rules": "Task 3 Step 4 revision examples from the live run, rules fixed in advance (manual L717-719, L777-779; prompt d).\n\nRun: python -m task3_ttc.live_examples   -> results/task3/qualitative/live_examples.json\n\nRules (live questions in live order q = 0..49; graded labels from the committed live analysis; a rule that finds no\nquestion records \"none\"):\n    wrong_to_correct   the first question whose draft (p1) is wrong and whose revision (refine) is correct\n    correct_to_wrong   the first question whose draft is correct and whose revision is wrong\n    truncated_draft    the first question whose draft hit its token cap without EOS\nSaved for each: problem, gold, the draft's answer, grade, truncation flag and last 40 words, the revision's answer and\ngrade and the first 40 and last 40 words of the refine output. Words = whitespace-split tokens of output_text.\naligned: for the first two rules (wrong_to_correct, correct_to_wrong) when found, one line per strategy: single,\nparallel (answers p1, p2, p3 and the self-consistency pick), refine. A missing extraction prints as NO_ANSWER.\nInputs are committed result files: results/task3/live/{analysis.json,per_question.csv,main/calls.jsonl} and\nsplits/task3/live_problems.json.\n",
+  "live_run_id": "task3_live_main_20261109T005656Z",
+  "inputs": {
+    "analysis": {
+      "path": "results/task3/live/analysis.json",
+      "sha256": "2a60384f6e10a43881aae7f9eac3849b069ec45e89c7b8bbc1b1e5611537a6bc"
+    },
+    "per_question": {
+      "path": "results/task3/live/per_question.csv",
+      "sha256": "3972b47a224a0925361a29d4f42b442183c15dfc282e970680813be8ddc5a7e3"
+    },
+    "calls": {
+      "path": "results/task3/live/main/calls.jsonl",
+      "sha256": "15dc5bd431b42582fc9d322cd5deb158314b5d447d5b501aaafcaffa821cf88d"
+    },
+    "problems": {
+      "path": "splits/task3/live_problems.json",
+      "sha256": "52cd8376f7682e244d76fcf0a282729f7fa842f60ce5046ae42ee367e5fac27d"
+    }
+  },
+  "examples": {
+    "wrong_to_correct": {
+      "q": 2,
+      "sample_id": "test:3504",
+      "problem": "What is the least positive multiple of 72 that has exactly 16 positive factors?",
+      "gold": "216",
+      "draft": {
+        "call": "p1",
+        "answer": "NO_ANSWER",
+        "correct": false,
+        "truncated": true,
+        "output_tokens": 1024,
+        "last_40_words": "\\) is: \\[ 2^1 \\times 3^1 \\times 5^1 \\times 7^1 = 2 \\times 3 \\times 5 \\times 7 = 210 \\] Check if 210 is a multiple of 72: \\[ 210 \\div 72 = 2.9167 \\quad (\\text{not an integer}) \\]"
+      },
+      "revision": {
+        "call": "refine",
+        "answer": "216",
+        "correct": true,
+        "truncated": false,
+        "output_tokens": 1080,
+        "answer_changed": true,
+        "first_40_words": "Let's review the solution step-by-step to ensure there are no errors and to find the correct least positive multiple of 72 that has exactly 16 positive factors. 1. **Factorize 72:** \\[ 72 = 2^3 \\times 3^2 \\] 2. **Determine the",
+        "last_40_words": "\\quad (\\text{not an integer}) \\] This case is not valid. From the valid cases, the smallest number that meets the criteria is 216. Therefore, the least positive multiple of 72 that has exactly 16 positive factors is: \\[ \\boxed{216} \\]"
+      }
+    },
+    "correct_to_wrong": "none",
+    "truncated_draft": {
+      "q": 2,
+      "sample_id": "test:3504",
+      "problem": "What is the least positive multiple of 72 that has exactly 16 positive factors?",
+      "gold": "216",
+      "draft": {
+        "call": "p1",
+        "answer": "NO_ANSWER",
+        "correct": false,
+        "truncated": true,
+        "output_tokens": 1024,
+        "last_40_words": "\\) is: \\[ 2^1 \\times 3^1 \\times 5^1 \\times 7^1 = 2 \\times 3 \\times 5 \\times 7 = 210 \\] Check if 210 is a multiple of 72: \\[ 210 \\div 72 = 2.9167 \\quad (\\text{not an integer}) \\]"
+      },
+      "revision": {
+        "call": "refine",
+        "answer": "216",
+        "correct": true,
+        "truncated": false,
+        "output_tokens": 1080,
+        "answer_changed": true,
+        "first_40_words": "Let's review the solution step-by-step to ensure there are no errors and to find the correct least positive multiple of 72 that has exactly 16 positive factors. 1. **Factorize 72:** \\[ 72 = 2^3 \\times 3^2 \\] 2. **Determine the",
+        "last_40_words": "\\quad (\\text{not an integer}) \\] This case is not valid. From the valid cases, the smallest number that meets the criteria is 216. Therefore, the least positive multiple of 72 that has exactly 16 positive factors is: \\[ \\boxed{216} \\]"
+      }
+    }
+  },
+  "aligned": {
+    "wrong_to_correct": {
+      "q": 2,
+      "sample_id": "test:3504",
+      "gold": "216",
+      "single": {
+        "answer": "216",
+        "correct": true,
+        "truncated": false
+      },
+      "parallel": {
+        "p1": {
+          "answer": "NO_ANSWER",
+          "correct": false,
+          "truncated": true
+        },
+        "p2": {
+          "answer": "216",
+          "correct": true,
+          "truncated": false
+        },
+        "p3": {
+          "answer": "NO_ANSWER",
+          "correct": false,
+          "truncated": true
+        },
+        "sc_pick": {
+          "call": "p1",
+          "answer": "NO_ANSWER",
+          "correct": false,
+          "groups": [
+            -1,
+            0,
+            -1
+          ]
+        }
+      },
+      "refine": {
+        "answer": "216",
+        "correct": true,
+        "truncated": false
+      },
+      "lines": {
+        "single": "single   | 216 (correct)",
+        "parallel": "parallel | p1 NO_ANSWER (wrong, truncated) ; p2 216 (correct) ; p3 NO_ANSWER (wrong, truncated) | SC pick p1: NO_ANSWER (wrong)",
+        "refine": "refine   | 216 (correct)"
+      }
+    },
+    "correct_to_wrong": "none"
+  }
+}
