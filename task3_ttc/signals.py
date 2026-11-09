@@ -67,6 +67,18 @@ def question_scores(q):
     return s
 
 
+def question_pearson(q, s=None):
+    """Per-question mean over valid rollouts of Pearson (c_t, v_t), (v_t, t), (c_t, t) with the number of
+    skipped rollouts: {key: (mean or NaN, skipped)}. s = question_scores(q) if already computed."""
+    s = s if s is not None else question_scores(q)
+    pos = [np.arange(len(x), dtype=np.float64) for x in q["v"]]
+    out = {}
+    for key, (a, b) in {"c_v": (s["_c"], q["v"]), "v_pos": (q["v"], pos), "c_pos": (s["_c"], pos)}.items():
+        r = rollout_pearson(a, b)
+        out[key] = (float(np.nanmean(r)) if np.isfinite(r).any() else np.nan, int(np.isnan(r).sum()))
+    return out
+
+
 def analyze(qs, mask, k=None):
     """Section D on the questions in mask (list of per-question dicts as for the engine)."""
     qsel = [q for q, m in zip(qs, mask) if m]
@@ -92,12 +104,10 @@ def analyze(qs, mask, k=None):
                 sp[n].append(float(spearmanr(q["T"], s[n]).statistic))
         qd["length (top = shortest)"].append(quartile_diff(-q["T"].astype(np.float64), corr, k))
         if vlm:
-            pos = [np.arange(len(x), dtype=np.float64) for x in q["v"]]
             short += int((q["T"] < 2).sum())
-            for key, (a, b) in {"c_v": (s["_c"], q["v"]), "v_pos": (q["v"], pos), "c_pos": (s["_c"], pos)}.items():
-                r = rollout_pearson(a, b)
-                skipped[key] += int(np.isnan(r).sum())
-                pear[key].append(float(np.nanmean(r)) if np.isfinite(r).any() else np.nan)
+            for key, (m, n_skip) in question_pearson(q, s).items():
+                skipped[key] += n_skip
+                pear[key].append(m)
     out = {"n_questions": len(qsel), "quartile_k": k, "mixed_questions": mixed,
            "quartile_difference": {n: {"mean_all_questions": float(np.mean(v)),
                                        "mean_mixed_questions": float(np.sum(v) / mixed) if mixed else None}
