@@ -45,3 +45,24 @@ def run_info():
     return {"git": git_info(), "hostname": socket.gethostname(),
             "hardware": hardware_info(),
             "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat()}
+
+
+def file_git_status(path):
+    """Git state of one file in the repository that contains it: tracked, modified (staged or not, relative to
+    HEAD) and the last commit touching it. A path outside any repository counts as untracked."""
+    d, name = os.path.split(os.path.abspath(path))
+
+    def git(*args):
+        try:
+            return subprocess.run(["git", "-C", d, *args], capture_output=True, text=True)
+        except OSError:
+            return None
+
+    r = git("ls-files", "--error-unmatch", "--", name)
+    tracked = r is not None and r.returncode == 0
+    if not tracked:
+        return {"tracked": False, "modified": None, "commit": None}
+    st = git("status", "--porcelain", "--untracked-files=no", "--", name)
+    log = git("log", "-1", "--format=%H", "--", name)
+    return {"tracked": True, "modified": bool(st.stdout.strip()) if st.returncode == 0 else None,
+            "commit": log.stdout.strip() or None}

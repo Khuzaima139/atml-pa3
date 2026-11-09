@@ -31,6 +31,7 @@ adaptive:                                       # L722, L734-739
   check_points: [4, 8, 16]
   tau: [0.5, 0.625, 0.75, 0.875, 1.0]
   gamma: [0.0, 0.1, 0.25, 0.5]
+  accuracy_slack_pp: 1.0                        # L736-737: dev accuracy >= fixed-32 SC - 1 pp
 bootstrap:                                      # L614-615 (seed = seed above)
   resamples: 1000
   ci: 0.95
