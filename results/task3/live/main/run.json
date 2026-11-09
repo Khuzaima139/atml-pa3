@@ -1,0 +1,384 @@
+{
+  "run_id": "task3_live_main_20261109T005656Z",
+  "status": "complete",
+  "config": {
+    "task": "task3 step 4 live generation",
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+    "dtype": "float16",
+    "quantization": null,
+    "batch_size": 1,
+    "device": "cuda:0",
+    "problems_file": "splits/task3/live_problems.json",
+    "problems_sha256": "deac8bc4c27cb5509526e8300820a7836d02f35b9f7108108a8f6cad28885cd5",
+    "n_questions": 50,
+    "sample_ids": [
+      "test:943",
+      "test:2688",
+      "test:3504",
+      "test:4335",
+      "test:2460",
+      "test:1324",
+      "test:2340",
+      "test:1577",
+      "test:639",
+      "test:2892",
+      "test:4702",
+      "test:1709",
+      "test:4041",
+      "test:2119",
+      "test:2087",
+      "test:4549",
+      "test:2732",
+      "test:1433",
+      "test:3285",
+      "test:29",
+      "test:2948",
+      "test:1997",
+      "test:414",
+      "test:1808",
+      "test:4962",
+      "test:274",
+      "test:916",
+      "test:534",
+      "test:2177",
+      "test:1043",
+      "test:373",
+      "test:1379",
+      "test:196",
+      "test:2134",
+      "test:771",
+      "test:3572",
+      "test:2358",
+      "test:2019",
+      "test:4144",
+      "test:3314",
+      "test:3239",
+      "test:4678",
+      "test:1122",
+      "test:4168",
+      "test:1300",
+      "test:4516",
+      "test:1903",
+      "test:1916",
+      "test:3409",
+      "test:3617"
+    ],
+    "calls": [
+      {
+        "call": 0,
+        "strategy": "single",
+        "max_new_tokens": 3072
+      },
+      {
+        "call": 1,
+        "strategy": "p1",
+        "max_new_tokens": 1024
+      },
+      {
+        "call": 2,
+        "strategy": "p2",
+        "max_new_tokens": 1024
+      },
+      {
+        "call": 3,
+        "strategy": "p3",
+        "max_new_tokens": 1024
+      },
+      {
+        "call": 4,
+        "strategy": "refine",
+        "max_new_tokens": 2048
+      }
+    ],
+    "cap_scale": 1.0,
+    "sampling": {
+      "do_sample": true,
+      "temperature": 0.7,
+      "top_p": 0.8,
+      "top_k": 20,
+      "repetition_penalty": 1.0
+    },
+    "eos_token_id": [
+      151645,
+      151643
+    ],
+    "pad_token_id": 151643,
+    "generation_config": "fresh transformers.GenerationConfig (checkpoint generation_config.json not used)",
+    "seed_rule": "torch.manual_seed(6304*1000 + 10*q + call) before each call; q = position 0-49, call 0 single, 1-3 p1-p3, 4 refine",
+    "warmup": {
+      "question": 0,
+      "max_new_tokens": 16,
+      "seed": 6304999,
+      "saved": false
+    },
+    "system": "You are a helpful assistant.",
+    "instruction": "Think step by step inside <think> </think> tags, then give your final answer inside \\boxed{}.",
+    "user_join": "problem + '\\n\\n' + instruction",
+    "review_instruction": "Review the solution above. Identify and correct any errors; if it is correct, retain its answer. Give your final answer inside \\boxed{}.",
+    "refine_draft": "p1 decoded with skip_special_tokens=True (stop token excluded), appended even if truncated",
+    "extraction": "task3_ttc.extract.last_boxed (README R32 balanced-brace rule)",
+    "timing": "perf_counter from prompt rendering to decoded text, cuda.synchronize at both ends; model loading and the warm-up excluded",
+    "peak_memory": "torch.cuda.reset_peak_memory_stats before each call; max_memory_allocated / reserved"
+  },
+  "effective_generation_config": {
+    "single": {
+      "do_sample": true,
+      "temperature": 0.7,
+      "top_p": 0.8,
+      "top_k": 20,
+      "repetition_penalty": 1.0,
+      "eos_token_id": [
+        151645,
+        151643
+      ],
+      "pad_token_id": 151643,
+      "max_new_tokens": 3072,
+      "other": {
+        "min_p": null,
+        "typical_p": 1.0,
+        "no_repeat_ngram_size": 0,
+        "num_beams": 1,
+        "min_new_tokens": null,
+        "max_length": 20,
+        "use_cache": true
+      }
+    },
+    "p1": {
+      "do_sample": true,
+      "temperature": 0.7,
+      "top_p": 0.8,
+      "top_k": 20,
+      "repetition_penalty": 1.0,
+      "eos_token_id": [
+        151645,
+        151643
+      ],
+      "pad_token_id": 151643,
+      "max_new_tokens": 1024,
+      "other": {
+        "min_p": null,
+        "typical_p": 1.0,
+        "no_repeat_ngram_size": 0,
+        "num_beams": 1,
+        "min_new_tokens": null,
+        "max_length": 20,
+        "use_cache": true
+      }
+    },
+    "p2": {
+      "do_sample": true,
+      "temperature": 0.7,
+      "top_p": 0.8,
+      "top_k": 20,
+      "repetition_penalty": 1.0,
+      "eos_token_id": [
+        151645,
+        151643
+      ],
+      "pad_token_id": 151643,
+      "max_new_tokens": 1024,
+      "other": {
+        "min_p": null,
+        "typical_p": 1.0,
+        "no_repeat_ngram_size": 0,
+        "num_beams": 1,
+        "min_new_tokens": null,
+        "max_length": 20,
+        "use_cache": true
+      }
+    },
+    "p3": {
+      "do_sample": true,
+      "temperature": 0.7,
+      "top_p": 0.8,
+      "top_k": 20,
+      "repetition_penalty": 1.0,
+      "eos_token_id": [
+        151645,
+        151643
+      ],
+      "pad_token_id": 151643,
+      "max_new_tokens": 1024,
+      "other": {
+        "min_p": null,
+        "typical_p": 1.0,
+        "no_repeat_ngram_size": 0,
+        "num_beams": 1,
+        "min_new_tokens": null,
+        "max_length": 20,
+        "use_cache": true
+      }
+    },
+    "refine": {
+      "do_sample": true,
+      "temperature": 0.7,
+      "top_p": 0.8,
+      "top_k": 20,
+      "repetition_penalty": 1.0,
+      "eos_token_id": [
+        151645,
+        151643
+      ],
+      "pad_token_id": 151643,
+      "max_new_tokens": 2048,
+      "other": {
+        "min_p": null,
+        "typical_p": 1.0,
+        "no_repeat_ngram_size": 0,
+        "num_beams": 1,
+        "min_new_tokens": null,
+        "max_length": 20,
+        "use_cache": true
+      }
+    }
+  },
+  "logits_processors": [
+    "TemperatureLogitsWarper",
+    "TopKLogitsWarper",
+    "TopPLogitsWarper"
+  ],
+  "sessions": [
+    {
+      "started": "2026-11-09T00:56:56.353711+00:00",
+      "provenance": {
+        "git": {
+          "commit": "a458a0a15d70b39cbf003014250ba83a9da0dae8",
+          "dirty": false
+        },
+        "hostname": "00792038839e",
+        "hardware": {
+          "cpu": "x86_64",
+          "cpu_count": 4,
+          "platform": "Linux-6.18.55+-x86_64-with-glibc2.39",
+          "python": "3.13.16",
+          "gpus": [
+            {
+              "index": 0,
+              "name": "Tesla T4",
+              "total_memory_gb": 14.56
+            }
+          ],
+          "torch": "2.11.0+cu130",
+          "cuda": "13.0"
+        },
+        "timestamp": "2026-11-09T00:56:56.386860+00:00"
+      },
+      "libraries": {
+        "torch": "2.11.0+cu130",
+        "transformers": "5.21.0",
+        "tokenizers": "0.23.3",
+        "accelerate": "1.15.0",
+        "safetensors": "0.8.0",
+        "huggingface_hub": "1.33.0",
+        "numpy": "2.1.3"
+      },
+      "argv": [
+        "--out",
+        "results/task3/live/main"
+      ],
+      "records_at_start": 0,
+      "partial_bytes_removed": 0,
+      "model": {
+        "source": "Qwen/Qwen2.5-3B-Instruct",
+        "revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+        "snapshot_commit": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+        "load_path": "/root/.cache/huggingface/hub/models--Qwen--Qwen2.5-3B-Instruct/snapshots/aa8e72537993ba99e69dfaafa59ed015b17504d1",
+        "dtype": "float16",
+        "param_dtypes": [
+          "torch.float16"
+        ],
+        "quantization": null,
+        "n_parameters": 3085938688,
+        "attn_implementation": "sdpa",
+        "model_class": "Qwen2ForCausalLM",
+        "tokenizer_class": "Qwen2Tokenizer",
+        "tokenizer_len": 151665,
+        "chat_template_sha256": "2e2d2512cfe46af53dc1eed45368ecaab26ac4461c480e6b69fe571cf0ceaa75",
+        "load_s": 7.394230788000073
+      },
+      "torch": {
+        "torch": "2.11.0+cu130",
+        "cuda": "13.0",
+        "cudnn": 92700,
+        "device": "cuda:0",
+        "cuda_device_count": 1,
+        "CUDA_VISIBLE_DEVICES": "0",
+        "gpu_name": "Tesla T4",
+        "gpu_capability": "7.5",
+        "gpu_total_memory_bytes": 15636037632
+      },
+      "warmup": {
+        "seed": 6304999,
+        "output_tokens": 16,
+        "wall_s": 1.3327348639999173,
+        "logits_processors": [
+          "TemperatureLogitsWarper",
+          "TopKLogitsWarper",
+          "TopPLogitsWarper"
+        ]
+      },
+      "elapsed_s": 7150.727501630783
+    }
+  ],
+  "totals": {
+    "calls_done": 250,
+    "calls_expected": 250,
+    "questions_done": 50,
+    "questions_expected": 50,
+    "input_tokens": 60738,
+    "output_tokens": 159973,
+    "wall_s_calls": 7137.010949970001,
+    "peak_mem_allocated_bytes": 6628523008,
+    "peak_mem_reserved_bytes": 7419723776,
+    "by_strategy": {
+      "single": {
+        "calls": 50,
+        "input_tokens": 5419,
+        "output_tokens": 38018,
+        "truncated": 2,
+        "finished_by_eos": 48,
+        "extraction_failures": 2,
+        "wall_s": 1709.081770771999
+      },
+      "p1": {
+        "calls": 50,
+        "input_tokens": 5419,
+        "output_tokens": 31743,
+        "truncated": 10,
+        "finished_by_eos": 40,
+        "extraction_failures": 10,
+        "wall_s": 1388.5233160810012
+      },
+      "p2": {
+        "calls": 50,
+        "input_tokens": 5419,
+        "output_tokens": 30261,
+        "truncated": 8,
+        "finished_by_eos": 42,
+        "extraction_failures": 8,
+        "wall_s": 1325.8792841780003
+      },
+      "p3": {
+        "calls": 50,
+        "input_tokens": 5419,
+        "output_tokens": 30847,
+        "truncated": 7,
+        "finished_by_eos": 43,
+        "extraction_failures": 7,
+        "wall_s": 1350.9340710540002
+      },
+      "refine": {
+        "calls": 50,
+        "input_tokens": 39062,
+        "output_tokens": 29104,
+        "truncated": 0,
+        "finished_by_eos": 50,
+        "extraction_failures": 0,
+        "wall_s": 1362.5925078850005
+      }
+    }
+  },
+  "updated": "2026-11-09T02:56:07.081210+00:00",
+  "wall_s_sessions": 7150.727501630783
+}

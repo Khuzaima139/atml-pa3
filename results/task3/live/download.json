@@ -1,0 +1,21 @@
+{
+ "model": "Qwen/Qwen2.5-3B-Instruct",
+ "revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+ "path": "/root/.cache/huggingface/hub/models--Qwen--Qwen2.5-3B-Instruct/snapshots/aa8e72537993ba99e69dfaafa59ed015b17504d1",
+ "files": [
+  ".gitattributes",
+  "LICENSE",
+  "README.md",
+  "config.json",
+  "generation_config.json",
+  "merges.txt",
+  "model-00001-of-00002.safetensors",
+  "model-00002-of-00002.safetensors",
+  "model.safetensors.index.json",
+  "tokenizer.json",
+  "tokenizer_config.json",
+  "vocab.json"
+ ],
+ "bytes": 6183464935,
+ "download_s": 36.88973116874695
+}
