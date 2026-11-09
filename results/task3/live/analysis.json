@@ -1,0 +1,436 @@
+{
+  "run_id": "task3_live_analysis_of_task3_live_main_20261109T005656Z",
+  "provenance": {
+    "git": {
+      "commit": "d110692b1d0c3b3bb8c8d5d40d4c00e902df35a5",
+      "dirty": false
+    },
+    "hostname": "192.168.1.6",
+    "hardware": {
+      "cpu": "arm",
+      "cpu_count": 8,
+      "platform": "macOS-27.0.1-arm64-arm-64bit",
+      "python": "3.11.18",
+      "gpus": [],
+      "torch": "2.15.0"
+    },
+    "timestamp": "2026-11-09T11:46:06.536310+00:00"
+  },
+  "config": "configs/task3/offline.yaml",
+  "inputs": {
+    "run_dir": "results/task3/live/main",
+    "live_run_id": "task3_live_main_20261109T005656Z",
+    "calls_jsonl_sha256": "15dc5bd431b42582fc9d322cd5deb158314b5d447d5b501aaafcaffa821cf88d",
+    "run_config_sha256": "382c1c2dad7690ac93ae292fef7d91b187d9a7db0d5d3a2234e0dbf070271053",
+    "gold": {
+      "source": "qwen25-math/generations.parquet gold_answer",
+      "sha256": "ffdecd753a2c0183b811d5679f3cf15e91bce46d1aacb196e28afb553d7e1c84"
+    },
+    "problems_sha256": "deac8bc4c27cb5509526e8300820a7836d02f35b9f7108108a8f6cad28885cd5"
+  },
+  "scorer_version": {
+    "answers_py_sha256": "cdcd43a572d7b57a2f3d750e012f2567ea764d66bf92501bf7c8a1ac0d8b96a3",
+    "libraries": {
+      "math-verify": "0.9.0",
+      "latex2sympy2_extended": "1.11.0",
+      "sympy": "1.14.0",
+      "antlr4-python3-runtime": "4.13.2"
+    },
+    "math_equivalence": "symmetric: equal if verify(a, b) or verify(b, a) (grouping, grading, check b)",
+    "math_verify": {
+      "wrap": "\\boxed{...}",
+      "parse_timeout_s": 5,
+      "verify_timeout_s": 5
+    },
+    "mathvista": {
+      "repo": "lupantech/MathVista",
+      "commit": "5f6b4deca69ecd1b8a1a4f338cee085e50524e4b"
+    },
+    "id": "a6b3433a1382548f67b84430ae96f07df8e344bd92f1c3ea481b7ac764f58738"
+  },
+  "scorer_timeouts": {},
+  "definitions": {
+    "strategies": {
+      "single": [
+        "single"
+      ],
+      "parallel": [
+        "p1",
+        "p2",
+        "p3"
+      ],
+      "refine": [
+        "p1",
+        "refine"
+      ],
+      "initial": [
+        "p1"
+      ]
+    },
+    "answer_calls": {
+      "single": [
+        "single"
+      ],
+      "parallel": [
+        "p1",
+        "p2",
+        "p3"
+      ],
+      "refine": [
+        "refine"
+      ],
+      "initial": [
+        "p1"
+      ]
+    },
+    "parallel_selection": "answers.group_keys over p1, p2, p3 (symmetric math-verify, NO_ANSWER one voting group) + selection.self_consistency (ties -> earliest of p1, p2, p3); graded on the group representative",
+    "bootstrap": "common.bootstrap.paired_bootstrap over questions, 1,000 resamples, seed 6304"
+  },
+  "run_settings": {
+    "effective_generation_config": {
+      "single": {
+        "do_sample": true,
+        "temperature": 0.7,
+        "top_p": 0.8,
+        "top_k": 20,
+        "repetition_penalty": 1.0,
+        "eos_token_id": [
+          151645,
+          151643
+        ],
+        "pad_token_id": 151643,
+        "max_new_tokens": 3072,
+        "other": {
+          "min_p": null,
+          "typical_p": 1.0,
+          "no_repeat_ngram_size": 0,
+          "num_beams": 1,
+          "min_new_tokens": null,
+          "max_length": 20,
+          "use_cache": true
+        }
+      },
+      "p1": {
+        "do_sample": true,
+        "temperature": 0.7,
+        "top_p": 0.8,
+        "top_k": 20,
+        "repetition_penalty": 1.0,
+        "eos_token_id": [
+          151645,
+          151643
+        ],
+        "pad_token_id": 151643,
+        "max_new_tokens": 1024,
+        "other": {
+          "min_p": null,
+          "typical_p": 1.0,
+          "no_repeat_ngram_size": 0,
+          "num_beams": 1,
+          "min_new_tokens": null,
+          "max_length": 20,
+          "use_cache": true
+        }
+      },
+      "p2": {
+        "do_sample": true,
+        "temperature": 0.7,
+        "top_p": 0.8,
+        "top_k": 20,
+        "repetition_penalty": 1.0,
+        "eos_token_id": [
+          151645,
+          151643
+        ],
+        "pad_token_id": 151643,
+        "max_new_tokens": 1024,
+        "other": {
+          "min_p": null,
+          "typical_p": 1.0,
+          "no_repeat_ngram_size": 0,
+          "num_beams": 1,
+          "min_new_tokens": null,
+          "max_length": 20,
+          "use_cache": true
+        }
+      },
+      "p3": {
+        "do_sample": true,
+        "temperature": 0.7,
+        "top_p": 0.8,
+        "top_k": 20,
+        "repetition_penalty": 1.0,
+        "eos_token_id": [
+          151645,
+          151643
+        ],
+        "pad_token_id": 151643,
+        "max_new_tokens": 1024,
+        "other": {
+          "min_p": null,
+          "typical_p": 1.0,
+          "no_repeat_ngram_size": 0,
+          "num_beams": 1,
+          "min_new_tokens": null,
+          "max_length": 20,
+          "use_cache": true
+        }
+      },
+      "refine": {
+        "do_sample": true,
+        "temperature": 0.7,
+        "top_p": 0.8,
+        "top_k": 20,
+        "repetition_penalty": 1.0,
+        "eos_token_id": [
+          151645,
+          151643
+        ],
+        "pad_token_id": 151643,
+        "max_new_tokens": 2048,
+        "other": {
+          "min_p": null,
+          "typical_p": 1.0,
+          "no_repeat_ngram_size": 0,
+          "num_beams": 1,
+          "min_new_tokens": null,
+          "max_length": 20,
+          "use_cache": true
+        }
+      }
+    },
+    "logits_processors": [
+      "TemperatureLogitsWarper",
+      "TopKLogitsWarper",
+      "TopPLogitsWarper"
+    ],
+    "gpu": [
+      "Tesla T4"
+    ],
+    "commits": [
+      {
+        "commit": "a458a0a15d70b39cbf003014250ba83a9da0dae8",
+        "dirty": false
+      }
+    ],
+    "libraries": {
+      "torch": "2.11.0+cu130",
+      "transformers": "5.21.0",
+      "tokenizers": "0.23.3",
+      "accelerate": "1.15.0",
+      "safetensors": "0.8.0",
+      "huggingface_hub": "1.33.0",
+      "numpy": "2.1.3"
+    }
+  },
+  "strategies": {
+    "single": {
+      "n_questions": 50,
+      "accuracy": 0.62,
+      "n_correct": 31,
+      "answer_calls": [
+        "single"
+      ],
+      "cost_calls": [
+        "single"
+      ],
+      "extraction_rate": 0.96,
+      "truncation_rate": 0.04,
+      "n_responses": 50,
+      "input_tokens_per_question": 108.38,
+      "output_tokens_per_question": 760.36,
+      "total_tokens_per_question": 868.74,
+      "input_tokens_total": 5419,
+      "output_tokens_total": 38018,
+      "runtime_s_per_question": 34.18163541543998,
+      "runtime_s_total": 1709.081770771999,
+      "peak_mem_allocated_bytes": 6535000576,
+      "peak_mem_reserved_bytes": 7419723776
+    },
+    "parallel": {
+      "n_questions": 50,
+      "accuracy": 0.54,
+      "n_correct": 27,
+      "answer_calls": [
+        "p1",
+        "p2",
+        "p3"
+      ],
+      "cost_calls": [
+        "p1",
+        "p2",
+        "p3"
+      ],
+      "extraction_rate": 0.8333333333333334,
+      "truncation_rate": 0.16666666666666666,
+      "n_responses": 150,
+      "input_tokens_per_question": 325.14,
+      "output_tokens_per_question": 1857.02,
+      "total_tokens_per_question": 2182.16,
+      "input_tokens_total": 16257,
+      "output_tokens_total": 92851,
+      "runtime_s_per_question": 81.30673342626004,
+      "runtime_s_total": 4065.3366713130017,
+      "peak_mem_allocated_bytes": 6372728320,
+      "peak_mem_reserved_bytes": 7419723776,
+      "extraction_rate_note": "per response over the 3 parallel calls",
+      "selected_no_answer_rate": 0.22
+    },
+    "refine": {
+      "n_questions": 50,
+      "accuracy": 0.62,
+      "n_correct": 31,
+      "answer_calls": [
+        "refine"
+      ],
+      "cost_calls": [
+        "p1",
+        "refine"
+      ],
+      "extraction_rate": 1.0,
+      "truncation_rate": 0.0,
+      "n_responses": 50,
+      "input_tokens_per_question": 889.62,
+      "output_tokens_per_question": 1216.94,
+      "total_tokens_per_question": 2106.56,
+      "input_tokens_total": 44481,
+      "output_tokens_total": 60847,
+      "runtime_s_per_question": 55.02231647932003,
+      "runtime_s_total": 2751.1158239660017,
+      "peak_mem_allocated_bytes": 6628523008,
+      "peak_mem_reserved_bytes": 7419723776,
+      "cost_note": "includes the shared p1 draft and the longer refinement prompt"
+    },
+    "initial": {
+      "n_questions": 50,
+      "accuracy": 0.56,
+      "n_correct": 28,
+      "answer_calls": [
+        "p1"
+      ],
+      "cost_calls": [
+        "p1"
+      ],
+      "extraction_rate": 0.8,
+      "truncation_rate": 0.2,
+      "n_responses": 50,
+      "input_tokens_per_question": 108.38,
+      "output_tokens_per_question": 634.86,
+      "total_tokens_per_question": 743.24,
+      "input_tokens_total": 5419,
+      "output_tokens_total": 31743,
+      "runtime_s_per_question": 27.770466321620024,
+      "runtime_s_total": 1388.5233160810012,
+      "peak_mem_allocated_bytes": 6372728320,
+      "peak_mem_reserved_bytes": 7419723776
+    }
+  },
+  "calls": {
+    "single": {
+      "n": 50,
+      "accuracy": 0.62,
+      "extraction_rate": 0.96,
+      "truncation_rate": 0.04,
+      "finished_by_eos_rate": 0.96,
+      "mean_input_tokens": 108.38,
+      "mean_output_tokens": 760.36,
+      "mean_wall_s": 34.18163541543998
+    },
+    "p1": {
+      "n": 50,
+      "accuracy": 0.56,
+      "extraction_rate": 0.8,
+      "truncation_rate": 0.2,
+      "finished_by_eos_rate": 0.8,
+      "mean_input_tokens": 108.38,
+      "mean_output_tokens": 634.86,
+      "mean_wall_s": 27.770466321620024
+    },
+    "p2": {
+      "n": 50,
+      "accuracy": 0.56,
+      "extraction_rate": 0.84,
+      "truncation_rate": 0.16,
+      "finished_by_eos_rate": 0.84,
+      "mean_input_tokens": 108.38,
+      "mean_output_tokens": 605.22,
+      "mean_wall_s": 26.517585683560004
+    },
+    "p3": {
+      "n": 50,
+      "accuracy": 0.56,
+      "extraction_rate": 0.86,
+      "truncation_rate": 0.14,
+      "finished_by_eos_rate": 0.86,
+      "mean_input_tokens": 108.38,
+      "mean_output_tokens": 616.94,
+      "mean_wall_s": 27.018681421080004
+    },
+    "refine": {
+      "n": 50,
+      "accuracy": 0.62,
+      "extraction_rate": 1.0,
+      "truncation_rate": 0.0,
+      "finished_by_eos_rate": 1.0,
+      "mean_input_tokens": 781.24,
+      "mean_output_tokens": 582.08,
+      "mean_wall_s": 27.25185015770001
+    }
+  },
+  "refine_transitions": {
+    "relative_to": "initial (p1, the shared draft)",
+    "wrong_to_correct": 3,
+    "correct_to_wrong": 0,
+    "both_correct": 28,
+    "both_wrong": 19,
+    "answer_changed": 10,
+    "answer_changed_rule": "refine answer not equivalent to p1's under the scorer (NO_ANSWER equals only NO_ANSWER)"
+  },
+  "bootstrap": {
+    "parallel-single": {
+      "mean": -0.08,
+      "ci_low": -0.2,
+      "ci_high": 0.04,
+      "n": 50,
+      "resamples": 1000,
+      "seed": 6304,
+      "ci": 0.95
+    },
+    "refine-single": {
+      "mean": 0.0,
+      "ci_low": -0.12,
+      "ci_high": 0.14,
+      "n": 50,
+      "resamples": 1000,
+      "seed": 6304,
+      "ci": 0.95
+    },
+    "refine-parallel": {
+      "mean": 0.08,
+      "ci_low": -0.02,
+      "ci_high": 0.18,
+      "n": 50,
+      "resamples": 1000,
+      "seed": 6304,
+      "ci": 0.95
+    },
+    "single-initial": {
+      "mean": 0.06,
+      "ci_low": -0.08,
+      "ci_high": 0.18,
+      "n": 50,
+      "resamples": 1000,
+      "seed": 6304,
+      "ci": 0.95
+    },
+    "refine-initial": {
+      "mean": 0.06,
+      "ci_low": 0.0,
+      "ci_high": 0.14,
+      "n": 50,
+      "resamples": 1000,
+      "seed": 6304,
+      "ci": 0.95
+    }
+  }
+}
