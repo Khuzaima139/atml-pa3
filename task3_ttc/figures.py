@@ -46,8 +46,8 @@ F1_VLM_EXTRA = ["Highest-Z", "RWC-Z"]
 F1B_METHODS = ["SC", "Highest-V", "RWC-V", "Highest-Z", "RWC-Z", "Highest-Ztok", "RWC-Ztok"]
 FAIL_COLOR = {"correct": "#2a78d6", "selection_failure": "#eb6834", "sampling_failure": "#b9b8b2"}
 FAMILY_STYLE = {"agreement": ("#eb6834", "D"), "quality": ("#1baf7a", "s")}
-SCORE_LABEL = {"L": "mean log-prob L", "K": "self-certainty K", "V": "vision V", "Z": "VisConf Z",
-               "Ztok": "tokenwise Ztok", "length (top = shortest)": "shortest length"}
+SCORE_LABEL = {"L": "mean\nlog-prob L", "K": "self-\ncertainty K", "V": "vision\nV", "Z": "VisConf\nZ",
+               "Ztok": "tokenwise\nZtok", "length (top = shortest)": "shortest\nlength"}
 
 
 def committed(path):
@@ -286,8 +286,10 @@ def fig_accuracy_vs_cost(summaries, evals, folder):
             h = ax.scatter([p["mean_cost"]], _pct([p["accuracy"]]), color=col, marker=mk, s=42, zorder=5,
                            label=f"adaptive {fam} (dev-selected)")
             handles[h.get_label()] = h
-            ax.annotate(p["name"], (p["mean_cost"], 100 * p["accuracy"]), xytext=(6, -12),
-                        textcoords="offset points", fontsize=6.5, color=col)
+        for k, fam in enumerate(FAMILY_STYLE):
+            p = evals[ds]["policies"][fam]
+            ax.text(0.98, 0.04 + 0.07 * (1 - k), f"{fam}: {p['name'].split('(', 1)[1][:-1]}", transform=ax.transAxes,
+                    ha="right", va="bottom", fontsize=7, color=FAMILY_STYLE[fam][0])
         ax.set_xscale("log")
     fig.legend(handles.values(), handles.keys(), loc="outside lower center", ncol=4, fontsize=7.5, frameon=False)
     return _save(fig, folder, "F2_accuracy_vs_cost")
@@ -332,7 +334,8 @@ def fig_quartiles(signals, folder):
             ax.text(xi, vi + (0.3 if vi >= 0 else -0.3), f"{vi:.1f}", ha="center", va="bottom" if vi >= 0 else "top",
                     fontsize=7, color=INK_2)
         ax.set_xticks(x)
-        ax.set_xticklabels([SCORE_LABEL[n] for n in names], rotation=20, ha="right", fontsize=7.5)
+        ax.set_xticklabels([SCORE_LABEL[n] for n in names], fontsize=7.5)
+        ax.margins(y=0.12)
     return _save(fig, folder, "F4_quartile_differences")
 
 
@@ -348,8 +351,8 @@ def fig_pearson(figdata, folder):
         ax.hist(v, bins=bins, color="#2a78d6", alpha=0.85)
         ax.axvline(0, color=INK_2, linewidth=0.8)
         ax.axvline(v.mean(), color="#eb6834", linewidth=1.4, linestyle="--")
-        ax.text(0.03, 0.95, f"mean {v.mean():+.3f}\nn = {len(v)}", transform=ax.transAxes, va="top", fontsize=7.5,
-                color=INK_2)
+        ax.text(0.97, 0.95, f"mean {v.mean():+.3f}\nn = {len(v)}", transform=ax.transAxes, va="top", ha="right",
+                fontsize=7.5, color=INK_2)
     return _save(fig, folder, "F5_mathvista_pearson")
 
 
@@ -385,11 +388,10 @@ def fig_trajectories(figdata, folder):
                         label=f"rollout {rid} ({roles}; Z {r['Z']:.3f}, Ztok {r['Ztok']:.3f}, "
                               f"{'correct' if r['correct'] else 'wrong'})")
             if row == 0:
-                ax.legend(fontsize=6.5, frameon=False, loc="lower left")
-    fig.text(0.5, 0.005, "Trailing moving average over 32 tokens (first 31 positions average the available prefix); "
-             "c_t calibrated on all 32 rollouts of the question.", ha="center", va="bottom", fontsize=7,
-             color=INK_2)
-    fig.get_layout_engine().set(h_pad=0.12)
+                ax.legend(fontsize=6.5, frameon=False, loc="lower right")
+    fig.suptitle("MathVista token trajectories. Trailing moving average over 32 tokens (the first 31 positions "
+                 "average the available prefix); c_t calibrated on all 32 rollouts of the question.",
+                 fontsize=7.5, color=INK_2)
     return _save(fig, folder, "F6_mathvista_trajectories")
 
 
