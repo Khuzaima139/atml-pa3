@@ -1,4 +1,4 @@
-# Task 3 offline setup (manual L577-615, L720-739; decisions of the Task 3 plan, prompt b1).
+# Task 3 offline setup (manual L577-615, L720-739).
 # Relative paths are resolved from the repo root.
 seed: 6304                                      # L594, L596
 paths:
@@ -6,7 +6,7 @@ paths:
   cache_dir: cached/task3                       # token-level caches (gitignored)
   splits_dir: splits/task3
   results_dir: results/task3
-  splits_preview: scratch/task3/splits_preview.json   # prompt a preview; split IDs must match it (null: no check)
+  splits_preview: scratch/task3/splits_preview.json   # preview; split IDs must match it (null: no check)
 sizes:                                          # L582-584, L594-596
   n_questions: 1000
   n_rollouts: 32
@@ -35,10 +35,10 @@ adaptive:                                       # L722, L734-739
 bootstrap:                                      # L614-615 (seed = seed above)
   resamples: 1000
   ci: 0.95
-selection:                                      # L607-615, L660-670 (prompt b2 item C); constants checked in code
+selection:                                      # L607-615, L660-670; constants checked in code
   calibration_quantiles: [0.05, 0.95]           # VisConf Q05/Q95, np.quantile(method="linear")
   calibration_eps: 1.0e-8
-  bootstrap_budgets: [8, 32]                    # prompt b2 item F
+  bootstrap_budgets: [8, 32]
 scorer:                                         # L600-601; installed versions must match
   libraries:
     math-verify: 0.9.0

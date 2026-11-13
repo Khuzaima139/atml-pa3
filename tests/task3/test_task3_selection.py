@@ -1,4 +1,4 @@
-"""Task 3 selection engine, Step 3 signals and bootstrap on hand-made pools (prompt b2 items C, D, F, G)."""
+"""Task 3 selection engine, Step 3 signals and bootstrap on hand-made pools."""
 import numpy as np
 import pytest
 
@@ -11,7 +11,7 @@ NA = S.NO_ANSWER
 
 # ------------------------------------------------------------------------------------------- rules
 
-def test_planning_chat_example():
+def test_worked_example():
     """answers [12, 15, 12, NO_ANSWER], K = [0.8, 2.1, 0.9, 1.0] -> SC 12, Highest-K 15, RWC-K 15."""
     g = np.array([0, 1, 0, NA])           # 12 -> 0, 15 -> 1
     K = np.array([0.8, 2.1, 0.9, 1.0])

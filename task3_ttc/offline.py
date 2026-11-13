@@ -1,4 +1,4 @@
-"""Task 3 offline experiments, Steps 1-3 (manual L607-615, L630-698; prompt b2 items C-H).
+"""Task 3 offline experiments, Steps 1-3 (manual L607-615, L630-698).
 
 Run: python -m task3_ttc.offline --dataset {math,mathvista} [--config configs/task3/offline.yaml] [--replace]
 

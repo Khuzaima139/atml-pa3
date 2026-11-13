@@ -1,4 +1,4 @@
-"""Task 3 figures F1-F8 (prompt b3 item B; manual L743-750, L768-779).
+"""Task 3 figures F1-F8 (manual L743-750, L768-779).
 
 Run:
     python -m task3_ttc.figures data   writes results/task3/figdata/mathvista_figdata.json (F5 per-question

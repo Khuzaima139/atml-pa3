@@ -1,4 +1,4 @@
-"""Task 3 offline selection engine (manual L607-615, L630-686; prompt b2 item C).
+"""Task 3 offline selection engine (manual L607-615, L630-686).
 
 For each question, order o (n_orders saved permutations) and budget N, the candidates are orders[q][o][:N]
 (positions 0..N-1 in the current order). Groups and correctness come from the rollout CSV; NO_ANSWER is group

@@ -1,5 +1,5 @@
 """Task 3 Step 4 live generation: single / parallel / refinement on the 50 live MATH problems
-(manual L616-626 settings, L699-719 Step 4; TASK3_FACTS items 12-14; design fixed by the planning chat, prompt c).
+(manual L616-626 settings, L699-719 Step 4; TASK3_FACTS items 12-14; design fixed before the run).
 
     python -m task3_ttc.live --out results/task3/live/<name> [--questions N] [--cap-scale F] [--model PATH]
     python -m task3_ttc.live --preflight --out results/task3/live/preflight

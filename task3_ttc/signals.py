@@ -1,4 +1,4 @@
-"""Task 3 Step 3: what the signals capture, at N = 32 (manual L687-698; prompt b2 item D).
+"""Task 3 Step 3: what the signals capture, at N = 32 (manual L687-698).
 
 All analyses use all R rollouts of a question (order-independent); VisConf calibration pools all R rollouts.
     Quartile difference  per score, top k = R/4 vs bottom k rollouts by the score, correct rate top minus bottom;

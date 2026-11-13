@@ -1,4 +1,4 @@
-"""Task 3 Step 5: adaptive sampling on the supplied pools (manual L720-742, L753-757; prompt b3 item A).
+"""Task 3 Step 5: adaptive sampling on the supplied pools (manual L720-742, L753-757).
 
 For question q and saved order o, rollouts orders[q][o] are revealed one at a time. The controller checks after
 n in check_points (4, 8, 16) revealed candidates; if it never stops it consumes all R = 32.

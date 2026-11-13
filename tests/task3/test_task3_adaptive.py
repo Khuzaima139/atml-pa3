@@ -1,4 +1,4 @@
-"""Task 3 Step 5 adaptive sampling (prompt b3 item A)."""
+"""Task 3 Step 5 adaptive sampling."""
 import json
 import os
 import subprocess

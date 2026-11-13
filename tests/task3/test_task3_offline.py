@@ -1,4 +1,4 @@
-"""End-to-end CLI run of task3_ttc.offline on tiny synthetic data (prompt b2 item H)."""
+"""End-to-end CLI run of task3_ttc.offline on tiny synthetic data."""
 import json
 import os
 import subprocess

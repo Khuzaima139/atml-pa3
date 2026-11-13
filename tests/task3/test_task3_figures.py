@@ -1,4 +1,4 @@
-"""Task 3 figures and qualitative picks (prompt b3 items B, C)."""
+"""Task 3 figures and qualitative picks."""
 import json
 import os
 

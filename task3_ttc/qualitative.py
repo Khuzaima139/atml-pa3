@@ -1,4 +1,4 @@
-"""Task 3 qualitative examples, rules fixed in advance (manual L748-750, L777-779; prompt b3 item C).
+"""Task 3 qualitative examples, rules fixed in advance (manual L748-750, L777-779).
 
 Run: python -m task3_ttc.qualitative   -> results/task3/qualitative/examples.json
 

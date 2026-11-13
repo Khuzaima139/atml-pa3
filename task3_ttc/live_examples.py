@@ -1,4 +1,4 @@
-"""Task 3 Step 4 revision examples from the live run, rules fixed in advance (manual L717-719, L777-779; prompt d).
+"""Task 3 Step 4 revision examples from the live run, rules fixed in advance (manual L717-719, L777-779).
 
 Run: python -m task3_ttc.live_examples   -> results/task3/qualitative/live_examples.json
 

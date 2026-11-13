@@ -1,4 +1,4 @@
-"""Task 3 live revision examples (prompt d item 4): fixed rules on a synthetic live run."""
+"""Task 3 live revision examples: fixed rules on a synthetic live run."""
 import csv
 import json
 
